@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
+import { SiteHeader } from '@/components/shell/SiteHeader';
+import { Footer } from '@/components/shell/Footer';
 import '@/styles/globals.css';
 
 // Self-hosted at build time by next/font: no runtime Google Fonts request, so
@@ -60,13 +62,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-teal-600 focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:bg-teal-600 focus:px-4 focus:py-2 focus:text-white"
         >
           Skip to content
         </a>
-        {/* TODO(phase-2): <SiteHeader /> */}
+        <SiteHeader />
         <main id="main">{children}</main>
-        {/* TODO(phase-2): <SiteFooter /> */}
+        <Footer />
       </body>
     </html>
   );

@@ -3,105 +3,90 @@
 @tailwind utilities;
 
 /* ---------------------------------------------------------------------------
-   Semantic tokens. Components read THESE, never a raw hex and never a colour
-   defined only inside a media query or [data-theme] block.
-   Light is the bare :root. Dark rotates roles rather than inverting values:
-   deep teal is too dark to carry interactive weight on a dark ground, so lime
-   takes over as the link / focus colour. See docs/BRAND.md section "Dark theme".
+   Semantic tokens — homepage design v3.
+
+   Every token is declared in the bare :root FIRST, before any media query or
+   [data-theme] block. A colour whose only definition sits inside one of those
+   blocks never applies in the un-stamped "system" state — that is the classic
+   unreadable-page bug.
+
+   Roles ROTATE in dark, they do not invert: lime becomes the link and focus
+   colour, teal stays the primary fill.
 --------------------------------------------------------------------------- */
 :root {
   color-scheme: light;
 
-  --ground: #F5F6F7;
-  --surface: #FFFFFF;
-  --surface-sunken: #E9EBEC;
-  --rule: #D6D9DB;
-  --rule-strong: #8E9093;
-
-  --ink: #131A17;
+  --ground: #ffffff;
+  --surface: #f5f6f7;
+  --ink: #131a17;
   --body: #424547;
-  --muted: #5A5D60;
-  --disabled: #8E9093;
+  --muted: #5a5d60;
+  --line: #d6d9db;
+  --line-strong: #8e9093;
+  --link: #235e42;
+  --primary: #2f7f59;
+  --primary-hover: #235e42;
+  --accent: #a0d233;
+  --green: #4f9934;
+  --tint: #eef7f2;
+  --plate: #131a17;
 
-  --primary: #2F7F59;
-  --primary-hover: #235E42;
-  --primary-active: #1A452F;
-  --on-primary: #FFFFFF;
+  /* Structural rhythm. The page has no centred max-width container: sections
+     run full-bleed and are padded with this single gutter, so hairlines run
+     the full width. */
+  --gutter: clamp(20px, 2.2vw, 32px);
+  --section-y: clamp(64px, 6.6vw, 128px);
+  --band-y: clamp(48px, 5vw, 96px);
 
-  --accent: #A0D233;
-  --accent-hover: #8FBE2B;
-  --on-accent: #131A17;
-
-  --link: #235E42;
-  --focus: #A0D233;
-
-  --state-ok: #235E42;
-  --state-warn: #8A6212;
-  --state-bad: #A33B2E;
+  /* Secondary button border. Section 6 gives #45564C on dark and var(--primary)
+     on light, and says the hover brightens to #A0D233 on dark. On light the
+     hover deepens to the primary hover instead — flagged for confirmation. */
+  --btn2-border: #2f7f59;
+  --btn2-border-hover: #235e42;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
 
-    --ground: #0E1411;
-    --surface: #161E1A;
-    --surface-sunken: #1B2420;
-    --rule: #2C3833;
-    --rule-strong: #465249;
-
-    --ink: #EAEEEB;
-    --body: #C3CBC6;
-    --muted: #94A09A;
-    --disabled: #5A5D60;
-
-    --primary: #2F7F59;
-    --primary-hover: #3C9469;
-    --primary-active: #48A87A;
-    --on-primary: #FFFFFF;
-
-    --accent: #A0D233;
-    --accent-hover: #B2DE55;
-    --on-accent: #131A17;
-
-    --link: #A0D233;
-    --focus: #A0D233;
-
-    --state-ok: #7FC79F;
-    --state-warn: #D9B25C;
-    --state-bad: #E28B7C;
+    --ground: #0e1411;
+    --surface: #131a17;
+    --ink: #eaeeeb;
+    --body: #c3cbc6;
+    --muted: #8e9093;
+    --line: #232d28;
+    --line-strong: #454e4a;
+    --link: #a0d233;
+    --primary: #2f7f59;
+    --primary-hover: #3c9b6d;
+    --accent: #a0d233;
+    --green: #4f9934;
+    --tint: #16241c;
+    --plate: #161e1a;
+    --btn2-border: #45564c;
+    --btn2-border-hover: #a0d233;
   }
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
 
-  --ground: #0E1411;
-  --surface: #161E1A;
-  --surface-sunken: #1B2420;
-  --rule: #2C3833;
-  --rule-strong: #465249;
-
-  --ink: #EAEEEB;
-  --body: #C3CBC6;
-  --muted: #94A09A;
-  --disabled: #5A5D60;
-
-  --primary: #2F7F59;
-  --primary-hover: #3C9469;
-  --primary-active: #48A87A;
-  --on-primary: #FFFFFF;
-
-  --accent: #A0D233;
-  --accent-hover: #B2DE55;
-  --on-accent: #131A17;
-
-  --link: #A0D233;
-  --focus: #A0D233;
-
-  --state-ok: #7FC79F;
-  --state-warn: #D9B25C;
-  --state-bad: #E28B7C;
+  --ground: #0e1411;
+  --surface: #131a17;
+  --ink: #eaeeeb;
+  --body: #c3cbc6;
+  --muted: #8e9093;
+  --line: #232d28;
+  --line-strong: #454e4a;
+  --link: #a0d233;
+  --primary: #2f7f59;
+  --primary-hover: #3c9b6d;
+  --accent: #a0d233;
+  --green: #4f9934;
+  --tint: #16241c;
+  --plate: #161e1a;
+  --btn2-border: #45564c;
+  --btn2-border-hover: #a0d233;
 }
 
 @layer base {
@@ -115,62 +100,93 @@
     @apply font-sans text-base antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  /* Square corners everywhere. Hairline borders, not shadows. */
+  * {
+    border-radius: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: var(--ink);
-    @apply font-display font-semibold;
-    text-wrap: balance;
+    @apply font-display font-bold;
   }
 
-  a {
-    color: var(--link);
-  }
-
-  /* Every interactive control gets a visible focus state. Non-negotiable. */
+  /* Never leave a browser-default focus outline. */
   :focus-visible {
-    outline: 2px solid var(--focus);
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
 }
 
 @layer components {
+  /* The single page gutter. */
+  .gutter {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+
+  .gutter-l {
+    padding-left: var(--gutter);
+  }
+
+  .section-y {
+    padding-top: var(--section-y);
+    padding-bottom: var(--section-y);
+  }
+
+  .band-y {
+    padding-top: var(--band-y);
+    padding-bottom: var(--band-y);
+  }
+
+  /**
+   * Always-dark surfaces (header, hero, Polyaire plate, footer) keep their
+   * ground in BOTH themes, so the tokens must rotate to their dark roles
+   * inside them regardless of the viewer's theme. Without this, a light-theme
+   * viewer gets --link #235E42 on #0E1411 — about 1.6:1, unreadable.
+   *
+   * Same rotation the dark theme performs: lime becomes the link and focus
+   * colour, teal stays the primary fill.
+   */
+  .on-dark {
+    --ink: #eaeeeb;
+    --body: #c3cbc6;
+    --muted: #8e9093;
+    --line: #232d28;
+    --line-strong: #454e4a;
+    --link: #a0d233;
+    --primary-hover: #3c9b6d;
+    --tint: #1c2621;
+    --btn2-border: #45564c;
+    --btn2-border-hover: #a0d233;
+  }
+
   /* Motion policy: the resting state is ALWAYS visible.
      The legacy WordPress site parked sections at opacity:0 waiting on a scroll
-     observer that never fired at 375px, so whole pages rendered blank.
-     .reveal is opt-in enhancement applied only AFTER hydration, and the
-     un-enhanced element is fully visible. Never author opacity-0 as a
-     resting state. */
+     observer that never fired at 375px, so whole pages rendered blank on
+     phones. .reveal is enhancement on top of a visible state — it never makes
+     content appear. */
   .reveal {
     opacity: 1;
     transform: none;
   }
 
-  .reveal[data-reveal='pending'] {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
   .reveal[data-reveal='shown'] {
-    opacity: 1;
-    transform: none;
     transition: opacity 200ms ease-out, transform 200ms ease-out;
-  }
-
-  .prose-measure {
-    @apply max-w-prose;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-
-  /* Reduced motion must never leave content hidden. */
-  .reveal[data-reveal='pending'] {
-    opacity: 1;
-    transform: none;
   }
 }

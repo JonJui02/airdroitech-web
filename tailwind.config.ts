@@ -72,6 +72,33 @@ const config: Config = {
       ok: { DEFAULT: '#235E42', bg: '#EEF7F2' },
       warn: { DEFAULT: '#8A6212', bg: '#FBF3DF' },
       bad: { DEFAULT: '#A33B2E', bg: '#FBEDEA' },
+
+      /**
+       * Chrome — the always-dark surfaces (header, hero, footer, mega panel).
+       * These are FIXED in both themes because they belong to a surface that is
+       * dark regardless of the viewer's theme, so they are literals in the
+       * design rather than tokens that flip. Named here so no component ever
+       * carries a raw hex.
+       */
+      chrome: {
+        rail: '#0A0F0D', // utility rail
+        ground: '#0E1411', // header / hero / footer ground
+        plate: '#161E1A', // mega panel ground
+        line: '#232D28', // chrome hairline
+        hover: '#1C2621', // mega-menu hover, progress track, footer ghost type
+        grid: '#1A231F', // hero column rules
+        meta: '#74777A', // chrome meta text
+        border: '#45564C', // secondary button border on dark
+        'line-dark': '#454E4A', // --line-strong in dark
+        'ink-hover': '#2B3531', // ink button hover on the lime field
+        'primary-hover': '#3C9B6D', // primary hover on dark
+      },
+
+      /** Text colours that only ever sit on the lime field. */
+      onlime: {
+        eyebrow: '#3E5214',
+        body: '#20291F',
+      },
     },
 
     extend: {
