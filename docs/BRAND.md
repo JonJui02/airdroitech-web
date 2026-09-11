@@ -44,6 +44,39 @@ body-text threshold.
 why it is the primary and not `#4F9934`, which is the colour the legacy site
 leans on hardest and whose white-on-green buttons already fail AA.
 
+### Contrast, dark ground
+
+Applies to any surface that is dark by design regardless of theme —
+`chrome.ground #0E1411`, `chrome.rail #0A0F0D`, `chrome.plate #161E1A` —
+measured by WCAG 2.1 relative luminance:
+
+| Grey | vs `#0E1411` | Legal as text on dark? |
+|---|---|---|
+| `#8E9093` grey-400 | **5.82:1** | **Yes, any size.** Floor for text on dark chrome. |
+| `#74777A` grey-500 | 4.14:1 | No. Structural / non-text only (borders, ≥3:1 UI). |
+| `#5A5D60` grey-600 and darker | <3:1 | No, at all, for anything, on dark. |
+
+**Testable rule:** on a dark ground, `grey-400` (`#8E9093`) is the darkest grey
+permitted to carry text, at any size. `grey-500` and darker are structural-only
+there.
+
+This is independent of the light-ground "large only" exemption for `#8E9093`
+above — that exemption exists because `#8E9093` clears just 3:1 on white, and it
+is a light-ground fact that does not transfer. The luminance direction reverses
+on dark, so a grey's rating on white says nothing about its rating on
+`#0E1411`.
+
+Separately: mono micro-labels below 18.7px bold / 24px regular — eyebrows,
+column labels, legal rows, everything in this repo runs 11.5–12.5px — never
+qualify for the large-text 3:1 allowance on *either* ground. They always need
+4.5:1.
+
+Any new literal dark surface added to the `chrome` palette must have every grey
+re-measured against it before shipping. This rule exists because
+`chrome.meta` shipped as `#74777A` and measured 4.13:1 on `#0E1411` — it was
+assumed legal by analogy to its light-ground rating, and axe caught it on every
+route.
+
 ## Usage criteria
 
 | Surface or element | Colour | Rule |

@@ -87,7 +87,7 @@ const config: Config = {
         line: '#232D28', // chrome hairline
         hover: '#1C2621', // mega-menu hover, progress track, footer ghost type
         grid: '#1A231F', // hero column rules
-        meta: '#74777A', // chrome meta text
+        meta: '#8E9093', // = grey.400, the dark-ground text floor — never grey.500 or darker
         border: '#45564C', // secondary button border on dark
         'line-dark': '#454E4A', // --line-strong in dark
         'ink-hover': '#2B3531', // ink button hover on the lime field

@@ -39,6 +39,8 @@ const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
  */
 function toUrl(target) {
   if (/^https?:\/\//i.test(target)) return target;
+  // "." is the spelling for the homepage: a bare "/" cannot survive Git Bash.
+  if (target === '.' || target === '') return `${BASE}/`;
 
   if (/^[A-Za-z]:[\\/]/.test(target)) {
     const recovered = target.replace(/\\/g, '/').split('/').filter(Boolean).pop() ?? '';
