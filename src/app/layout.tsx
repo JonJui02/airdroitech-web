@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from 'next';
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
-import { SiteHeader } from '@/components/shell/SiteHeader';
-import { Footer } from '@/components/shell/Footer';
 import '@/styles/globals.css';
 
 // Self-hosted at build time by next/font: no runtime Google Fonts request, so
@@ -66,9 +64,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <Footer />
+        {/*
+          No header/footer here. The site shell lives in (site)/layout.tsx so
+          that `/` can render the console without a duplicate nav; every other
+          route is inside that group and is unaffected.
+        */}
+        {children}
       </body>
     </html>
   );

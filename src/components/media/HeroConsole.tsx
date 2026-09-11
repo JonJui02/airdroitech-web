@@ -20,20 +20,9 @@
  * state is the final state (CLAUDE.md non-negotiable #3).
  */
 
-interface Zone {
-  name: string;
-  temp: string;
-  state: string;
-  /** The one zone drawn as actively conditioning. */
-  active?: boolean;
-}
+import { ZONES, DEFAULT_ZONE } from '@/lib/zones';
 
-const ZONES: Zone[] = [
-  { name: 'Lounge', temp: '22', state: 'Cooling', active: true },
-  { name: 'Kitchen', temp: '24', state: 'Auto' },
-  { name: 'Master', temp: '23', state: 'Cooling' },
-  { name: 'Study', temp: '24', state: 'Idle' },
-];
+const ACTIVE = DEFAULT_ZONE;
 
 /** A day's zone load, normalised 0-1. Shape only — not measured data. */
 const CURVE = [
@@ -78,12 +67,12 @@ export function HeroConsole() {
           <div
             key={z.name}
             className={`px-[clamp(14px,1.6vw,22px)] py-[clamp(14px,1.8vw,26px)] ${
-              z.active ? 'bg-teal-600' : 'bg-chrome-plate'
+              (z.name === ACTIVE) ? 'bg-teal-600' : 'bg-chrome-plate'
             }`}
           >
             <p
               className={`font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.14em] ${
-                z.active ? 'text-white' : 'text-grey-400'
+                (z.name === ACTIVE) ? 'text-white' : 'text-grey-400'
               }`}
             >
               {z.name}
@@ -94,7 +83,7 @@ export function HeroConsole() {
             </p>
             <p
               className={`mt-2 font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.1em] ${
-                z.active ? 'text-white' : 'text-grey-400'
+                (z.name === ACTIVE) ? 'text-white' : 'text-grey-400'
               }`}
             >
               {z.state}

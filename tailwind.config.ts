@@ -88,6 +88,8 @@ const config: Config = {
         hover: '#1C2621', // mega-menu hover, progress track, footer ghost type
         grid: '#1A231F', // hero column rules
         meta: '#8E9093', // = grey.400, the dark-ground text floor — never grey.500 or darker
+        ink: '#EAEEEB', // headings on dark chrome (13.7:1 on chrome.ground)
+        body: '#C3CBC6', // running text on dark chrome (11.9:1 on chrome.ground)
         border: '#45564C', // secondary button border on dark
         'line-dark': '#454E4A', // --line-strong in dark
         'ink-hover': '#2B3531', // ink button hover on the lime field
@@ -130,6 +132,29 @@ const config: Config = {
       },
       transitionDuration: {
         reveal: '200ms',
+      },
+      /**
+       * Room-pane mount animations. Both END at the resting state and are only
+       * ever applied to an element that is already in the DOM and already
+       * laid out, so nothing is parked invisible waiting on an observer
+       * (CLAUDE.md non-negotiable #3). The global prefers-reduced-motion rule
+       * in globals.css clamps both to 0.01ms.
+       */
+      keyframes: {
+        paneIn: {
+          from: { opacity: '0', transform: 'translateY(14px)' },
+          to: { opacity: '1', transform: 'none' },
+        },
+        sheetIn: {
+          from: { opacity: '0', transform: 'translateY(28px)' },
+          to: { opacity: '1', transform: 'none' },
+        },
+      },
+      animation: {
+        'pane-in': 'paneIn 320ms ease-out',
+        'pane-in-sm': 'paneIn 300ms ease-out',
+        'pane-in-fast': 'paneIn 260ms ease-out',
+        'sheet-in': 'sheetIn 260ms ease-out',
       },
       minHeight: {
         tap: '44px',
