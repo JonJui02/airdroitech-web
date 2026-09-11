@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npm run lint)",
+      "Bash(npm run typecheck)",
+      "Bash(npm run brand:check)",
+      "Bash(npm run preflight)",
+      "Bash(npm install)",
+      "Bash(npm ci)",
+      "Bash(npx tsc:*)",
+      "Bash(node scripts/:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Bash(nslookup:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(du:*)",
+      "Bash(find:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Read(./.env.production)",
+      "Bash(git push --force:*)",
+      "Bash(vercel dns:*)",
+      "Bash(vercel domains:*)",
+      "Bash(vercel --prod:*)",
+      "Bash(vercel deploy --prod:*)"
+    ]
+  },
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": "1"
+  }
+}

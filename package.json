@@ -1,0 +1,41 @@
+{
+  "name": "airdroitech-web",
+  "version": "2.0.0",
+  "private": true,
+  "description": "AirdroiTech Sdn Bhd website — Revamp 2.0",
+  "engines": { "node": ">=20.9.0" },
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "brand:check": "node scripts/brand-check.mjs",
+    "a11y": "axe http://localhost:3000 --exit",
+    "preflight": "npm run typecheck && npm run lint && npm run brand:check && npm run build"
+  },
+  "dependencies": {
+    "next": "^15.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.0",
+    "resend": "^4.0.0",
+    "@vercel/blob": "^0.27.0",
+    "@vercel/analytics": "^1.4.0",
+    "@vercel/speed-insights": "^1.1.0",
+    "next-mdx-remote": "^5.0.0",
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.0",
+    "tailwindcss": "^3.4.17",
+    "postcss": "^8.4.49",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.17.0",
+    "eslint-config-next": "^15.5.0",
+    "@axe-core/cli": "^4.10.0"
+  }
+}

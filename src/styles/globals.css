@@ -1,0 +1,176 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Semantic tokens. Components read THESE, never a raw hex and never a colour
+   defined only inside a media query or [data-theme] block.
+   Light is the bare :root. Dark rotates roles rather than inverting values:
+   deep teal is too dark to carry interactive weight on a dark ground, so lime
+   takes over as the link / focus colour. See docs/BRAND.md section "Dark theme".
+--------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --ground: #F5F6F7;
+  --surface: #FFFFFF;
+  --surface-sunken: #E9EBEC;
+  --rule: #D6D9DB;
+  --rule-strong: #8E9093;
+
+  --ink: #131A17;
+  --body: #424547;
+  --muted: #5A5D60;
+  --disabled: #8E9093;
+
+  --primary: #2F7F59;
+  --primary-hover: #235E42;
+  --primary-active: #1A452F;
+  --on-primary: #FFFFFF;
+
+  --accent: #A0D233;
+  --accent-hover: #8FBE2B;
+  --on-accent: #131A17;
+
+  --link: #235E42;
+  --focus: #A0D233;
+
+  --state-ok: #235E42;
+  --state-warn: #8A6212;
+  --state-bad: #A33B2E;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+
+    --ground: #0E1411;
+    --surface: #161E1A;
+    --surface-sunken: #1B2420;
+    --rule: #2C3833;
+    --rule-strong: #465249;
+
+    --ink: #EAEEEB;
+    --body: #C3CBC6;
+    --muted: #94A09A;
+    --disabled: #5A5D60;
+
+    --primary: #2F7F59;
+    --primary-hover: #3C9469;
+    --primary-active: #48A87A;
+    --on-primary: #FFFFFF;
+
+    --accent: #A0D233;
+    --accent-hover: #B2DE55;
+    --on-accent: #131A17;
+
+    --link: #A0D233;
+    --focus: #A0D233;
+
+    --state-ok: #7FC79F;
+    --state-warn: #D9B25C;
+    --state-bad: #E28B7C;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --ground: #0E1411;
+  --surface: #161E1A;
+  --surface-sunken: #1B2420;
+  --rule: #2C3833;
+  --rule-strong: #465249;
+
+  --ink: #EAEEEB;
+  --body: #C3CBC6;
+  --muted: #94A09A;
+  --disabled: #5A5D60;
+
+  --primary: #2F7F59;
+  --primary-hover: #3C9469;
+  --primary-active: #48A87A;
+  --on-primary: #FFFFFF;
+
+  --accent: #A0D233;
+  --accent-hover: #B2DE55;
+  --on-accent: #131A17;
+
+  --link: #A0D233;
+  --focus: #A0D233;
+
+  --state-ok: #7FC79F;
+  --state-warn: #D9B25C;
+  --state-bad: #E28B7C;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--body);
+    @apply font-sans text-base antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--ink);
+    @apply font-display font-semibold;
+    text-wrap: balance;
+  }
+
+  a {
+    color: var(--link);
+  }
+
+  /* Every interactive control gets a visible focus state. Non-negotiable. */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Motion policy: the resting state is ALWAYS visible.
+     The legacy WordPress site parked sections at opacity:0 waiting on a scroll
+     observer that never fired at 375px, so whole pages rendered blank.
+     .reveal is opt-in enhancement applied only AFTER hydration, and the
+     un-enhanced element is fully visible. Never author opacity-0 as a
+     resting state. */
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal[data-reveal='pending'] {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .reveal[data-reveal='shown'] {
+    opacity: 1;
+    transform: none;
+    transition: opacity 200ms ease-out, transform 200ms ease-out;
+  }
+
+  .prose-measure {
+    @apply max-w-prose;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Reduced motion must never leave content hidden. */
+  .reveal[data-reveal='pending'] {
+    opacity: 1;
+    transform: none;
+  }
+}
