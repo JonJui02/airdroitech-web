@@ -70,7 +70,7 @@ export const COMPANY_LINE = '© AirdroiTech Sdn Bhd (1411956P)';
 
 export const LOGO = {
   src: '/brand/airdroitech-logo-header.png',
-  width: 714,
-  height: 171,
+  width: 300,
+  height: 72,
   alt: 'AirdroiTech',
 } as const;
