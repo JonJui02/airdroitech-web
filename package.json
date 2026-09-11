@@ -13,7 +13,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "brand:check": "node scripts/brand-check.mjs",
-    "a11y": "axe http://localhost:3000 --exit",
+    "a11y": "node scripts/a11y.mjs",
     "preflight": "npm run typecheck && npm run lint && npm run brand:check && npm run build"
   },
   "dependencies": {
@@ -38,10 +38,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^9.17.0",
     "eslint-config-next": "^15.5.0",
-    "@axe-core/cli": "^4.10.0",
-    "chromedriver": "147.0.0"
-  },
-  "overrides": {
-    "chromedriver": "147.0.0"
+    "axe-core": "^4.13.0",
+    "ws": "^8.18.0"
   }
 }
