@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Button, InkButton } from '@/components/ui/Button';
-import { ImageSlot } from '@/components/ui/ImageSlot';
+import { HeroConsole } from '@/components/media/HeroConsole';
 import { CapabilityStrip } from '@/components/content/CapabilityStrip';
 import { ProjectRow } from '@/components/content/ProjectRow';
 import { StatPlate } from '@/components/content/StatPlate';
@@ -117,19 +117,13 @@ export default function HomePage() {
 
         {/*
           Full-bleed to the right edge: left gutter only, no right padding.
-          A still image is the hero and the LCP element. A video may attach
-          above 1024px and never under prefers-reduced-motion — the layout is
-          reviewed with the static image alone.
+          The hero visual is drawn in markup rather than photographed — see
+          HeroConsole. Consequence worth knowing: there is no hero image, so
+          the LCP element is the h1 the server already sent, and no video
+          attaches here at any width.
         */}
         <div className="relative mt-[clamp(32px,3.4vw,64px)] gutter-l">
-          <ImageSlot
-            ratio="2.4/1"
-            minHeight="200px"
-            alt="AirdroiTech engineering"
-            label="hero/home-hero.jpg"
-            sizes="100vw"
-            priority
-          />
+          <HeroConsole />
         </div>
       </section>
 

@@ -12,6 +12,27 @@ interface ImageSlotProps {
   priority?: boolean;
   className?: string;
   minHeight?: string;
+  /**
+   * How the image fills the slot.
+   *
+   * `cover` (default) crops to fill — right for photography, where the frame is
+   * a composition and trimming its edges is harmless.
+   *
+   * `contain` fits the whole image in and pads the remainder. Use it for
+   * product shots isolated on a white ground: they are not compositions, and
+   * cropping one cuts the product or its wordmark off. Pair with `padded`.
+   */
+  fit?: 'cover' | 'contain';
+  /**
+   * Pads a `contain` image onto a white plate, in BOTH themes.
+   *
+   * The supplied product shots are JPEGs matted on white. On a themed ground
+   * the matte does not blend — in dark theme a square shot renders as a white
+   * rectangle floating in dark bars. A white plate absorbs the matte, so the
+   * slot reads as one product card either way. Replace with a transparent PNG
+   * or WebP and this is no longer needed.
+   */
+  padded?: boolean;
 }
 
 /**
@@ -35,13 +56,27 @@ export function ImageSlot({
   priority = false,
   className = '',
   minHeight,
+  fit = 'cover',
+  padded = false,
 }: ImageSlotProps) {
   const style = { aspectRatio: ratio, ...(minHeight ? { minHeight } : {}) };
 
   if (src) {
     return (
-      <div className={`relative w-full overflow-hidden ${className}`} style={style}>
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" />
+      <div
+        className={
+          `relative w-full overflow-hidden ${padded ? 'bg-white' : ''} ${className}`
+        }
+        style={style}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className={fit === 'contain' ? 'object-contain' : 'object-cover'}
+        />
       </div>
     );
   }

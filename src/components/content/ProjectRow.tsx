@@ -60,10 +60,13 @@ export function ProjectRow({
       </div>
 
       <ImageSlot
+        src={`/${asset}`}
         ratio="16/10"
         alt={`${name} — ${kicker}`}
         label={asset}
         sizes="(min-width: 1024px) 50vw, 100vw"
+        fit="contain"
+        padded
         className={media === 'left' ? 'lg:order-first' : ''}
       />
     </Link>
