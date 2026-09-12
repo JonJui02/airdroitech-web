@@ -1,11 +1,13 @@
 'use client';
 
+import Image from 'next/image';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { BrandLogo } from '@/components/shell/BrandLogo';
 import type { Role } from '@/lib/roles';
 import { CAPABILITIES, EMAIL } from '@/lib/site';
 import { DEFAULT_ZONE } from '@/lib/zones';
 import { MobileRoomDock } from './MobileRoomDock';
+import { RoomLegal } from './RoomLegal';
 import { RoomDial } from './RoomDial';
 import { RoomDock } from './RoomDock';
 import { RoomHeader } from './RoomHeader';
@@ -24,6 +26,7 @@ import {
   CONTACT_HEADING,
   HERO_DECK,
   PROJECT_COPY,
+  TEAM_PHOTOS,
 } from './panes/copy';
 import { at, buildRooms, readout, wrapIndex, type RoomKey } from './rooms';
 
@@ -332,6 +335,25 @@ function MobilePane({
         </div>
       ) : null}
 
+      {room === 'ABOUT' ? (
+        <div className="mt-[22px] grid grid-cols-2 gap-px border border-chrome-line bg-chrome-line">
+          {TEAM_PHOTOS.map((photo) => (
+            <figure key={photo.src} className="relative h-[118px] overflow-hidden bg-chrome-plate">
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                sizes="50vw"
+                className="object-cover"
+              />
+              <figcaption className="absolute inset-x-0 bottom-0 bg-chrome-ground/95 px-[10px] py-[6px] font-mono text-[9.5px] uppercase tracking-[0.12em] text-chrome-body">
+                {photo.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      ) : null}
+
       {room === 'PROJECTS' ? (
         <div className="mt-[22px] flex flex-col gap-px border border-chrome-line bg-chrome-line">
           {PROJECT_COPY.map((p, i) => (
@@ -357,6 +379,8 @@ function MobilePane({
           ))}
         </div>
       ) : null}
+
+      <RoomLegal className="mt-[26px] border-t border-chrome-line pt-[18px]" />
 
       <button
         type="button"

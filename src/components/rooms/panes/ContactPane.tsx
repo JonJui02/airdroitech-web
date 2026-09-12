@@ -1,3 +1,4 @@
+import { ImageSlot } from '@/components/ui/ImageSlot';
 import { ADDRESS_LINES, EMAIL, LINKEDIN, POLYAIRE } from '@/lib/site';
 import {
   CONTACT_EYEBROW,
@@ -17,7 +18,8 @@ import {
 export function ContactPane() {
   return (
     <div className="grid h-full grid-rows-[1fr_auto]">
-      <div className="flex flex-col justify-center overflow-y-auto px-[40px] py-[44px]">
+      <div className="grid min-h-0 grid-cols-1 lg:grid-cols-[1fr_minmax(0,320px)]">
+        <div className="flex flex-col justify-center overflow-y-auto px-[40px] py-[44px]">
         <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-lime-500">
           {CONTACT_EYEBROW}
         </p>
@@ -45,6 +47,39 @@ export function ContactPane() {
           >
             LinkedIn <span aria-hidden="true" className="ml-1">↗</span>
           </a>
+          </div>
+        </div>
+
+        {/*
+          The two supplied brand illustrations. Both are matted on white, so
+          each sits on its own white plate — the same treatment the product
+          shots get.
+        */}
+        <div className="grid grid-rows-2 gap-px border-chrome-line bg-chrome-line max-lg:hidden lg:border-l">
+          <div className="bg-chrome-plate p-[22px]">
+            <ImageSlot
+              src="/illustration/adt-get-in-touch-3d.jpg"
+              ratio="1/1"
+              alt="A hand holding a phone showing the AirdroiTech mark"
+              label="illustration/adt-get-in-touch-3d.jpg"
+              sizes="320px"
+              fit="contain"
+              padded
+              className="h-full"
+            />
+          </div>
+          <div className="bg-chrome-plate p-[22px]">
+            <ImageSlot
+              src="/illustration/adt-located.jpg"
+              ratio="1/1"
+              alt="A map pin carrying the AirdroiTech mark, marking the office location"
+              label="illustration/adt-located.jpg"
+              sizes="320px"
+              fit="contain"
+              padded
+              className="h-full"
+            />
+          </div>
         </div>
       </div>
 

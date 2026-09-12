@@ -1,4 +1,5 @@
 import { ADDRESS_LINES } from '@/lib/site';
+import { RoomLegal } from './RoomLegal';
 import { at, readout, type Room } from './rooms';
 
 /**
@@ -21,7 +22,8 @@ export function RoomDock({ rooms, index }: { rooms: Room[]; index: number }) {
     .join(' · ');
 
   return (
-    <div className="flex min-h-[56px] flex-none items-center gap-[22px] border-t border-chrome-line bg-chrome-rail px-[26px]">
+    <div className="flex-none border-t border-chrome-line bg-chrome-rail">
+      <div className="flex min-h-[52px] items-center gap-[22px] px-[26px]">
       <span className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-chrome-meta">
         You are in
       </span>
@@ -44,9 +46,12 @@ export function RoomDock({ rooms, index }: { rooms: Room[]; index: number }) {
         ))}
       </span>
 
-      <span className="ml-auto font-mono text-[11.5px] uppercase tracking-[0.14em] text-chrome-meta">
-        {place}
-      </span>
+        <span className="ml-auto font-mono text-[11.5px] uppercase tracking-[0.14em] text-chrome-meta">
+          {place}
+        </span>
+      </div>
+
+      <RoomLegal className="border-t border-chrome-line px-[26px] py-[9px]" />
     </div>
   );
 }
