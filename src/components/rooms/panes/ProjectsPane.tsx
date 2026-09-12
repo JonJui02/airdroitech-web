@@ -49,7 +49,6 @@ export function ProjectsPane({ onOpen }: ProjectsPaneProps) {
                 label={p.asset}
                 sizes="(min-width: 1024px) 33vw, 100vw"
                 fit="contain"
-                padded
               />
             </span>
 

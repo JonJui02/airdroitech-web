@@ -143,7 +143,6 @@ export function SiteHeader() {
                   label={p.asset}
                   sizes="(min-width: 1024px) 33vw, 100vw"
                   fit="contain"
-                  padded
                 />
                 <p className="mt-4 font-display text-[22px] font-bold text-[#EAEEEB]">{p.name}</p>
                 <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.08em] text-grey-400">

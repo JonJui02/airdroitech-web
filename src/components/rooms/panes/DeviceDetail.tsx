@@ -88,41 +88,82 @@ export function DeviceDetail({ product, onBack }: DeviceDetailProps) {
           </div>
         </div>
 
-        {/*
-          Product shots, largest first. All are matted on white, so each sits
-          on its own white plate rather than on the chrome ground — see
-          ImageSlot's `padded`.
-        */}
-        <div className="flex flex-col gap-px overflow-y-auto border-l border-chrome-line bg-chrome-line">
-          <div className="flex-1 bg-chrome-plate p-[24px]">
-            <ImageSlot
-              src={`/${product.asset}`}
-              ratio="4/3"
-              alt={`${product.name} — ${product.kicker}`}
-              label={product.asset}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              fit="contain"
-              padded
-              className="h-full"
-            />
-          </div>
-
-          {product.gallery.map((g) => (
-            <div key={g.src} className="flex-1 bg-chrome-plate p-[24px]">
-              <ImageSlot
-                src={g.src}
-                ratio="4/3"
-                alt={g.alt}
-                label={g.src}
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                fit="contain"
-                padded
-                className="h-full"
-              />
-            </div>
-          ))}
-        </div>
+        <DeviceGallery product={product} />
       </div>
     </div>
+  );
+}
+
+/**
+ * The product shots, as a left-to-right rail.
+ *
+ * Deliberately NOT a carousel in the banned sense: every shot is in the DOM,
+ * laid out, and reachable — the rail is a scroll container with snap points,
+ * the arrows only scroll it, and there is no auto-advance and no slide hidden
+ * behind a gesture. CLAUDE.md non-negotiable #3 rules out hiding content
+ * behind a gesture, not horizontal movement.
+ *
+ * The next shot peeks past the right edge (88% per slide), which is what tells
+ * a viewer there is more without a caption saying so. A single shot fills the
+ * rail and the arrows do not render.
+ */
+function DeviceGallery({ product }: { product: ProjectCopy }) {
+  const railRef = useRef<HTMLDivElement>(null);
+
+  const shots = [
+    { src: `/${product.asset}`, alt: `${product.name} — ${product.kicker}` },
+    ...product.gallery,
+  ];
+
+  function scrollRail(direction: -1 | 1) {
+    const rail = railRef.current;
+    if (!rail) return;
+    rail.scrollBy({ left: direction * rail.clientWidth * 0.88, behavior: 'smooth' });
+  }
+
+  return (
+    <div className="relative min-h-0 border-l border-chrome-line">
+      <div
+        ref={railRef}
+        className="flex h-full snap-x snap-mandatory overflow-x-auto overflow-y-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {shots.map((s) => (
+          <div
+            key={s.src}
+            className="flex h-full w-[88%] flex-none snap-center items-center p-[28px]"
+          >
+            <ImageSlot
+              src={s.src}
+              ratio="4/3"
+              alt={s.alt}
+              label={s.src}
+              sizes="(min-width: 1024px) 45vw, 90vw"
+              fit="contain"
+              className="w-full"
+            />
+          </div>
+        ))}
+      </div>
+
+      {shots.length > 1 ? (
+        <div className="pointer-events-none absolute inset-x-[14px] top-1/2 flex -translate-y-1/2 justify-between">
+          <GalleryArrow direction={-1} onClick={() => scrollRail(-1)} />
+          <GalleryArrow direction={1} onClick={() => scrollRail(1)} />
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+function GalleryArrow({ direction, onClick }: { direction: -1 | 1; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={direction === -1 ? 'Previous image' : 'Next image'}
+      className="pointer-events-auto flex min-h-tap min-w-tap items-center justify-center border border-chrome-border bg-chrome-ground/90 font-mono text-[15px] text-lime-500 transition-colors duration-200 hover:border-lime-500"
+    >
+      <span aria-hidden="true">{direction === -1 ? '◄' : '►'}</span>
+    </button>
   );
 }

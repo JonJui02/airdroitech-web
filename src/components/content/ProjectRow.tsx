@@ -66,7 +66,6 @@ export function ProjectRow({
         label={asset}
         sizes="(min-width: 1024px) 50vw, 100vw"
         fit="contain"
-        padded
         className={media === 'left' ? 'lg:order-first' : ''}
       />
     </Link>

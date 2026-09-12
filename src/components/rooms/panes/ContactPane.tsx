@@ -51,32 +51,30 @@ export function ContactPane() {
         </div>
 
         {/*
-          The two supplied brand illustrations. Both are matted on white, so
-          each sits on its own white plate — the same treatment the product
-          shots get.
+          The two supplied brand illustrations. Their white mattes have been
+          cut (scripts/matte-cut.mjs), so they sit directly on the chrome
+          ground with no plate.
         */}
         <div className="grid grid-rows-2 gap-px border-chrome-line bg-chrome-line max-lg:hidden lg:border-l">
           <div className="bg-chrome-plate p-[22px]">
             <ImageSlot
-              src="/illustration/adt-get-in-touch-3d.jpg"
+              src="/illustration/adt-get-in-touch-3d.webp"
               ratio="1/1"
               alt="A hand holding a phone showing the AirdroiTech mark"
-              label="illustration/adt-get-in-touch-3d.jpg"
+              label="illustration/adt-get-in-touch-3d.webp"
               sizes="320px"
               fit="contain"
-              padded
               className="h-full"
             />
           </div>
           <div className="bg-chrome-plate p-[22px]">
             <ImageSlot
-              src="/illustration/adt-located.jpg"
+              src="/illustration/adt-located.webp"
               ratio="1/1"
               alt="A map pin carrying the AirdroiTech mark, marking the office location"
-              label="illustration/adt-located.jpg"
+              label="illustration/adt-located.webp"
               sizes="320px"
               fit="contain"
-              padded
               className="h-full"
             />
           </div>

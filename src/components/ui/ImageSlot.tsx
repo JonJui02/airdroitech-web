@@ -24,13 +24,14 @@ interface ImageSlotProps {
    */
   fit?: 'cover' | 'contain';
   /**
-   * Pads a `contain` image onto a white plate, in BOTH themes.
+   * Historically padded a `contain` image onto a white plate, because the
+   * supplied product shots were JPEGs matted on white and the matte would not
+   * blend with a themed ground.
    *
-   * The supplied product shots are JPEGs matted on white. On a themed ground
-   * the matte does not blend — in dark theme a square shot renders as a white
-   * rectangle floating in dark bars. A white plate absorbs the matte, so the
-   * slot reads as one product card either way. Replace with a transparent PNG
-   * or WebP and this is no longer needed.
+   * The mattes have since been cut (scripts/matte-cut.mjs) and the product
+   * imagery is transparent WebP, so images sit directly on the page ground and
+   * nothing needs a plate. Kept only so a future non-transparent asset has an
+   * escape hatch — do not reach for it otherwise.
    */
   padded?: boolean;
 }

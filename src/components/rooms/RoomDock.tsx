@@ -12,12 +12,14 @@ import { at, readout, type Room } from './rooms';
  */
 export function RoomDock({ rooms, index }: { rooms: Room[]; index: number }) {
   const total = rooms.length;
-  // "Shah Alam, Selangor," -> "Shah Alam · Selangor · Malaysia"
-  const place = ADDRESS_LINES.slice(2)
+  // The last two lines are always city/state then country, however many street
+  // lines precede them — counted from the end so adding a street line cannot
+  // silently push the city out of the readout.
+  const place = ADDRESS_LINES.slice(-2)
     .join(' ')
     .replace(/,\s*$/, '')
     .split(',')
-    .map((s) => s.trim())
+    .map((s) => s.trim().replace(/^\d{4,6}\s+/, '')) // drop the postcode
     .filter(Boolean)
     .join(' · ');
 

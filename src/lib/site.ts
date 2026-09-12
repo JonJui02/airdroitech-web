@@ -24,21 +24,21 @@ export const PRODUCTS = [
     href: '/projects/airtouch/',
     descriptor: 'Smart home climate control',
     tag: 'CLIMATE',
-    asset: 'projects/airtouch.jpg',
+    asset: 'projects/airtouch.webp',
   },
   {
     name: 'AirTouch Beam',
     href: '/projects/airtouch-beam/',
     descriptor: "Your AC's smart companion",
     tag: 'MATTER',
-    asset: 'projects/airtouch-beam.jpg',
+    asset: 'projects/airtouch-beam.webp',
   },
   {
     name: 'PolyPlan',
     href: '/projects/polyplan/',
     descriptor: 'CAD software for HVAC professionals',
     tag: 'CAD',
-    asset: 'projects/polyplan.jpg',
+    asset: 'projects/polyplan.webp',
   },
 ] as const;
 
@@ -56,10 +56,18 @@ export const CAPABILITIES = [
  * for the same office (homepage and About differ) — this is the reconciled one
  * and it is pending confirmation before launch. See docs/OPEN-DECISIONS.md.
  */
+/**
+ * The registered office. Updated to the new premises — the company moved from
+ * Unit 3A-1, Level 3A, Tower 9 to Tower 2A in the same business park.
+ *
+ * RoomDock derives its location readout from the last two lines, so the city,
+ * state and country must stay in that order.
+ */
 export const ADDRESS_LINES = [
-  'Unit 3A-1, Level 3A, Tower 9,',
+  'Unit 6-1, Level 6, Tower 2A,',
   'UOA Business Park,',
-  'Shah Alam, Selangor,',
+  'Jalan Pengaturcara U1/51, Seksyen U1,',
+  '40150 Shah Alam, Selangor,',
   'Malaysia',
 ] as const;
 
