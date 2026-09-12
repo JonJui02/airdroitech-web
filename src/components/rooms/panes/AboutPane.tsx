@@ -1,8 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { CAPABILITIES } from '@/lib/site';
-import { ABOUT_BODY, ABOUT_EYEBROW, ABOUT_HEADING, TEAM_PHOTOS } from './copy';
+import { ABOUT_BODY, ABOUT_EYEBROW, ABOUT_HEADING } from './copy';
 
 interface AboutPaneProps {
   caps: Record<string, boolean>;
@@ -20,8 +19,7 @@ interface AboutPaneProps {
  */
 export function AboutPane({ caps, onToggle }: AboutPaneProps) {
   return (
-    <div className="grid h-full grid-cols-1 lg:grid-cols-[1fr_minmax(0,460px)]">
-      <div className="flex flex-col justify-center overflow-y-auto px-[40px] py-[40px]">
+    <div className="flex h-full flex-col justify-center overflow-y-auto px-[40px] py-[48px]">
         <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-lime-500">
           {ABOUT_EYEBROW}
         </p>
@@ -71,51 +69,6 @@ export function AboutPane({ caps, onToggle }: AboutPaneProps) {
             );
           })}
         </div>
-      </div>
-
-      <TeamWall />
     </div>
-  );
-}
-
-/**
- * The team, shown as a wall of feeds.
- *
- * NOT a carousel. CLAUDE.md non-negotiable #3 rules out "carousels that hide
- * content behind a gesture" — that is the legacy failure this rebuild exists to
- * undo, and it would put three of four photographs one swipe away from being
- * seen at all. A wall shows every photograph at once, needs no gesture, and
- * reads as the console's own monitor grid, which is closer to the smart-home
- * idea than a slideshow is.
- *
- * Each tile is labelled, so the photographs are captioned rather than
- * decorative.
- */
-function TeamWall() {
-  return (
-    <section
-      aria-label="The AirdroiTech team"
-      className="grid grid-cols-2 gap-px border-l border-chrome-line bg-chrome-line max-lg:border-l-0 max-lg:border-t"
-    >
-      {TEAM_PHOTOS.map((photo) => (
-        <figure key={photo.src} className="relative min-h-[150px] overflow-hidden bg-chrome-plate">
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            sizes="(min-width: 1024px) 230px, 50vw"
-            className="object-cover"
-          />
-          {/*
-            The caption sits on a solid plate rather than over the photograph:
-            text on an arbitrary image cannot be contrast-checked, and these
-            photographs are bright.
-          */}
-          <figcaption className="absolute inset-x-0 bottom-0 bg-chrome-ground/95 px-[12px] py-[7px] font-mono text-[10px] uppercase tracking-[0.14em] text-chrome-body">
-            {photo.caption}
-          </figcaption>
-        </figure>
-      ))}
-    </section>
   );
 }
