@@ -149,11 +149,11 @@ export function AnniversaryDialog() {
         aria-modal="true"
         aria-labelledby="anniv-title"
         aria-describedby="anniv-body"
-        className="anniv-panel relative my-auto w-full max-w-[560px] border border-[color:var(--chrome-line)] bg-[color:var(--chrome-ground)] shadow-2xl"
+        className="anniv-panel relative my-auto flex max-h-[100dvh] w-full max-w-[560px] flex-col border border-[color:var(--chrome-line)] bg-[color:var(--chrome-ground)] shadow-2xl sm:max-h-[calc(100dvh-3rem)]"
       >
         {/* The page's single instance of the brand sweep: teal to green to lime,
             the logo's own gradient. Decorative, so it is hidden from the a11y tree. */}
-        <div aria-hidden="true" className="h-[6px] w-full bg-brand-sweep" />
+        <div aria-hidden="true" className="h-[6px] w-full flex-none bg-brand-sweep" />
 
         <button
           ref={closeRef}
@@ -165,14 +165,14 @@ export function AnniversaryDialog() {
           <span aria-hidden="true">×</span>
         </button>
 
-        <div className="px-6 pb-6 pt-8 sm:px-10 sm:pb-9 sm:pt-11">
+        <div className="min-h-0 flex-1 overflow-y-auto px-6 pt-7 sm:px-10 sm:pt-9">
           <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[color:var(--chrome-state)]">
             AirdroiTech &nbsp;·&nbsp; 2021 &ndash; 2026
           </p>
 
           <h2
             id="anniv-title"
-            className="mt-4 font-display text-[clamp(34px,9vw,56px)] font-bold leading-[0.95] tracking-[-0.035em] text-[color:var(--chrome-ink)]"
+            className="mt-3 font-display text-[clamp(32px,8.4vw,52px)] font-bold leading-[0.95] tracking-[-0.035em] text-[color:var(--chrome-ink)]"
           >
             Five years of
             <span className="block text-[color:var(--chrome-accent)]">AirdroiTech</span>
@@ -181,7 +181,7 @@ export function AnniversaryDialog() {
           {/* Year rule: 2021 -- 2026, with the far end marked. */}
           <div
             aria-hidden="true"
-            className="mt-6 flex items-center gap-3 font-mono text-[11.5px] tracking-[0.14em] text-[color:var(--chrome-meta)]"
+            className="mt-5 flex items-center gap-3 font-mono text-[11.5px] tracking-[0.14em] text-[color:var(--chrome-meta)]"
           >
             <span>2021</span>
             <span className="h-px flex-1 bg-[color:var(--chrome-line)]" />
@@ -189,7 +189,7 @@ export function AnniversaryDialog() {
             <span className="text-[color:var(--chrome-ink)]">2026</span>
           </div>
 
-          <div id="anniv-body" className="mt-6 space-y-4 text-[15px] leading-[1.68] text-[color:var(--chrome-body)]">
+          <div id="anniv-body" className="mt-5 space-y-3 text-[14.5px] leading-[1.62] text-[color:var(--chrome-body)]">
             <p>
               AirdroiTech opened in Shah Alam in 2021, as the Polyaire Group&rsquo;s research
               and software arm in Malaysia.
@@ -201,13 +201,22 @@ export function AnniversaryDialog() {
               designed, built and tested here — and they run in homes and on job sites across
               Australia and Malaysia.
             </p>
+            <p>
+              Shipping was never the end of it. Since the AirTouch Home and Beam releases, the{' '}
+              <strong className="font-semibold text-[color:var(--chrome-ink)]">AirMate team</strong>{' '}
+              has stood behind every customer who owns one — steady support, day after day. And{' '}
+              <strong className="font-semibold text-[color:var(--chrome-ink)]">Shared Services</strong>{' '}
+              keeps the whole operation upright, from accounts and inventory through to sales
+              support.
+            </p>
             <p className="text-[color:var(--chrome-ink)]">
-              Thank you to every AirdroiTechie who got us here.
+              Thank you to every AirdroiTechie who got us here — engineering, mobile, product, QA,
+              AirMate and Shared Services alike.
             </p>
           </div>
 
           {/* Facts come from COMPANY_FACTS, the same source as the console. */}
-          <dl className="mt-7 grid grid-cols-2 gap-px border border-[color:var(--chrome-line)] bg-[color:var(--chrome-line)] sm:grid-cols-4">
+          <dl className="mt-6 grid grid-cols-2 gap-px border border-[color:var(--chrome-line)] bg-[color:var(--chrome-line)] sm:grid-cols-4">
             {COMPANY_FACTS.map((f) => (
               <div key={f.label} className="bg-[color:var(--chrome-ground)] px-3 py-3 text-center">
                 <dt className="font-mono text-[9.5px] uppercase tracking-[0.12em] text-[color:var(--chrome-meta)]">
@@ -220,11 +229,15 @@ export function AnniversaryDialog() {
             ))}
           </dl>
 
-          <p className="mt-6 font-mono text-[11.5px] uppercase tracking-[0.14em] text-[color:var(--chrome-meta)]">
+          <p className="mt-5 font-mono text-[11.5px] uppercase tracking-[0.14em] text-[color:var(--chrome-meta)]">
             Quality. &nbsp;Integrity. &nbsp;Kindness.
           </p>
 
-          <div className="mt-7 flex flex-col gap-4 border-t border-[color:var(--chrome-line)] pt-6 sm:flex-row-reverse sm:items-center sm:justify-between">
+        </div>
+
+        {/* Pinned below the scrolling text, so the action is reachable at any
+            window height without hunting for it. */}
+        <div className="flex flex-none flex-col gap-4 border-t border-[color:var(--chrome-line)] px-6 pb-6 pt-5 sm:flex-row-reverse sm:items-center sm:justify-between sm:px-10 sm:pb-7">
             <button
               type="button"
               onClick={close}
@@ -242,7 +255,6 @@ export function AnniversaryDialog() {
               />
               Don&rsquo;t show this again
             </label>
-          </div>
         </div>
       </div>
     </div>
