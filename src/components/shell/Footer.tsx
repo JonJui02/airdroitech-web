@@ -4,7 +4,7 @@ import { ColumnLabel } from '@/components/ui/Eyebrow';
 import { ADDRESS_LINES, COMPANY_LINE, EMAIL, LINKEDIN, POLYAIRE, PRODUCTS } from '@/lib/site';
 
 const ROW =
-  'flex min-h-[40px] items-center text-[#C3CBC6] transition-colors hover:text-white ' +
+  'flex min-h-[40px] items-center text-chrome-body transition-colors hover:text-white ' +
   'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ' +
   'focus-visible:outline-lime-500';
 
@@ -22,7 +22,7 @@ export function Footer() {
       <div className="grid grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-[clamp(28px,3vw,56px)]">
         <div>
           <BrandLogo height="30px" />
-          <address className="mt-5 text-[15px] not-italic leading-[1.75] text-[#C3CBC6]">
+          <address className="mt-5 text-[15px] not-italic leading-[1.75] text-chrome-body">
             {ADDRESS_LINES.map((line) => (
               <span key={line} className="block">
                 {line}
@@ -74,7 +74,7 @@ export function Footer() {
 
         <div>
           <ColumnLabel>Part of</ColumnLabel>
-          <p className="mt-2 max-w-[32ch] text-[15px] leading-[1.75] text-[#C3CBC6]">
+          <p className="mt-2 max-w-[32ch] text-[15px] leading-[1.75] text-chrome-body">
             Polyaire — Australia&rsquo;s largest air-conditioning wholesale network.
           </p>
           <a

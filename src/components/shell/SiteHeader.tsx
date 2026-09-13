@@ -11,7 +11,7 @@ import { EMAIL, LINKEDIN, NAV, PRODUCTS } from '@/lib/site';
 
 const CELL =
   'flex items-center border-l border-chrome-line px-[clamp(18px,1.8vw,28px)] ' +
-  'font-mono text-[12.5px] uppercase tracking-[0.12em] text-[color:#C3CBC6] ' +
+  'font-mono text-[12.5px] uppercase tracking-[0.12em] text-chrome-body ' +
   'transition-colors hover:bg-lime-500 hover:text-grey-900 ' +
   'focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] ' +
   'focus-visible:outline-lime-500';
@@ -123,8 +123,8 @@ export function SiteHeader() {
             aria-expanded={drawerOpen}
             className="flex w-[62px] flex-none flex-col items-center justify-center gap-[5px] border-l border-chrome-line focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500 lg:hidden"
           >
-            <span aria-hidden="true" className="block h-[1.5px] w-[22px] bg-[#EAEEEB]" />
-            <span aria-hidden="true" className="block h-[1.5px] w-[22px] bg-[#EAEEEB]" />
+            <span aria-hidden="true" className="block h-[1.5px] w-[22px] bg-chrome-ink" />
+            <span aria-hidden="true" className="block h-[1.5px] w-[22px] bg-chrome-ink" />
             <span aria-hidden="true" className="block h-[1.5px] w-[22px] bg-lime-500" />
           </button>
         </div>
@@ -150,7 +150,7 @@ export function SiteHeader() {
                   sizes="(min-width: 1024px) 33vw, 100vw"
                   fit="contain"
                 />
-                <p className="mt-4 font-display text-[22px] font-bold text-[#EAEEEB]">{p.name}</p>
+                <p className="mt-4 font-display text-[22px] font-bold text-chrome-ink">{p.name}</p>
                 <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.08em] text-grey-400">
                   {p.descriptor}
                 </p>

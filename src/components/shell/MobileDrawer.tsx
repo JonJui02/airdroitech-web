@@ -96,7 +96,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
           type="button"
           onClick={onClose}
           aria-label="Close navigation"
-          className="flex w-[62px] flex-none items-center justify-center border-l border-chrome-line text-[26px] leading-none text-[#EAEEEB] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500"
+          className="flex w-[62px] flex-none items-center justify-center border-l border-chrome-line text-[26px] leading-none text-chrome-ink focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500"
         >
           <span aria-hidden="true">×</span>
         </button>
@@ -106,7 +106,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
         <Link
           href="/what-we-do/"
           onClick={onClose}
-          className="flex min-h-[60px] items-center border-b border-chrome-line font-display text-[30px] font-bold text-[#EAEEEB]"
+          className="flex min-h-[60px] items-center border-b border-chrome-line font-display text-[30px] font-bold text-chrome-ink"
         >
           About
         </Link>
@@ -121,7 +121,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                 <Link
                   href={p.href}
                   onClick={onClose}
-                  className="flex min-h-[50px] items-center justify-between gap-4 text-[18px] text-[#EAEEEB]"
+                  className="flex min-h-[50px] items-center justify-between gap-4 text-[18px] text-chrome-ink"
                 >
                   <span>{p.name}</span>
                   <span className="font-mono text-[11.5px] tracking-[0.1em] text-chrome-meta">
@@ -142,7 +142,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
               <Link
                 href="/careers/"
                 onClick={onClose}
-                className="flex min-h-[50px] items-center text-[18px] text-[#EAEEEB]"
+                className="flex min-h-[50px] items-center text-[18px] text-chrome-ink"
               >
                 Working at AirdroiTech
               </Link>
@@ -151,7 +151,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
               <Link
                 href="/careers/open-positions/"
                 onClick={onClose}
-                className="flex min-h-[50px] items-center text-[18px] text-[#EAEEEB]"
+                className="flex min-h-[50px] items-center text-[18px] text-chrome-ink"
               >
                 Open positions
               </Link>
@@ -162,7 +162,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
         <Link
           href="/data-protection-and-privacy-policy/"
           onClick={onClose}
-          className="flex min-h-[60px] items-center border-b border-chrome-line font-display text-[30px] font-bold text-[#EAEEEB]"
+          className="flex min-h-[60px] items-center border-b border-chrome-line font-display text-[30px] font-bold text-chrome-ink"
         >
           Privacy
         </Link>

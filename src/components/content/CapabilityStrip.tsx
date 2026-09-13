@@ -7,7 +7,7 @@ import { CAPABILITIES } from '@/lib/site';
 export function CapabilityStrip() {
   return (
     <div className="border-t border-chrome-line bg-chrome-ground gutter py-[clamp(18px,1.6vw,26px)]">
-      <ul className="flex flex-wrap items-center gap-[clamp(12px,1.4vw,26px)] font-mono text-[clamp(12px,0.95vw,14px)] uppercase tracking-[0.1em] text-[#C3CBC6]">
+      <ul className="flex flex-wrap items-center gap-[clamp(12px,1.4vw,26px)] font-mono text-[clamp(12px,0.95vw,14px)] uppercase tracking-[0.1em] text-chrome-body">
         {CAPABILITIES.map((c, i) => (
           <li key={c} className="flex items-center gap-[clamp(12px,1.4vw,26px)]">
             {i > 0 && (

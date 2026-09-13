@@ -77,7 +77,7 @@ export function HeroConsole() {
             >
               {z.name}
             </p>
-            <p className="mt-2 font-display text-[clamp(30px,3.6vw,52px)] font-bold leading-none tracking-[-0.03em] text-[#EAEEEB]">
+            <p className="mt-2 font-display text-[clamp(30px,3.6vw,52px)] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
               {z.temp}
               <span className="align-super text-[0.42em]">°</span>
             </p>
