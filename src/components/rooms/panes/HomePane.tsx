@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
+import { CountUp } from '@/components/ui/CountUp';
 import { COMPANY_FACTS } from '@/lib/site';
 import { HERO_DECK, HERO_EYEBROW } from './copy';
 import { TypeText } from '@/components/ui/TypeText';
@@ -66,7 +67,7 @@ export function HomePane({ onOpenProjects }: HomePaneProps) {
                 {fact.label}
               </dt>
               <dd className="font-display text-[38px] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
-                {fact.value}
+                <CountUp value={fact.value} replay />
               </dd>
             </div>
           ))}

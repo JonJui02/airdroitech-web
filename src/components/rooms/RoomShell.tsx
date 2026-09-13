@@ -4,6 +4,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { Accent } from '@/components/ui/Accent';
 import { TypeText } from '@/components/ui/TypeText';
 import { Carousel3D } from '@/components/ui/Carousel3D';
+import { CountUp } from '@/components/ui/CountUp';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { BrandLogo } from '@/components/shell/BrandLogo';
 import { ThemeToggle } from '@/components/shell/ThemeToggle';
@@ -354,7 +355,8 @@ function MobilePane({
                 {s.label}
               </p>
               <p className="mt-2 font-display text-[22px] font-bold leading-none text-chrome-ink">
-                {s.value}
+                {/* Home facts count up and decode, as on desktop; other rooms stay plain. */}
+                {room === 'HOME' ? <CountUp key={`${room}-${s.label}`} value={s.value} replay /> : s.value}
               </p>
             </div>
           ))}

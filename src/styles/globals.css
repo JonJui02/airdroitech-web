@@ -725,7 +725,11 @@ html.tt-ready .tt:not([data-tt]) .tt-char {
   animation: tt-in 1ms linear 2.5s both;
 }
 
+/* Hidden with visibility, not just opacity: a gradient accent (background-clip:
+   text on the parent) still paints letters whose own opacity is 0, which made
+   "Intelligence" show in full before it was typed. Invisible text is not painted. */
 html.tt-ready .tt[data-tt='armed'] .tt-char {
+  visibility: hidden;
   opacity: 0;
 }
 
@@ -747,9 +751,11 @@ html.tt-ready .tt[data-tt='play'] .tt-char.tt-last::after {
 
 @keyframes tt-in {
   from {
+    visibility: hidden;
     opacity: 0;
   }
   to {
+    visibility: visible;
     opacity: 1;
   }
 }
@@ -775,11 +781,45 @@ html.tt-ready .tt[data-tt='play'] .tt-char.tt-last::after {
 @media (prefers-reduced-motion: reduce) {
   .tt .tt-char {
     animation: none !important;
+    visibility: visible !important;
     opacity: 1 !important;
   }
 
   .tt .tt-char::after {
     animation: none !important;
     opacity: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Animated facts (src/components/ui/CountUp.tsx) — numbers count up from 0,
+   text decodes from blurred scramble. Same approved exception and safeguards
+   as the typing headlines: scoped to html.tt-ready, final value in the HTML,
+   failsafe reveal after 2.5s, nothing animates under reduced motion.
+--------------------------------------------------------------------------- */
+html.tt-ready .count:not([data-count]) .count-live {
+  animation: tt-in 1ms linear 2.5s both;
+}
+
+/* Text values start blurred and dim, and sharpen as the letters settle. */
+html.tt-ready .count-text[data-count='armed'] .count-live {
+  filter: blur(4px);
+  opacity: 0.55;
+}
+
+html.tt-ready .count-text[data-count='play'] .count-live {
+  filter: blur(0);
+  opacity: 1;
+  transition:
+    filter 1100ms cubic-bezier(0.22, 0.7, 0.2, 1),
+    opacity 700ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .count .count-live {
+    animation: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    transition: none !important;
   }
 }

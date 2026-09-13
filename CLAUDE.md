@@ -70,6 +70,14 @@ pre-paint script sets `tt-ready`, which it skips under reduced motion; and a CSS
 failsafe shows the text after 2.5s if JavaScript never runs. Do not remove a
 safeguard, and do not add typing to other headings without asking.
 
+**Approved exception (user decision, 2026-09-13):** `src/components/ui/CountUp.tsx`
+animates the homepage facts (Established 2021, 30+ AirdroiTechies, 3 products,
+AU · MY): numbers count up from 0 and text decodes from blurred scramble, replaying
+when the Home room reopens. Same safeguards as TypeText: the final value is in the
+server HTML and read by screen readers; an invisible copy holds the size so nothing
+shifts; it only animates under `tt-ready` (not set for reduced motion); and a CSS
+failsafe shows the value after 2.5s if JavaScript never runs.
+
 ### 4. Every URL stays byte-identical
 
 Ten legacy URLs, all with a trailing slash, all preserved — including the
