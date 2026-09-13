@@ -17,6 +17,20 @@ export interface Room {
   label: string;
   /** Second line in the header cell. Facts only — see substateFor(). */
   sub: string;
+  /**
+   * The standalone page this room previews.
+   *
+   * Rooms are summaries; the pages under (site)/ carry the substance. Without
+   * this link the console and the footer both said "About" and meant different
+   * things — one swapped a panel in place, the other left for /what-we-do/.
+   * "Read more" makes the relationship visible.
+   *
+   * Set ONLY for pages that are built. Career and Contact still resolve to
+   * scaffold stubs, and pointing the homepage's most prominent link at a page
+   * that says "Scaffold" is worse than no link. Add their `page` here when those
+   * routes are real.
+   */
+  page?: { href: string; label: string };
 }
 
 /**
@@ -35,8 +49,18 @@ export interface Room {
 export function buildRooms(counts: { products: number; roles: number }): Room[] {
   return [
     { key: 'HOME', label: 'Home', sub: 'Overview' },
-    { key: 'ABOUT', label: 'About', sub: 'Company' },
-    { key: 'PROJECTS', label: 'Projects', sub: `${counts.products} devices` },
+    {
+      key: 'ABOUT',
+      label: 'About',
+      sub: 'Company',
+      page: { href: '/what-we-do/', label: 'Read more about us' },
+    },
+    {
+      key: 'PROJECTS',
+      label: 'Projects',
+      sub: `${counts.products} devices`,
+      page: { href: '/projects/', label: 'All projects' },
+    },
     { key: 'CAREER', label: 'Career', sub: `${counts.roles} roles` },
     { key: 'CONTACT', label: 'Contact', sub: 'Shah Alam' },
   ];

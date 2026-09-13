@@ -7,6 +7,7 @@ import { CAPABILITIES, EMAIL } from '@/lib/site';
 import { DEFAULT_ZONE } from '@/lib/zones';
 import { MobileRoomDock } from './MobileRoomDock';
 import { RoomLegal } from './RoomLegal';
+import { RoomReadMore } from './RoomReadMore';
 import { RoomDial } from './RoomDial';
 import { RoomDock } from './RoomDock';
 import { RoomHeader } from './RoomHeader';
@@ -26,7 +27,7 @@ import {
   HERO_DECK,
   PROJECT_COPY,
 } from './panes/copy';
-import { at, buildRooms, readout, wrapIndex, type RoomKey } from './rooms';
+import { at, buildRooms, readout, wrapIndex, type Room, type RoomKey } from './rooms';
 
 export interface RoomShellProps {
   roles: Role[];
@@ -87,6 +88,8 @@ export function RoomShell({ roles }: RoomShellProps) {
     setDevice(i);
   }, []);
 
+  const pageOf = (key: RoomKey) => rooms.find((r) => r.key === key)?.page;
+
   const paneProps = (key: RoomKey) => ({
     role: 'region' as const,
     'aria-label': rooms.find((r) => r.key === key)?.label ?? key,
@@ -125,12 +128,13 @@ export function RoomShell({ roles }: RoomShellProps) {
               <AboutPane
                 caps={caps}
                 onToggle={(n) => setCaps((c) => ({ ...c, [n]: !c[n] }))}
+                page={pageOf('ABOUT')}
               />
             </div>
 
             <div {...paneProps('PROJECTS')} className="h-full animate-pane-in">
               {device === null ? (
-                <ProjectsPane onOpen={openDevice} />
+                <ProjectsPane onOpen={openDevice} page={pageOf('PROJECTS')} />
               ) : (
                 <DeviceDetail product={at(PROJECT_COPY, device)} onBack={closeDevice} />
               )}
@@ -183,6 +187,7 @@ export function RoomShell({ roles }: RoomShellProps) {
         <div className="min-h-0 flex-1 overflow-y-auto">
           <MobilePane
             room={room}
+            page={at(rooms, index).page}
             roles={roles}
             zone={zone}
             device={device}
@@ -214,6 +219,7 @@ interface Stat {
  */
 function MobilePane({
   room,
+  page,
   roles,
   zone,
   device,
@@ -222,6 +228,7 @@ function MobilePane({
   onNext,
 }: {
   room: RoomKey;
+  page: Room['page'];
   roles: Role[];
   zone: string;
   device: number | null;
@@ -314,6 +321,8 @@ function MobilePane({
         {c.title}
       </h2>
       <p className="mt-[14px] text-[15.5px] leading-[1.62] text-chrome-body">{c.copy}</p>
+
+      <RoomReadMore page={page} className="mt-[14px] text-[15.5px]" />
 
       {c.stats.length > 0 ? (
         <div

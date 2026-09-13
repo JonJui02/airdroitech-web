@@ -1,11 +1,14 @@
 'use client';
 
 import { CAPABILITIES } from '@/lib/site';
+import { RoomReadMore } from '../RoomReadMore';
+import type { Room } from '../rooms';
 import { ABOUT_BODY, ABOUT_EYEBROW, ABOUT_HEADING } from './copy';
 
 interface AboutPaneProps {
   caps: Record<string, boolean>;
   onToggle: (name: string) => void;
+  page: Room['page'];
 }
 
 /**
@@ -17,7 +20,7 @@ interface AboutPaneProps {
  * and the control is what it looks like: a demonstration of the interface,
  * asserting nothing.
  */
-export function AboutPane({ caps, onToggle }: AboutPaneProps) {
+export function AboutPane({ caps, onToggle, page }: AboutPaneProps) {
   return (
     <div className="flex h-full flex-col justify-center overflow-y-auto px-[40px] py-[48px]">
         <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-lime-500">
@@ -69,6 +72,8 @@ export function AboutPane({ caps, onToggle }: AboutPaneProps) {
             );
           })}
         </div>
+
+        <RoomReadMore page={page} className="mt-[26px] text-[16px]" />
     </div>
   );
 }

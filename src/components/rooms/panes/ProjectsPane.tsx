@@ -1,10 +1,13 @@
 'use client';
 
 import { ImageSlot } from '@/components/ui/ImageSlot';
+import { RoomReadMore } from '../RoomReadMore';
+import type { Room } from '../rooms';
 import { PROJECT_COPY } from './copy';
 
 interface ProjectsPaneProps {
   onOpen: (index: number, el: HTMLButtonElement) => void;
+  page: Room['page'];
 }
 
 /**
@@ -14,16 +17,19 @@ interface ProjectsPaneProps {
  * header's "all online" are removed: there is no release-status source in the
  * repo and no system reporting online, so both would be invented facts.
  */
-export function ProjectsPane({ onOpen }: ProjectsPaneProps) {
+export function ProjectsPane({ onOpen, page }: ProjectsPaneProps) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex flex-none items-end justify-between px-[40px] pb-[20px] pt-[30px]">
         <h2 className="font-display text-[44px] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
           ADT Projects
         </h2>
-        <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-chrome-meta">
-          {PROJECT_COPY.length} devices
-        </p>
+        <div className="flex items-center gap-[22px]">
+          <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-chrome-meta">
+            {PROJECT_COPY.length} devices
+          </p>
+          <RoomReadMore page={page} className="text-[15px]" />
+        </div>
       </div>
 
       <div className="grid flex-1 grid-cols-3 gap-px overflow-y-auto border-t border-chrome-line bg-chrome-line">
