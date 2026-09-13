@@ -115,7 +115,7 @@ export const BEAM: ProductPageCopy = {
   summary: 'Turns any split-system air conditioner into a smart, efficient, customisable unit.',
   hero: {
     src: '/projects/at-beam-device.webp',
-    alt: 'The AirTouch Beam unit, a small white square with an illuminated indicator',
+    alt: 'The AirTouch Beam unit beside its retail box, which shows the Beam app on a phone and a wall-mounted air conditioner',
   },
   sections: [
     {
@@ -128,8 +128,8 @@ export const BEAM: ProductPageCopy = {
        */
       body: 'The AirTouch Beam is created through a meticulous, iterative process involving AirdroiTech’s R&D, hardware and software development, and extensive testing to ensure it meets the highest standards of performance and user experience. Our engineers contributed greatly: firmware engineers, hardware engineers and mobile developers worked together to bring it to life, each contributing their expertise to make managing air conditioning smarter, simpler and more efficient.',
       figure: {
-        src: '/projects/at-beam-content.webp',
-        alt: 'A Beam unit signalling to three different wall-mounted split-system air conditioners',
+        src: '/projects/at-beam-app.webp',
+        alt: 'The AirTouch Beam app on a phone: the Lounge zone set to 23°, with heat, fan speed, swing and auto controls, a timer and programs',
       },
     },
     {

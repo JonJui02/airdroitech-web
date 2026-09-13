@@ -3,6 +3,8 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { Accent } from '@/components/ui/Accent';
 import { TypeText } from '@/components/ui/TypeText';
+import { Carousel3D } from '@/components/ui/Carousel3D';
+import { ImageSlot } from '@/components/ui/ImageSlot';
 import { BrandLogo } from '@/components/shell/BrandLogo';
 import { ThemeToggle } from '@/components/shell/ThemeToggle';
 import type { Role } from '@/lib/roles';
@@ -303,6 +305,17 @@ function MobilePane({
             <span aria-hidden="true">×</span>
           </button>
         </div>
+        {/* Same swipeable 3D gallery as the desktop device view, sized for a phone. */}
+        <Carousel3D
+          slides={[{ src: `/${p.asset}`, alt: `${p.name} — ${p.kicker}` }, ...p.gallery]}
+          label={`${p.name} images`}
+          ratio="4/3"
+          fit="contain"
+          tone="chrome"
+          itemWidth={0.72}
+          sizes="72vw"
+          className="mt-[16px]"
+        />
         <p className="mt-[14px] text-[15px] leading-[1.62] text-chrome-body">{p.copy}</p>
         <a
           href={p.href}
@@ -355,19 +368,25 @@ function MobilePane({
               key={p.name}
               type="button"
               onClick={(e) => onOpenDevice(i, e.currentTarget)}
-              className="hover-box min-h-tap bg-chrome-plate px-[16px] py-[16px] text-left"
+              className="hover-box flex min-h-tap items-center gap-[14px] bg-chrome-plate px-[14px] py-[14px] text-left"
             >
-              <span className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-chrome-meta">
-                {p.tag}
+              {/* Product thumbnail. alt="" because the product name follows in the same button. */}
+              <span className="block w-[92px] flex-none">
+                <ImageSlot src={`/${p.asset}`} ratio="4/3" alt="" label={p.asset} sizes="92px" fit="contain" />
               </span>
-              <span className="mt-2 block font-display text-[22px] font-bold text-chrome-ink">
-                {p.name}
-              </span>
-              <span className="mt-2 block text-[14.5px] leading-[1.55] text-chrome-body">
-                {p.copy}
-              </span>
-              <span className="mt-3 block text-[15px] font-semibold text-chrome-link">
-                Open device <span aria-hidden="true">→</span>
+              <span className="min-w-0 flex-1">
+                <span className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-chrome-meta">
+                  {p.tag}
+                </span>
+                <span className="mt-2 block font-display text-[22px] font-bold text-chrome-ink">
+                  {p.name}
+                </span>
+                <span className="mt-2 block text-[14.5px] leading-[1.55] text-chrome-body">
+                  {p.copy}
+                </span>
+                <span className="mt-3 block text-[15px] font-semibold text-chrome-link">
+                  Open device <span aria-hidden="true">→</span>
+                </span>
               </span>
             </button>
           ))}

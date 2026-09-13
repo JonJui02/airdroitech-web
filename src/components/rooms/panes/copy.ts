@@ -86,22 +86,23 @@ export const PROJECT_COPY: ProjectCopy[] = [
     gallery: [
       {
         src: '/projects/at-beam-device.webp',
-        alt: 'The AirTouch Beam unit, a small white square with an illuminated indicator',
+        alt: 'The AirTouch Beam unit beside its retail box, which shows the Beam app on a phone and a wall-mounted air conditioner',
       },
       {
-        src: '/projects/at-beam-content.webp',
-        alt: 'A Beam unit signalling to three different wall-mounted split-system air conditioners',
+        src: '/projects/at-beam-app.webp',
+        alt: 'The AirTouch Beam app on a phone: the Lounge zone set to 23°, with heat, fan speed, swing and auto controls, a timer and programs',
       },
     ],
     /*
-     * at-beam-content.webp shows one Beam and three DIFFERENT split systems.
+     * The removed supplied image at-beam-content.webp (replaced by at-beam-app.webp
+     * on user request 2026-09-13) showed one Beam and three DIFFERENT split systems.
      * That is a statement about compatibility across makes — and the official
      * FAQ confirms "One Beam unit controls one air conditioner". Do not upgrade
      * any line here to imply multi-unit control.
      */
     features: [
-      { label: 'Works with any split system', from: 'at-beam-content.webp' },
-      { label: 'Wireless — no rewiring', from: 'at-beam-content.webp' },
+      { label: 'Works with any split system', from: 'at-beam-content.webp (supplied image, removed 2026-09-13)' },
+      { label: 'Wireless — no rewiring', from: 'at-beam-content.webp (supplied image, removed 2026-09-13)' },
       { label: 'Matter-enabled', from: 'PRODUCTS[1].tag — confirmed by user 2026-09-13' },
       { label: 'Apple Home, Google and Alexa', from: 'airtouchhome.com.au Beam page' },
     ],
