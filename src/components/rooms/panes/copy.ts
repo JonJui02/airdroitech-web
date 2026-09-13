@@ -200,4 +200,9 @@ export const TEAM_PHOTOS = [
     alt: 'AirdroiTech staff in pirate hats and face paint taking a group selfie at a costume night',
     caption: 'Costume night',
   },
+  {
+    src: '/team/adt-team-9.jpeg',
+    alt: 'About twenty AirdroiTech staff posing together around a long wooden table in a restaurant with brick arches and pendant lights',
+    caption: 'Team dinner',
+  },
 ];
