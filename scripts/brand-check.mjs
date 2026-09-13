@@ -25,6 +25,7 @@ const APPROVED = new Set([
   '#424547', '#2b2e30', '#131a17',
   '#0e1411', '#161e1a', '#1b2420', '#2c3833', '#465249',
   '#eaeeeb', '#c3cbc6', '#94a09a', '#3c9469', '#48a87a',
+  '#f7f9f8', '#edf2f0', '#dfe7e4', '#e6f0eb', '#dae8e1', // light-theme grounds, brand-guardian 2026-09-13
   '#235e42', '#8a6212', '#a33b2e', '#eef7f2', '#fbf3df', '#fbedea',
   '#7fc79f', '#d9b25c', '#e28b7c',
   '#ffffff', '#000000', '#fff', '#000',

@@ -17,11 +17,11 @@
   color-scheme: light;
 
   /* Chrome surfaces (header, footer, drawer, console). brand-guardian ruling 2026-09-13. */
-  --chrome-rail: #e9ebec;
-  --chrome-ground: #ffffff;
-  --chrome-plate: #f5f6f7;
+  --chrome-rail: #dfe7e4;
+  --chrome-ground: #f7f9f8;
+  --chrome-plate: #edf2f0;
   --chrome-line: #d6d9db;
-  --chrome-hover: #eef7f2;
+  --chrome-hover: #e6f0eb;
   --chrome-grid: #74777a;
   --chrome-meta: #5a5d60;
   --chrome-ink: #131a17;
@@ -34,11 +34,12 @@
   /* Focus ring: lime is 1.79:1 on white, so light uses teal-700. */
   --focus: #235e42;
 
-  --ground: #ffffff;
-  --surface: #f5f6f7;
+  --ground: #f7f9f8;
+  --surface: #edf2f0;
   --ink: #131a17;
   --body: #424547;
   --muted: #5a5d60;
+  --eyebrow: #235e42; /* green section labels in light — brand-guardian 2026-09-13 */
   --line: #d6d9db;
   --line-strong: #8e9093;
   --link: #235e42;
@@ -46,7 +47,7 @@
   --primary-hover: #235e42;
   --accent: #a0d233;
   --green: #4f9934;
-  --tint: #eef7f2;
+  --tint: #dae8e1;
   --plate: #131a17;
 
   /* Structural rhythm. The page has no centred max-width container: sections
@@ -90,6 +91,7 @@
     --ink: #eaeeeb;
     --body: #c3cbc6;
     --muted: #8e9093;
+    --eyebrow: #8e9093; /* dark keeps its grey labels */
     --line: #232d28;
     --line-strong: #454e4a;
     --link: #a0d233;
@@ -130,6 +132,7 @@
   --ink: #eaeeeb;
   --body: #c3cbc6;
   --muted: #8e9093;
+  --eyebrow: #8e9093; /* dark keeps its grey labels */
   --line: #232d28;
   --line-strong: #454e4a;
   --link: #a0d233;
@@ -210,6 +213,7 @@
     --ink: #eaeeeb;
     --body: #c3cbc6;
     --muted: #8e9093;
+    --eyebrow: #8e9093; /* dark keeps its grey labels */
     --line: #232d28;
     --line-strong: #454e4a;
     --link: #a0d233;
@@ -281,7 +285,13 @@
    the toggle.
    --------------------------------------------------------------------------- */
 .brand-sweep-text {
-  color: var(--ink);
+  /* Light: teal -> green only. Lime dropped — clipped to glyphs it is 1.79:1.
+     Worst stop green-600 is 3.35:1 on --ground: legal ONLY because this is
+     84px display bold (large text). Never render this class below 18.7px bold. */
+  background-image: linear-gradient(100deg, #2f7f59 0%, #4f9934 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 @media (prefers-color-scheme: dark) {

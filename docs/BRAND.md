@@ -204,22 +204,22 @@ approved set in `scripts/brand-check.mjs`.
 Brand-guardian ruling, 2026-09-13. The header, footer, drawer and homepage
 console used to be dark in both themes; they now follow the theme through
 `--chrome-*` variables. Ratios are recomputed, against the ground each colour
-actually sits on (white ground, `#F5F6F7` plate, `#E9EBEC` rail).
+actually sits on (`#F7F9F8` ground, `#EDF2F0` plate, `#DFE7E4` rail). Grounds re-tinted toward the greens on 2026-09-13 — pure white read as too stark.
 
 | Role | Dark | Light | Light ratio |
 |---|---|---|---|
-| Ground | `#0E1411` | `#FFFFFF` | — |
-| Plate | `#161E1A` | `#F5F6F7` | surface only |
-| Rail | `#0A0F0D` | `#E9EBEC` | surface only |
+| Ground | `#0E1411` | `#F7F9F8` | — |
+| Plate | `#161E1A` | `#EDF2F0` | surface only |
+| Rail | `#0A0F0D` | `#DFE7E4` | surface only |
 | Line | `#232D28` | `#D6D9DB` | decorative divider |
-| Hover fill | `#1C2621` | `#EEF7F2` | ink on it 16.18:1 |
-| Grid / dial groove | `#1A231F` | `#74777A` | 3.77–4.50:1 |
-| Meta labels | `#8E9093` | `#5A5D60` | 5.54–6.63:1 |
-| Ink | `#EAEEEB` | `#131A17` | 14.78–17.68:1 |
-| Body | `#C3CBC6` | `#424547` | 8.08–9.66:1 |
-| Border | `#45564C` | `#2F7F59` | 4.08–4.88:1 |
-| **Link** (text, focus, hover border) | `#A0D233` | `#235E42` | 6.38–7.63:1 |
-| **State** (dots, ticks, dial, progress — never text) | `#A0D233` | `#5E7C1E` | 4.01–4.80:1 |
+| Hover fill | `#1C2621` | `#E6F0EB` | ink on it 15.18:1 |
+| Grid / dial groove | `#1A231F` | `#74777A` | 3.58–4.26:1 |
+| Meta labels | `#8E9093` | `#5A5D60` | 5.24–6.27:1 |
+| Ink | `#EAEEEB` | `#131A17` | 13.98–16.72:1 |
+| Body | `#C3CBC6` | `#424547` | 7.64–9.14:1 |
+| Border | `#45564C` | `#2F7F59` | 4.62:1 on ground |
+| **Link** (text, focus, hover border) | `#A0D233` | `#235E42` | 6.04–7.22:1 |
+| **State** (dots, ticks, dial, progress — never text) | `#A0D233` | `#5E7C1E` | 3.81–4.54:1 |
 
 **Testable rules:**
 
@@ -234,6 +234,15 @@ actually sits on (white ground, `#F5F6F7` plate, `#E9EBEC` rail).
 - Theme branching goes through the CSS-variable cascade, never Tailwind
   `dark:` — `darkMode` is keyed to `[data-theme]`, so `dark:` never fires for
   a visitor on OS-dark who has not used the toggle.
+
+- Section eyebrows use `--eyebrow`: teal-700 `#235E42` in light (6.04:1 worst,
+  on the tint band), today's grey `#8E9093` in dark. Headings, feature titles
+  and body copy stay ink/grey — green text signals labels and links only.
+- Light "Intelligence" is a two-stop teal→green sweep (`#2F7F59`→`#4F9934`).
+  Worst stop is 3.35:1 on the ground — legal only as large display text. It
+  is not the three-stop brand gradient and does not spend that budget.
+- `--line-strong` `#8E9093` clears the new ground at only 3.03:1 and FAILS on
+  plate, tint and hover fills. Never pair it with those; use `--muted`.
 
 Known pre-existing issue, not introduced here: in dark, `chrome.border`
 `#45564C` on `#0E1411` is 2.39:1, below the 3:1 non-text floor.

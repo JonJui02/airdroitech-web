@@ -24,7 +24,7 @@ export default function Page() {
   return (
     <>
       <section className="gutter section-y">
-        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">{INDEX.eyebrow}</Eyebrow>
+        <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{INDEX.eyebrow}</Eyebrow>
         <h1 className="mt-4 font-display text-[clamp(48px,8vw,104px)] font-bold leading-[0.9] tracking-[-0.04em] text-[color:var(--ink)]">
           {INDEX.title}
         </h1>
@@ -51,7 +51,7 @@ export default function Page() {
             </div>
 
             <div>
-              <Eyebrow className="tracking-[0.14em] text-[color:var(--muted)]">
+              <Eyebrow className="tracking-[0.14em] text-[color:var(--eyebrow)]">
                 {product.kicker}
               </Eyebrow>
               <h2 className="mt-3 font-display text-[clamp(34px,4.6vw,64px)] font-bold leading-[1.02] tracking-[-0.035em] text-[color:var(--ink)]">

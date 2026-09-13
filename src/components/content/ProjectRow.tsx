@@ -32,7 +32,7 @@ export function ProjectRow({
   firstRow = false,
   lastRow = false,
 }: ProjectRowProps) {
-  const topBorder = firstRow ? 'border-t-[color:var(--line-strong)]' : 'border-t-[color:var(--line)]';
+  const topBorder = firstRow ? 'border-t-[color:var(--muted)]' : 'border-t-[color:var(--line)]';
 
   return (
     <Link

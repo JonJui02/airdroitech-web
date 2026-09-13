@@ -51,8 +51,8 @@ export const SEQUENTIAL = ['#123122', '#2F7F59', '#4F9934', '#A0D233'] as const;
  * 3:1 but NOT 4.5:1 on plate/rail, so it must never carry a character.
  */
 export const CHROME_THEME = {
-  link: { dark: '#A0D233', light: '#235E42', lightRatio: '6.38–7.63:1' },
-  state: { dark: '#A0D233', light: '#5E7C1E', lightRatio: '4.01–4.80:1', textAllowed: false },
-  meta: { dark: '#8E9093', light: '#5A5D60', lightRatio: '5.54–6.63:1' },
-  grid: { dark: '#1A231F', light: '#74777A', lightRatio: '3.77–4.50:1' },
+  link: { dark: '#A0D233', light: '#235E42', lightRatio: '6.04–7.22:1' },
+  state: { dark: '#A0D233', light: '#5E7C1E', lightRatio: '3.81–4.54:1', textAllowed: false },
+  meta: { dark: '#8E9093', light: '#5A5D60', lightRatio: '5.24–6.27:1' },
+  grid: { dark: '#1A231F', light: '#74777A', lightRatio: '3.58–4.26:1' },
 } as const;

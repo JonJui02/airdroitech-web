@@ -32,13 +32,13 @@ export default function Page() {
     <>
       {/* ================= hero ================= */}
       <section className="gutter section-y">
-        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">
+        <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">
           {ABOUT_HERO.eyebrow}
         </Eyebrow>
         <h1 className="mt-4 max-w-[14ch] font-display text-[clamp(48px,8vw,104px)] font-bold leading-[0.9] tracking-[-0.04em] text-[color:var(--ink)]">
           {ABOUT_HERO.title}
         </h1>
-        <p className="mt-5 font-mono text-[13px] uppercase tracking-[0.16em] text-[color:var(--muted)]">
+        <p className="mt-5 font-mono text-[13px] uppercase tracking-[0.16em] text-[color:var(--eyebrow)]">
           {ABOUT_HERO.established}
         </p>
       </section>
@@ -46,7 +46,7 @@ export default function Page() {
       {/* ================= our story ================= */}
       <section className="gutter band-y border-t border-[color:var(--line)]">
         <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
-          <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">{STORY.label}</Eyebrow>
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{STORY.label}</Eyebrow>
           <div>
             <p className="max-w-[46ch] font-display text-[clamp(24px,2.8vw,38px)] font-bold leading-[1.22] tracking-[-0.02em] text-[color:var(--ink)]">
               {STORY.body}
@@ -63,7 +63,7 @@ export default function Page() {
       {/* ================= our approach ================= */}
       <section className="gutter band-y border-t border-[color:var(--line)]">
         <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
-          <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">
             {APPROACH.label}
           </Eyebrow>
           <div>
@@ -89,7 +89,7 @@ export default function Page() {
       {/* ================= capabilities ================= */}
       <section className="gutter band-y border-t border-[color:var(--line)]">
         <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
-          <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">Capabilities</Eyebrow>
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">Capabilities</Eyebrow>
           <ul className="grid gap-px border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2 lg:grid-cols-3">
             {CAPABILITIES.map((capability) => (
               <li
@@ -107,7 +107,7 @@ export default function Page() {
       {/* ================= team ================= */}
       <section className="gutter band-y border-t border-[color:var(--line)]">
         <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
-          <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">{TEAM.label}</Eyebrow>
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{TEAM.label}</Eyebrow>
           <div>
             <h2 className="font-display text-[clamp(30px,4vw,56px)] font-bold leading-[1.04] tracking-[-0.03em] text-[color:var(--ink)]">
               {TEAM.heading}
@@ -131,7 +131,7 @@ export default function Page() {
       {/* ================= values ================= */}
       <section className="gutter band-y border-t border-[color:var(--line)]">
         <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
-          <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">Our values</Eyebrow>
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">Our values</Eyebrow>
           <ul className="flex flex-wrap items-baseline gap-x-[clamp(16px,3vw,48px)] gap-y-3">
             {VALUES.map((value) => (
               <li
@@ -151,7 +151,7 @@ export default function Page() {
       {/* ================= location ================= */}
       <section className="gutter band-y border-t border-[color:var(--line)]">
         <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
-          <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">Our location</Eyebrow>
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">Our location</Eyebrow>
           <div>
             <address className="font-display text-[clamp(20px,2.2vw,30px)] font-bold not-italic leading-[1.35] tracking-[-0.01em] text-[color:var(--ink)]">
               {ADDRESS_LINES.map((line) => (

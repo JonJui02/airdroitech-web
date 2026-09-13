@@ -37,7 +37,7 @@ export function ProductPage({
   return (
     <>
       <section className="gutter section-y">
-        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">{product.kicker}</Eyebrow>
+        <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{product.kicker}</Eyebrow>
         <h1 className="mt-4 font-display text-[clamp(44px,7vw,96px)] font-bold leading-[0.92] tracking-[-0.04em] text-[color:var(--ink)]">
           {product.name}
         </h1>
@@ -137,7 +137,7 @@ export function ProductPage({
           </div>
         ) : null}
 
-        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">On the official site</Eyebrow>
+        <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">On the official site</Eyebrow>
         <p className="mt-3 max-w-[52ch] text-[17px] leading-[1.6] text-[color:var(--body)]">
           {product.official.note}
         </p>
@@ -153,7 +153,7 @@ export function ProductPage({
       </section>
 
       <section className="gutter band-y border-t border-[color:var(--line)]">
-        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">Other projects</Eyebrow>
+        <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">Other projects</Eyebrow>
         <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
           {siblings.map((s) => (
             <li key={s.href}>

@@ -85,7 +85,7 @@ export function ImageSlot({
   return (
     <div
       className={
-        'flex w-full items-end border border-dashed border-[color:var(--line-strong)] ' +
+        'flex w-full items-end border border-dashed border-[color:var(--muted)] ' +
         `bg-[color:var(--tint)] p-3 ${className}`
       }
       style={style}

@@ -19,7 +19,7 @@ export function StatPlate({ figure, label, note, state }: StatPlateProps) {
       className={
         real
           ? 'border-t-2 border-t-[color:var(--primary)] pt-5'
-          : 'border-t-2 border-dashed border-t-[color:var(--line-strong)] pt-5'
+          : 'border-t-2 border-dashed border-t-[color:var(--muted)] pt-5'
       }
     >
       <p
