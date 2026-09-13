@@ -65,21 +65,21 @@ export default function Page() {
               </div>
 
           {/*
-            Lab photo, 740x415 as supplied. Capped at 380px wide and, on desktop, centred in the right half of the hero, so a 2x screen
-            shows it at about its native resolution, and served untouched
-            (unoptimized) so it is not recompressed. Sharper at larger sizes needs
-            a higher-resolution original.
+            Lab photo, 740x415 as supplied. Up to 380px wide on mobile and 560px on
+            desktop (centred in the right half), both under the 740px source, and
+            served untouched (unoptimized) so it is not recompressed. Sharper on 2x
+            desktop screens needs a higher-resolution original.
           */}
           <ImageSlot
             src="/hero/home-hero.jpg"
             ratio="740/415"
             alt="An AirdroiTech engineer in safety glasses soldering a green circuit board at a lab bench"
             label="hero/home-hero.jpg"
-            sizes="(min-width: 1024px) 380px, min(380px, 100vw)"
+            sizes="(min-width: 1024px) 560px, min(380px, 100vw)"
             fit="cover"
             unoptimized
             priority
-            className="max-w-[380px] border border-[color:var(--line)] lg:justify-self-center"
+            className="max-w-[380px] border border-[color:var(--line)] lg:max-w-[560px] lg:justify-self-center"
           />
         </div>
       </section>
