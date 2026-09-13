@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { SiteHeader } from '@/components/shell/SiteHeader';
 import { Footer } from '@/components/shell/Footer';
+import { ToneFrame } from '@/components/shell/ToneFrame';
 
 /**
  * The root 404 renders the site shell itself.
@@ -12,7 +13,7 @@ import { Footer } from '@/components/shell/Footer';
  */
 export default function NotFound() {
   return (
-    <>
+    <ToneFrame>
       <SiteHeader />
       <main id="main" className="mx-auto max-w-container px-5 py-20">
       <p className="font-mono text-2xs uppercase tracking-[0.14em] text-[color:var(--muted)]">
@@ -38,6 +39,6 @@ export default function NotFound() {
         </div>
       </main>
       <Footer />
-    </>
+    </ToneFrame>
   );
 }

@@ -278,3 +278,37 @@ heading that carries a status.
 
 Also from this ruling: the dark primary hover `#3C9B6D` was never an approved
 hex; it is now `#48A87A` (teal-400).
+
+### Page tones (light mode)
+
+Every route wears its own light shade so light mode reads as layered colour,
+not flat near-white. brand-guardian ruling 2026-09-13; route shades adjusted
+so every page except legal is deeper than the old `#F7F9F8` ground. The privacy
+page stays the lightest tone on purpose (brand-guardian: legal is the calmest).
+
+Recipe: ONE brand hue (teal-600, green-600 or grey-400) mixed into white.
+`--page` = p%, `--ground` (card fill) = p−6% (min 1.5%), `--surface` = p+4%,
+`--tint` (CTA band) = p+9%. Glows are `color-mix()` of brand hexes at the top
+of the page — no new colour. Route map: `src/lib/tones.ts`.
+
+| Route | Hue | `--page` | `--ground` | `--tint` | Glow |
+|---|---|---|---|---|---|
+| / (console) | teal 8% | `#eef5f2` | chrome plate `#e6f0eb`, rail `#deebe4`, hover `#dae8e1` | — | none |
+| /what-we-do/ | green 10% | `#edf5eb` | `#f8fbf7` | `#deecd8` | green 9% + teal 7% |
+| /projects/ | teal 6% | `#f3f7f5` | `#fcfdfd` | `#e0ece6` | teal 9% + green 7% |
+| /projects/airtouch/ | teal 10% | `#eaf2ee` | `#f7faf8` | `#d7e7df` | teal 9% + green 7% |
+| /projects/airtouch-beam/ | grey 12% | `#f1f2f2` | `#f8f8f9` | `#e7e8e8` | teal 9% + grey 7% |
+| /projects/polyplan/ | green 7% | `#f3f8f1` | `#fcfdfc` | `#e3efdf` | green 9% + teal 7% |
+| /careers/ | grey 15% | `#eeeeef` | `#f5f5f5` | `#e4e4e5` | teal 9% + grey 7% |
+| /careers/open-positions/ | grey 9% | `#f5f5f5` | `#fcfcfc` | `#ebebec` | green 9% + grey 7% |
+| /get-in-touch/ | teal 12% | `#e6f0eb` | `#f3f7f5` | `#d3e4dc` | teal 9% + green 7% |
+| /thank-you/ | teal 4% | `#f7faf8` | `#fcfdfd` | `#e4eee9` | teal 9% + green 7% |
+| /data-protection-and-privacy-policy/ (legal: calmest, no glow) | grey 3% | `#fcfcfc` | `#fdfdfd` | `#f1f2f2` | none |
+| 404 | grey 11% | `#f3f3f3` | `#f9f9fa` | `#e8e9e9` | grey 9% + teal 7% |
+
+Worst text contrast across every surface and glow peak: `--muted` on the
+`/get-in-touch/` band, 5.02:1. Links/accent worst 5.78:1.
+
+**Rules:** no lime in glows (lime is spent once per screen on the main action);
+no glow on the privacy page; header and footer stay neutral on every route so
+the shared chrome never flickers between pages; dark mode ignores tones.

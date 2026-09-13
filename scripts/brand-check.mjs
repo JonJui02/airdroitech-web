@@ -26,6 +26,8 @@ const APPROVED = new Set([
   '#0e1411', '#161e1a', '#1b2420', '#2c3833', '#465249',
   '#eaeeeb', '#c3cbc6', '#94a09a', '#3c9469', '#48a87a',
   '#f7f9f8', '#edf2f0', '#dfe7e4', '#e6f0eb', '#dae8e1', // light-theme grounds, brand-guardian 2026-09-13
+  // Page tones: one brand hue (teal/green/grey) mixed into white, per route. docs/BRAND.md "Page tones".
+  '#d3e4dc', '#d7e7df', '#deebe4', '#deecd8', '#e0ece6', '#e2ede8', '#e3efdf', '#e4e4e5', '#e4eee9', '#e6f1e3', '#e7e8e8', '#e8e9e9', '#eaeaea', '#eaf2ee', '#ebebec', '#ecf4e9', '#ededee', '#edf5eb', '#eeeeef', '#eef5f2', '#f0f1f1', '#f1f2f2', '#f3f3f3', '#f3f7f5', '#f3f8f1', '#f5f5f5', '#f7f7f7', '#f7faf8', '#f8f8f9', '#f8fbf7', '#f9f9fa', '#fcfcfc', '#fcfdfc', '#fcfdfd', '#fdfdfd',
   '#235e42', '#8a6212', '#a33b2e', '#eef7f2', '#fbf3df', '#fbedea',
   '#7fc79f', '#d9b25c', '#e28b7c',
   '#ffffff', '#000000', '#fff', '#000',

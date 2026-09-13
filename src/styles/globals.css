@@ -50,6 +50,12 @@
   --accent: #a0d233;
   --green: #4f9934;
   --tint: #dae8e1;
+  /* Page tone defaults. Each route overrides these under [data-tone] below. */
+  --page: #f7f9f8;
+  --glow-a: #2f7f59;
+  --glow-b: #a0d233;
+  --glow-a-mix: 0%;
+  --glow-b-mix: 0%;
   --plate: #131a17;
 
   /* Structural rhythm. The page has no centred max-width container: sections
@@ -104,6 +110,7 @@
     --accent: #a0d233;
     --green: #4f9934;
     --tint: #16241c;
+    --page: #0e1411;
     --plate: #161e1a;
     --btn2-border: #45564c;
     --btn2-border-hover: #a0d233;
@@ -147,6 +154,7 @@
   --accent: #a0d233;
   --green: #4f9934;
   --tint: #16241c;
+  --page: #0e1411;
   --plate: #161e1a;
   --btn2-border: #45564c;
   --btn2-border-hover: #a0d233;
@@ -158,7 +166,7 @@
   }
 
   body {
-    background: var(--ground);
+    background: var(--page);
     color: var(--body);
     @apply font-sans text-base antialiased;
   }
@@ -315,4 +323,197 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   Page tones — light mode only.
+
+   Every route wears its own shade (src/lib/tones.ts decides which) so light
+   mode reads as layered colour, not one flat near-white: a tinted page, a
+   lighter card fill, and two soft brand-hue glows at the top. Glows are
+   color-mix() of the brand hexes, so they add no new colour.
+
+   Dark mode: every tone token resets to inherit, so dark stays exactly as it
+   was. Specificity (0,3,0) beats the light [data-tone] blocks (0,1,0).
+--------------------------------------------------------------------------- */
+.tone-frame {
+  min-height: 100dvh;
+  background-color: var(--page);
+  background-image:
+    radial-gradient(64rem 38rem at 92% -8%, color-mix(in srgb, var(--glow-a) var(--glow-a-mix), transparent), transparent 70%),
+    radial-gradient(52rem 32rem at -10% 22%, color-mix(in srgb, var(--glow-b) var(--glow-b-mix), transparent), transparent 70%);
+  background-repeat: no-repeat;
+}
+
+/* / — homepage console. Chrome surfaces take the teal tone (brand-guardian 2026-09-13). */
+[data-tone='home'] {
+  --page: #eef5f2;
+  --chrome-ground: #eef5f2;
+  --chrome-plate: #e6f0eb;
+  --chrome-rail: #deebe4;
+  --chrome-hover: #dae8e1;
+}
+
+/* /what-we-do/ — green 10% */
+[data-tone='about'] {
+  --page: #edf5eb;
+  --ground: #f8fbf7;
+  --surface: #e6f1e3;
+  --tint: #deecd8;
+  --glow-a: #4f9934;
+  --glow-b: #2f7f59;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /projects/ — teal 6% */
+[data-tone='projects'] {
+  --page: #f3f7f5;
+  --ground: #fcfdfd;
+  --surface: #eaf2ee;
+  --tint: #e0ece6;
+  --glow-a: #2f7f59;
+  --glow-b: #4f9934;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /projects/airtouch/ — teal 10% */
+[data-tone='airtouch'] {
+  --page: #eaf2ee;
+  --ground: #f7faf8;
+  --surface: #e2ede8;
+  --tint: #d7e7df;
+  --glow-a: #2f7f59;
+  --glow-b: #4f9934;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /projects/airtouch-beam/ — grey 12% */
+[data-tone='beam'] {
+  --page: #f1f2f2;
+  --ground: #f8f8f9;
+  --surface: #ededee;
+  --tint: #e7e8e8;
+  --glow-a: #2f7f59;
+  --glow-b: #8e9093;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /projects/polyplan/ — green 7% */
+[data-tone='polyplan'] {
+  --page: #f3f8f1;
+  --ground: #fcfdfc;
+  --surface: #ecf4e9;
+  --tint: #e3efdf;
+  --glow-a: #4f9934;
+  --glow-b: #2f7f59;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /careers/ — grey 15% */
+[data-tone='careers'] {
+  --page: #eeeeef;
+  --ground: #f5f5f5;
+  --surface: #eaeaea;
+  --tint: #e4e4e5;
+  --glow-a: #2f7f59;
+  --glow-b: #8e9093;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /careers/open-positions/ — grey 9% */
+[data-tone='roles'] {
+  --page: #f5f5f5;
+  --ground: #fcfcfc;
+  --surface: #f0f1f1;
+  --tint: #ebebec;
+  --glow-a: #4f9934;
+  --glow-b: #8e9093;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /get-in-touch/ — teal 12% */
+[data-tone='contact'] {
+  --page: #e6f0eb;
+  --ground: #f3f7f5;
+  --surface: #deebe4;
+  --tint: #d3e4dc;
+  --glow-a: #2f7f59;
+  --glow-b: #4f9934;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /thank-you/ — teal 4% */
+[data-tone='thanks'] {
+  --page: #f7faf8;
+  --ground: #fcfdfd;
+  --surface: #eef5f2;
+  --tint: #e4eee9;
+  --glow-a: #2f7f59;
+  --glow-b: #4f9934;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /data-protection-and-privacy-policy/ (legal: calmest, no glow) — grey 3% */
+[data-tone='privacy'] {
+  --page: #fcfcfc;
+  --ground: #fdfdfd;
+  --surface: #f7f7f7;
+  --tint: #f1f2f2;
+}
+
+/* 404 — grey 11% */
+[data-tone='missing'] {
+  --page: #f3f3f3;
+  --ground: #f9f9fa;
+  --surface: #eeeeef;
+  --tint: #e8e9e9;
+  --glow-a: #8e9093;
+  --glow-b: #2f7f59;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) [data-tone] {
+    --page: inherit;
+    --ground: inherit;
+    --surface: inherit;
+    --tint: inherit;
+    --line: inherit;
+    --glow-a: inherit;
+    --glow-b: inherit;
+    --glow-a-mix: inherit;
+    --glow-b-mix: inherit;
+    --chrome-rail: inherit;
+    --chrome-ground: inherit;
+    --chrome-plate: inherit;
+    --chrome-hover: inherit;
+    --chrome-line: inherit;
+  }
+}
+
+:root[data-theme='dark'] [data-tone] {
+  --page: inherit;
+  --ground: inherit;
+  --surface: inherit;
+  --tint: inherit;
+  --line: inherit;
+  --glow-a: inherit;
+  --glow-b: inherit;
+  --glow-a-mix: inherit;
+  --glow-b-mix: inherit;
+  --chrome-rail: inherit;
+  --chrome-ground: inherit;
+  --chrome-plate: inherit;
+  --chrome-hover: inherit;
+  --chrome-line: inherit;
 }

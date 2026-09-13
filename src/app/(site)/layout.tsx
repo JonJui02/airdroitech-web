@@ -1,5 +1,6 @@
 import { SiteHeader } from '@/components/shell/SiteHeader';
 import { Footer } from '@/components/shell/Footer';
+import { ToneFrame } from '@/components/shell/ToneFrame';
 
 /**
  * The shared site shell: header, main landmark, footer.
@@ -12,13 +13,15 @@ import { Footer } from '@/components/shell/Footer';
  *
  * `/` supplies its own <main id="main"> so the skip link in the root layout
  * still lands somewhere on every route.
+ *
+ * ToneFrame gives each route its own light-mode shade (src/lib/tones.ts).
  */
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <ToneFrame>
       <SiteHeader />
       <main id="main">{children}</main>
       <Footer />
-    </>
+    </ToneFrame>
   );
 }

@@ -101,6 +101,7 @@ export function RoomShell({ roles }: RoomShellProps) {
   return (
     <main
       id="main"
+      data-tone="home"
       className="flex h-[100dvh] flex-col overflow-hidden border border-chrome-line bg-chrome-ground"
     >
       {/* ---------------- desktop ---------------- */}
