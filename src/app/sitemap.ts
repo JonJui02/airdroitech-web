@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/site-url';
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://airdroitech.com';
+const SITE = SITE_URL;
 
 /**
  * Replaces Yoast. Every path here matches a live legacy URL byte-for-byte, so

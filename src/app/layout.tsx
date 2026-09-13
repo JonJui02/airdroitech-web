@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import { themeInitScript } from '@/lib/theme';
 import '@/styles/globals.css';
+import { SITE_URL } from '@/lib/site-url';
 
 // Self-hosted at build time by next/font: no runtime Google Fonts request, so
 // the fonts add no third-party dependency and no PDPA consent question.
@@ -28,7 +29,7 @@ const mono = IBM_Plex_Mono({
   display: 'swap',
 });
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://airdroitech.com';
+const SITE = SITE_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
