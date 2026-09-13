@@ -139,7 +139,7 @@ export function SiteHeader() {
               <Link
                 key={p.href}
                 href={p.href}
-                className="group border-l border-chrome-line px-7 pb-[30px] pt-[26px] transition-colors duration-200 hover:bg-chrome-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link"
+                className="hover-box group border-l border-chrome-line px-7 pb-[30px] pt-[26px] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link"
                 onClick={() => setPanelOpen(false)}
               >
                 {/* The card content lifts on hover and settles back when the cursor leaves. */}

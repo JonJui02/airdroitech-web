@@ -79,7 +79,7 @@ export default function Page() {
               {APPROACH.points.map((point) => (
                 <li
                   key={point}
-                  className="bg-[color:var(--ground)] px-5 py-6 font-display text-[19px] font-bold leading-[1.25] tracking-[-0.01em] text-[color:var(--ink)]"
+                  className="hover-box bg-[color:var(--ground)] px-5 py-6 font-display text-[19px] font-bold leading-[1.25] tracking-[-0.01em] text-[color:var(--ink)]"
                 >
                   {point}
                 </li>
@@ -97,7 +97,7 @@ export default function Page() {
             {CAPABILITIES.map((capability) => (
               <li
                 key={capability}
-                className="flex items-center gap-3 bg-[color:var(--ground)] px-5 py-5 text-[color:var(--ink)]"
+                className="hover-box flex items-center gap-3 bg-[color:var(--ground)] px-5 py-5 text-[color:var(--ink)]"
               >
                 <span aria-hidden="true" className="h-[7px] w-[7px] flex-none bg-[color:var(--green)]" />
                 {capability}
@@ -121,7 +121,7 @@ export default function Page() {
               {TEAM.groups.map((group) => (
                 <li
                   key={group}
-                  className="border border-[color:var(--line-strong)] px-4 py-2 font-mono text-[12.5px] uppercase tracking-[0.1em] text-[color:var(--body)]"
+                  className="hover-box border border-[color:var(--line-strong)] px-4 py-2 font-mono text-[12.5px] uppercase tracking-[0.1em] text-[color:var(--body)]"
                 >
                   {group}
                 </li>

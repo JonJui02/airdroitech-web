@@ -57,7 +57,7 @@ export function ContactPane() {
           ground with no plate.
         */}
         <div className="grid grid-rows-2 gap-px border-chrome-line bg-chrome-line max-lg:hidden lg:border-l">
-          <div className="bg-chrome-plate p-[22px]">
+          <div className="hover-box bg-chrome-plate p-[22px]">
             <ImageSlot
               src="/illustration/adt-get-in-touch-3d.webp"
               ratio="1/1"
@@ -68,7 +68,7 @@ export function ContactPane() {
               className="h-full"
             />
           </div>
-          <div className="bg-chrome-plate p-[22px]">
+          <div className="hover-box bg-chrome-plate p-[22px]">
             <ImageSlot
               src="/illustration/adt-located.webp"
               ratio="1/1"

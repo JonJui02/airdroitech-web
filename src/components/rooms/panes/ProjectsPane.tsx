@@ -40,7 +40,7 @@ export function ProjectsPane({ onOpen, page }: ProjectsPaneProps) {
             key={p.name}
             type="button"
             onClick={(e) => onOpen(i, e.currentTarget)}
-            className="group flex flex-col items-stretch bg-chrome-plate p-[22px] text-left transition-colors duration-200 hover:bg-chrome-hover"
+            className="hover-box group flex flex-col items-stretch bg-chrome-plate p-[22px] text-left"
           >
             <span className="flex items-center gap-[10px]">
               <span aria-hidden="true" className="h-[7px] w-[7px] flex-none bg-chrome-state" />

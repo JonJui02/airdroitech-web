@@ -107,7 +107,7 @@ export default function Page() {
               <article
                 key={role.slug}
                 id={role.slug}
-                className="scroll-mt-[120px] bg-[color:var(--ground)] px-[clamp(20px,3vw,40px)] py-[clamp(24px,3vw,40px)]"
+                className="hover-box scroll-mt-[120px] bg-[color:var(--ground)] px-[clamp(20px,3vw,40px)] py-[clamp(24px,3vw,40px)]"
               >
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>

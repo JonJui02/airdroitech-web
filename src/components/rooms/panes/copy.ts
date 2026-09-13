@@ -168,9 +168,9 @@ export const TEAM_PHOTOS = [
     caption: 'Training session',
   },
   {
-    src: '/team/adt-team-5.jfif',
-    alt: 'An AirdroiTech team member presenting at a screen on a stand while two colleagues listen from the sofas',
-    caption: 'Team meeting',
+    src: '/team/adt-team-5.jpeg',
+    alt: 'Eight AirdroiTech staff, several in AirTouch Engineering t-shirts, sharing a meal at a restaurant table',
+    caption: 'Team meal',
   },
   {
     src: '/team/adt-team-6 (1).jpeg',
@@ -178,7 +178,7 @@ export const TEAM_PHOTOS = [
     caption: 'Festive dinner',
   },
   {
-    src: '/team/adt-team-4.jfif',
+    src: '/team/adt-team-4.jpg',
     alt: 'A large group of AirdroiTech staff in festive outfits posing under string lights and hanging plants',
     caption: 'Year-end gathering',
   },

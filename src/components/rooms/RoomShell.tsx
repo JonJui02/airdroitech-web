@@ -330,7 +330,7 @@ function MobilePane({
           style={{ gridTemplateColumns: `repeat(${c.stats.length > 3 ? 2 : c.stats.length}, minmax(0, 1fr))` }}
         >
           {c.stats.map((s) => (
-            <div key={s.label} className="bg-chrome-plate p-[14px]">
+            <div key={s.label} className="hover-box bg-chrome-plate p-[14px]">
               <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-chrome-meta">
                 {s.label}
               </p>
@@ -349,7 +349,7 @@ function MobilePane({
               key={p.name}
               type="button"
               onClick={(e) => onOpenDevice(i, e.currentTarget)}
-              className="min-h-tap bg-chrome-plate px-[16px] py-[16px] text-left"
+              className="hover-box min-h-tap bg-chrome-plate px-[16px] py-[16px] text-left"
             >
               <span className="block font-mono text-[10.5px] uppercase tracking-[0.14em] text-chrome-meta">
                 {p.tag}

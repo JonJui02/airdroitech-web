@@ -37,7 +37,7 @@ export function CareerPane({ roles }: { roles: Role[] }) {
         {roles.map((role, i) => (
           <li
             key={role.slug}
-            className="flex min-h-[62px] flex-1 items-center gap-[18px] bg-chrome-ground px-[24px]"
+            className="hover-box flex min-h-[62px] flex-1 items-center gap-[18px] bg-chrome-ground px-[24px]"
           >
             <span className="font-mono text-[11.5px] tracking-[0.1em] text-chrome-meta">
               {String(i + 1).padStart(2, '0')}

@@ -67,7 +67,9 @@ export default function Page() {
           {/*
             Lab photo, 740x415 as supplied. Up to 380px wide on mobile and 560px on
             desktop (centred in the right half), both under the 740px source, and
-            served untouched (unoptimized) so it is not recompressed. Sharper on 2x
+            served untouched (unoptimized) so it is not recompressed. Rounded 14px
+            corners are a deliberate exception to the square-corner rule in
+            globals.css (user request 2026-09-13). Sharper on 2x
             desktop screens needs a higher-resolution original.
           */}
           <ImageSlot
@@ -79,7 +81,7 @@ export default function Page() {
             fit="cover"
             unoptimized
             priority
-            className="max-w-[380px] border border-[color:var(--line)] lg:max-w-[560px] lg:justify-self-center"
+            className="max-w-[380px] rounded-[14px] border border-[color:var(--line)] lg:max-w-[560px] lg:justify-self-center"
           />
         </div>
       </section>
@@ -92,7 +94,7 @@ export default function Page() {
             {PERKS.items.map((perk) => (
               <li
                 key={perk}
-                className="flex items-center gap-3 bg-[color:var(--ground)] px-5 py-5 text-[color:var(--ink)]"
+                className="hover-box flex items-center gap-3 bg-[color:var(--ground)] px-5 py-5 text-[color:var(--ink)]"
               >
                 <span aria-hidden="true" className="h-[7px] w-[7px] flex-none bg-[color:var(--green)]" />
                 {perk}
@@ -110,7 +112,7 @@ export default function Page() {
           </Eyebrow>
           <ul className="grid gap-px border border-[color:var(--line)] bg-[color:var(--line)] lg:grid-cols-3">
             {PROGRAMMES.items.map((p) => (
-              <li key={p.title} className="bg-[color:var(--ground)] px-6 py-7">
+              <li key={p.title} className="hover-box bg-[color:var(--ground)] px-6 py-7">
                 <h2 className="font-display text-[clamp(26px,2.6vw,36px)] font-bold leading-[1.05] tracking-[-0.02em] text-[color:var(--ink)]">
                   {p.title}
                 </h2>
@@ -152,7 +154,7 @@ export default function Page() {
           </Eyebrow>
           <ul className="grid gap-px border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2">
             {ACTIVITIES.items.map((a) => (
-              <li key={a.tag} className="bg-[color:var(--ground)] px-6 py-7">
+              <li key={a.tag} className="hover-box bg-[color:var(--ground)] px-6 py-7">
                 <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-[color:var(--eyebrow)]">
                   {a.tag}
                 </p>

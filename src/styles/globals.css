@@ -52,6 +52,11 @@
   --tint: #dae8e1;
   /* Page tone defaults. Each route overrides these under [data-tone] below. */
   --page: #f7f9f8;
+  /* Box hover fill (.hover-box). brand-guardian ruling 2026-09-13: same pair in light and dark
+     (teal stays the fill in dark, per the dark-theme table). docs/BRAND.md "Box hover". */
+  --hover-fill: #2f7f59;
+  --on-fill: #ffffff;
+  --on-fill-line: #d7ebe1; /* teal-100: hairlines and dots, 3.92:1 on the fill */
   --glow-a: #2f7f59;
   --glow-b: #a0d233;
   --glow-a-mix: 0%;
@@ -572,4 +577,79 @@
     color: CanvasText;
     -webkit-text-fill-color: CanvasText;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Box hover — cards, tiles, chips and rows fill with colour on hover and every
+   text colour inside flips with it, so nothing becomes unreadable (user
+   request 2026-09-13). One class, .hover-box, on every box.
+
+   The box redefines the colour tokens its children read, rather than
+   restyling each child: text, links, labels, dots, hairlines and button
+   borders all follow automatically, including the project-name sweep, which
+   turns the on-fill colour.
+
+   Hover only on devices that can hover, so a tap on a phone never leaves a
+   box stuck filled. Keyboard focus on a link or button box fills it too.
+   :where() on both parts keeps the child transition at zero specificity, so a
+   child with its own transition utility (the dropdown card lift) keeps it.
+--------------------------------------------------------------------------- */
+.hover-box,
+:where(.hover-box) :where(*) {
+  transition-property: background-color, color, border-color;
+  transition-duration: 260ms;
+  transition-timing-function: cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+
+@media (hover: hover) {
+  .hover-box:hover {
+    background-color: var(--hover-fill);
+    border-color: var(--hover-fill);
+    color: var(--on-fill);
+    --ink: var(--on-fill);
+    --body: var(--on-fill);
+    --muted: var(--on-fill);
+    --link: var(--on-fill);
+    --eyebrow: var(--on-fill);
+    --heading-accent: var(--on-fill);
+    --green: var(--on-fill-line);
+    --line: var(--on-fill-line);
+    --line-strong: var(--on-fill-line);
+    --btn2-border: var(--on-fill);
+    --btn2-border-hover: var(--on-fill);
+    --chrome-ink: var(--on-fill);
+    --chrome-body: var(--on-fill);
+    --chrome-meta: var(--on-fill);
+    --chrome-link: var(--on-fill);
+    --chrome-accent: var(--on-fill);
+    --chrome-state: var(--on-fill-line);
+    --chrome-border: var(--on-fill);
+    --chrome-line: var(--on-fill-line);
+  }
+}
+
+a.hover-box:focus-visible,
+button.hover-box:focus-visible {
+  background-color: var(--hover-fill);
+  border-color: var(--hover-fill);
+  color: var(--on-fill);
+  --ink: var(--on-fill);
+  --body: var(--on-fill);
+  --muted: var(--on-fill);
+  --link: var(--on-fill);
+  --eyebrow: var(--on-fill);
+  --heading-accent: var(--on-fill);
+  --green: var(--on-fill-line);
+  --line: var(--on-fill-line);
+  --line-strong: var(--on-fill-line);
+  --btn2-border: var(--on-fill);
+  --btn2-border-hover: var(--on-fill);
+  --chrome-ink: var(--on-fill);
+  --chrome-body: var(--on-fill);
+  --chrome-meta: var(--on-fill);
+  --chrome-link: var(--on-fill);
+  --chrome-accent: var(--on-fill);
+  --chrome-state: var(--on-fill-line);
+  --chrome-border: var(--on-fill);
+  --chrome-line: var(--on-fill-line);
 }

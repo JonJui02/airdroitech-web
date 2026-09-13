@@ -39,7 +39,7 @@ export default function Page() {
         >
           <Link
             href={`/projects/${product.slug}/`}
-            className="group grid items-center gap-[clamp(24px,3.4vw,72px)] lg:grid-cols-2"
+            className="hover-box group -m-[clamp(14px,1.6vw,28px)] grid items-center gap-[clamp(24px,3.4vw,72px)] p-[clamp(14px,1.6vw,28px)] lg:grid-cols-2"
           >
             <div className={i % 2 === 1 ? 'lg:order-last' : ''}>
               <Tilt><ImageSlot

@@ -67,7 +67,7 @@ export function HomePane({ onOpenProjects }: HomePaneProps) {
           {COMPANY_FACTS.map((fact) => (
             <div
               key={fact.label}
-              className="flex flex-col-reverse bg-chrome-plate px-[20px] py-[18px] transition-colors duration-200 hover:bg-chrome-hover"
+              className="hover-box flex flex-col-reverse bg-chrome-plate px-[20px] py-[18px]"
             >
               <dt className="mt-[8px] font-mono text-[11px] uppercase tracking-[0.14em] text-chrome-meta">
                 {fact.label}

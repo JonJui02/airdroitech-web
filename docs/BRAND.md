@@ -319,3 +319,31 @@ glow peak, 5.13:1.
 - No lime in glows; no glow on the privacy page, which stays the lightest tone.
 - Header and footer stay neutral on every route; dark mode ignores tones.
 - 3D tilt on images is transform and perspective only — no shadows.
+
+### Box hover
+
+brand-guardian ruling 2026-09-13, from the user request that every box on every
+page fills with colour on hover with its text staying readable.
+
+| Token | Light | Dark | Ratio |
+|---|---|---|---|
+| `--hover-fill` | `#2F7F59` teal-600 | same | fill vs worst light tone 3.84:1, dark ground 3.82:1, dark plate 3.48:1 |
+| `--on-fill` (text, links, button borders) | `#FFFFFF` | same | 4.88:1 |
+| `--on-fill-line` (hairlines, dots) | `#D7EBE1` teal-100 | same | 3.92:1 |
+
+**Rules:**
+
+- One class, `.hover-box`. It redefines the colour tokens its children read, so
+  text, links, labels, dots, hairlines, button borders and the project-name sweep
+  all flip together. Do not restyle children one by one.
+- Hover only inside `@media (hover: hover)`, so a tap never leaves a box filled
+  on a phone. Keyboard focus on a link or button box fills it too.
+- Dark uses the same pair: teal stays the fill in dark, as in the dark-theme table.
+  Vetoed for dark: teal-300 fill with ground-coloured text, which would blur the
+  roles of those two colours.
+- Never lime: white on lime fails at 1.79:1, and lime is spent once per screen.
+
+### Corners
+
+Square corners everywhere (`globals.css` base layer). One approved exception, by
+user request 2026-09-13: the `/careers/` hero photo has 14px rounded corners.

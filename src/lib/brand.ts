@@ -58,3 +58,16 @@ export const CHROME_THEME = {
   // Heading accent word (site --heading-accent, console chrome-accent). Solid only.
   accent: { dark: '#8FC4AC', light: '#235E42', lightRatio: '6.04–7.22:1', darkRatio: '8.18–9.46:1' },
 } as const;
+
+/**
+ * Box hover (.hover-box in globals.css): cards, tiles, chips and rows fill on
+ * hover and every colour inside flips. Same pair in light and dark — teal stays
+ * the fill in dark. brand-guardian ruling 2026-09-13; lime is never the fill.
+ */
+export const HOVER_BOX = {
+  fill: '#2F7F59', // teal-600
+  onFill: '#FFFFFF', // all text, links, button borders: 4.88:1
+  onFillLine: '#D7EBE1', // teal-100 — hairlines and dots: 3.92:1
+  // Fill against surrounding surfaces (non-text): worst light tone 3.84:1,
+  // dark ground 3.82:1, dark plate 3.48:1.
+} as const;

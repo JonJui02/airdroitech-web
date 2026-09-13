@@ -86,7 +86,7 @@ export function ProductPage({
                   {section.items.map((item, i, all) => (
                     <li
                       key={item.title}
-                      className={`bg-[color:var(--ground)] px-6 py-6 ${
+                      className={`hover-box bg-[color:var(--ground)] px-6 py-6 ${
                         // An odd count in a two-column grid leaves the last row
                         // half empty, and the 1px grid gap shows through as a
                         // solid grey block. The last item spans both columns.
