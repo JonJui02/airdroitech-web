@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { COMPANY_FACTS } from '@/lib/site';
 import { ANNIVERSARY_OPEN_EVENT } from './anniversary-bus';
+import { Confetti } from './Confetti';
 
 /**
  * Fifth-year welcome dialog — homepage only, once per visitor.
@@ -143,6 +144,10 @@ export function AnniversaryDialog() {
         if (e.target === e.currentTarget) close();
       }}
     >
+      {/* The burst carries over from the gift box so the two read as one moment.
+          Sits above the panel, ignores pointer events, and removes itself. */}
+      <Confetti count={30} duration={2400} originY={34} />
+
       <div
         ref={panelRef}
         role="dialog"

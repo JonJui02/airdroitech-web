@@ -51,8 +51,8 @@ export function HomePane({ onOpenProjects }: HomePaneProps) {
           never squeezes the copy column.
         */}
         {FLAGS.anniversary && (
-          <div className="flex-none">
-            <GiftBox size={150} />
+          <div className="flex flex-none basis-[300px] items-center justify-center">
+            <GiftBox size={216} />
           </div>
         )}
       </div>

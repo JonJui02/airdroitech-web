@@ -864,7 +864,7 @@ html.tt-ready .count-text[data-count='play'] .count-live {
 
 @layer components {
   /* ---------------------------------------------------------------------------
-     Fifth-year gift box (TEMPORARY — see src/lib/flags.ts).
+     Fifth-year gift box + confetti (TEMPORARY — see src/lib/flags.ts).
      Delete this block with the dialog.
   --------------------------------------------------------------------------- */
   .gift-stage {
@@ -883,6 +883,42 @@ html.tt-ready .count-text[data-count='play'] .count-live {
     background: radial-gradient(circle at 50% 62%, color-mix(in srgb, #a0d233 30%, transparent), transparent 62%);
     opacity: 0.55;
     animation: gift-pulse 3.4s ease-in-out infinite;
+  }
+
+  /* Light rays. Hidden until the box opens: twelve spokes struck through a
+     conic gradient, masked to a soft disc so they fade at the edge. */
+  .gift-rays {
+    opacity: 0;
+    transform: scale(0.3);
+    background: conic-gradient(
+      from 0deg,
+      color-mix(in srgb, #a0d233 78%, transparent) 0deg 5deg,
+      transparent 5deg 30deg,
+      color-mix(in srgb, #a0d233 55%, transparent) 30deg 34deg,
+      transparent 34deg 60deg,
+      color-mix(in srgb, #ffffff 62%, transparent) 60deg 65deg,
+      transparent 65deg 90deg,
+      color-mix(in srgb, #a0d233 70%, transparent) 90deg 95deg,
+      transparent 95deg 120deg,
+      color-mix(in srgb, #4f9934 62%, transparent) 120deg 125deg,
+      transparent 125deg 150deg,
+      color-mix(in srgb, #a0d233 60%, transparent) 150deg 155deg,
+      transparent 155deg 180deg,
+      color-mix(in srgb, #ffffff 55%, transparent) 180deg 185deg,
+      transparent 185deg 210deg,
+      color-mix(in srgb, #a0d233 72%, transparent) 210deg 215deg,
+      transparent 215deg 240deg,
+      color-mix(in srgb, #4f9934 58%, transparent) 240deg 245deg,
+      transparent 245deg 270deg,
+      color-mix(in srgb, #a0d233 66%, transparent) 270deg 275deg,
+      transparent 275deg 300deg,
+      color-mix(in srgb, #ffffff 50%, transparent) 300deg 305deg,
+      transparent 305deg 330deg,
+      color-mix(in srgb, #a0d233 60%, transparent) 330deg 335deg,
+      transparent 335deg 360deg
+    );
+    -webkit-mask-image: radial-gradient(circle at 50% 52%, #000 12%, rgba(0, 0, 0, 0.55) 42%, transparent 70%);
+    mask-image: radial-gradient(circle at 50% 52%, #000 12%, rgba(0, 0, 0, 0.55) 42%, transparent 70%);
   }
 
   .gift-lid {
@@ -915,6 +951,23 @@ html.tt-ready .count-text[data-count='play'] .count-live {
     transform: rotateX(4deg) rotateY(-6deg) scale(0.98);
   }
 
+  /* ---------- the open sequence ---------- */
+  .gift[data-opening='true'] .gift-svg {
+    animation: gift-open 780ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .gift[data-opening='true'] .gift-lid {
+    animation: gift-lid-off 780ms cubic-bezier(0.3, 0.9, 0.4, 1) both;
+  }
+
+  .gift[data-opening='true'] .gift-rays {
+    animation: gift-rays 780ms ease-out both;
+  }
+
+  .gift[data-opening='true'] .gift-glow {
+    animation: gift-glow-flare 780ms ease-out both;
+  }
+
   @keyframes gift-bob {
     0%, 100% { transform: translateY(0) rotateY(-2deg); }
     50%      { transform: translateY(-7px) rotateY(3deg); }
@@ -925,23 +978,81 @@ html.tt-ready .count-text[data-count='play'] .count-live {
     50%      { opacity: 0.62; transform: scale(1.04); }
   }
 
+  /* A quick squash, then the box pushes up as the lid leaves. */
+  @keyframes gift-open {
+    0%   { transform: scaleY(1) translateY(0); }
+    18%  { transform: scaleY(0.88) translateY(6px); }
+    46%  { transform: scaleY(1.06) translateY(-8px); }
+    100% { transform: scaleY(1) translateY(0); }
+  }
+
+  @keyframes gift-lid-off {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    18%  { transform: translateY(4px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-96px) rotate(-26deg); opacity: 0; }
+  }
+
+  @keyframes gift-rays {
+    0%   { opacity: 0; transform: scale(0.3) rotate(0deg); }
+    28%  { opacity: 0.95; transform: scale(1.15) rotate(14deg); }
+    100% { opacity: 0; transform: scale(1.9) rotate(34deg); }
+  }
+
+  @keyframes gift-glow-flare {
+    0%   { opacity: 0.5; transform: scale(1); }
+    30%  { opacity: 1; transform: scale(1.45); }
+    100% { opacity: 0.45; transform: scale(1); }
+  }
+
+  /* ---------- confetti ---------- */
+  .confetti-piece {
+    position: absolute;
+    width: 9px;
+    height: 13px;
+    opacity: 0;
+    animation: confetti-fly 1500ms cubic-bezier(0.16, 0.62, 0.3, 1) both;
+    will-change: transform, opacity;
+  }
+
+  .confetti-piece.is-round {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+  }
+
+  @keyframes confetti-fly {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 0, 0) rotate(0deg) scale(var(--cs, 1));
+    }
+    12% { opacity: 1; }
+    80% { opacity: 1; }
+    100% {
+      opacity: 0;
+      transform: translate3d(var(--cx, 0), var(--cy, 0), 0) rotate(var(--cr, 0deg)) scale(var(--cs, 1));
+    }
+  }
+
   /*
-    Reduced motion: the box is completely still. It still lifts its lid on
-    hover and focus, because that is a direct response to the pointer or the
-    keyboard rather than ambient movement — but nothing loops, and nothing
-    moves on its own.
+    Reduced motion: the box is completely still, nothing bursts, and Confetti
+    renders nothing at all. The lid still lifts on hover and focus, because that
+    is a direct response to the pointer or the keyboard rather than ambient
+    movement — and clicking opens the dialog immediately instead of waiting out
+    an animation.
   */
   @media (prefers-reduced-motion: reduce) {
     .gift-svg,
-    .gift-glow {
+    .gift-glow,
+    .gift-rays,
+    .gift[data-opening='true'] .gift-svg,
+    .gift[data-opening='true'] .gift-lid,
+    .gift[data-opening='true'] .gift-rays,
+    .gift[data-opening='true'] .gift-glow,
+    .confetti-piece {
       animation: none;
     }
-    .gift-svg {
-      transform: none;
-    }
-    .gift-glow {
-      opacity: 0.45;
-      transform: none;
-    }
+    .gift-svg { transform: none; }
+    .gift-glow { opacity: 0.45; transform: none; }
+    .gift-rays { opacity: 0; }
   }
 }

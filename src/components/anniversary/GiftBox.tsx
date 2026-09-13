@@ -1,6 +1,8 @@
 'use client';
 
+import { useCallback, useRef, useState } from 'react';
 import { openAnniversary } from './anniversary-bus';
+import { Confetti } from './Confetti';
 
 /**
  * The fifth-year gift box — the invitation to open the anniversary dialog.
@@ -12,11 +14,16 @@ import { openAnniversary } from './anniversary-bus';
  * On the ribbon colour: the reference image used a gold ribbon. Gold is a fifth
  * hue and scripts/brand-check.mjs fails the build on it, so the ribbon is lime
  * (#A0D233) — the brand's accent, and a stronger separation against the greens
- * than gold would give (about 3:1 against the lid).
+ * than gold would give.
  *
- * It is a real <button> with a real accessible name, so it is reachable and
- * operable from the keyboard like any other control.
+ * Opening sequence: the lid flies off, light rays burst from inside, confetti
+ * scatters, and only then does the dialog open. Under prefers-reduced-motion
+ * the whole sequence is skipped and the dialog opens immediately — the reward
+ * must never be gated behind an animation someone asked not to see.
  */
+
+/** Length of the open animation. Must match `gift-open` in globals.css. */
+const OPEN_SEQUENCE_MS = 780;
 
 interface GiftBoxProps {
   /** Rendered size in px. The SVG scales; the caption tracks it. */
@@ -31,15 +38,43 @@ export function GiftBox({
   caption = 'A gift for AirdroiTechies',
   className = '',
 }: GiftBoxProps) {
+  const [opening, setOpening] = useState(false);
+  const timer = useRef<number | null>(null);
+
+  const handleOpen = useCallback(() => {
+    // Ignore repeat presses while the sequence is already running.
+    if (opening) return;
+
+    const reduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduced) {
+      openAnniversary();
+      return;
+    }
+
+    setOpening(true);
+    timer.current = window.setTimeout(() => {
+      openAnniversary();
+      // Reset once the dialog covers it, so the box is closed again underneath.
+      window.setTimeout(() => setOpening(false), 400);
+    }, OPEN_SEQUENCE_MS);
+  }, [opening]);
+
   return (
     <button
       type="button"
-      onClick={openAnniversary}
+      onClick={handleOpen}
       aria-label="Open the fifth-year surprise"
+      data-opening={opening ? 'true' : undefined}
       className={`gift group flex flex-col items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--focus)] ${className}`}
     >
       <span className="gift-stage relative block" style={{ width: size, height: size }}>
-        {/* Soft lime halo, purely decorative. */}
+        {/* Light rays — hidden until the box opens, then they burst outward. */}
+        <span aria-hidden="true" className="gift-rays absolute inset-0 block" />
+
+        {/* Soft lime halo, always there, purely decorative. */}
         <span aria-hidden="true" className="gift-glow absolute inset-0 block" />
 
         <svg
@@ -58,7 +93,7 @@ export function GiftBox({
           <polygon points="42.6,83.7 51.4,88.3 51.4,120.3 42.6,115.7" fill="#A0D233" />
           <polygon points="88.6,88.3 97.4,83.7 97.4,115.7 88.6,120.3" fill="#8FBE2B" />
 
-          {/* ---------- lid (lifts on hover / focus) ---------- */}
+          {/* ---------- lid (lifts on hover, flies off on open) ---------- */}
           <g className="gift-lid">
             <polygon points="70,40 122,68 70,96 18,68" fill="#3C7628" />
             <polygon points="18,68 70,96 70,110 18,82" fill="#2C5A1D" />
@@ -78,14 +113,15 @@ export function GiftBox({
               <ellipse cx="85" cy="47" rx="15" ry="9" transform="rotate(24 85 47)" fill="#A0D233" />
               <ellipse cx="55" cy="47" rx="7" ry="4" transform="rotate(-24 55 47)" fill="#8FBE2B" />
               <ellipse cx="85" cy="47" rx="7" ry="4" transform="rotate(24 85 47)" fill="#8FBE2B" />
-              {/* tails */}
               <polygon points="66,54 72,57 64,70 59,65" fill="#8FBE2B" />
               <polygon points="74,54 68,57 76,70 81,65" fill="#8FBE2B" />
-              {/* knot */}
               <ellipse cx="70" cy="52" rx="8" ry="6" fill="#A0D233" />
             </g>
           </g>
         </svg>
+
+        {/* Confetti from the box itself, mounted only for the open sequence. */}
+        {opening && <Confetti scope="local" count={20} duration={1400} originY={52} />}
       </span>
 
       {caption !== null && (
