@@ -20,7 +20,7 @@ export function ContactPane() {
     <div className="grid h-full grid-rows-[1fr_auto]">
       <div className="grid min-h-0 grid-cols-1 lg:grid-cols-[1fr_minmax(0,320px)]">
         <div className="flex flex-col justify-center overflow-y-auto px-[40px] py-[44px]">
-        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-lime-500">
+        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-chrome-link">
           {CONTACT_EYEBROW}
         </p>
         <h2 className="mt-[14px] font-display text-[60px] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
@@ -35,7 +35,7 @@ export function ContactPane() {
         <div className="mt-[26px] flex flex-wrap gap-[26px]">
           <a
             href={`mailto:${EMAIL}`}
-            className="inline-flex min-h-tap items-center text-[17px] text-lime-500 underline [text-underline-offset:5px]"
+            className="inline-flex min-h-tap items-center text-[17px] text-chrome-link underline [text-underline-offset:5px]"
           >
             {EMAIL}
           </a>
@@ -43,7 +43,7 @@ export function ContactPane() {
             href={LINKEDIN}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-tap items-center text-[17px] text-lime-500 underline [text-underline-offset:5px]"
+            className="inline-flex min-h-tap items-center text-[17px] text-chrome-link underline [text-underline-offset:5px]"
           >
             LinkedIn <span aria-hidden="true" className="ml-1">↗</span>
           </a>
@@ -81,10 +81,10 @@ export function ContactPane() {
         </div>
       </div>
 
-      <div className="flex flex-none flex-wrap items-center gap-[36px] border-t border-chrome-line bg-grey-900 px-[40px] py-[28px]">
-        <p className="font-display text-[72px] font-bold leading-[0.82] tracking-[-0.04em] text-white">
+      <div className="flex flex-none flex-wrap items-center gap-[36px] border-t border-chrome-line bg-chrome-plate px-[40px] py-[28px]">
+        <p className="font-display text-[72px] font-bold leading-[0.82] tracking-[-0.04em] text-chrome-ink">
           {POLYAIRE_YEARS}
-          <span className="text-lime-500">+</span>
+          <span className="text-chrome-link">+</span>
         </p>
         <div>
           <p className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-chrome-meta">
@@ -96,7 +96,7 @@ export function ContactPane() {
           href={POLYAIRE}
           target="_blank"
           rel="noopener noreferrer"
-          className="ml-auto inline-flex min-h-tap items-center font-semibold text-lime-500 underline [text-underline-offset:5px]"
+          className="ml-auto inline-flex min-h-tap items-center font-semibold text-chrome-link underline [text-underline-offset:5px]"
         >
           polyaire.com.au <span aria-hidden="true" className="ml-1">↗</span>
         </a>

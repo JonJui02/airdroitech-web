@@ -14,7 +14,7 @@ const CELL =
   'font-mono text-[12.5px] uppercase tracking-[0.12em] text-chrome-body ' +
   'transition-colors hover:bg-lime-500 hover:text-grey-900 ' +
   'focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] ' +
-  'focus-visible:outline-lime-500';
+  'focus-visible:outline-chrome-link';
 
 /**
  * Section 3 — sticky site header, shared by every page.
@@ -38,18 +38,18 @@ export function SiteHeader() {
         <div className="hidden h-[34px] items-center justify-between gap-6 border-b border-chrome-hover bg-chrome-rail gutter font-mono text-[11.5px] uppercase tracking-[0.14em] text-chrome-meta lg:flex">
           <span>Shah Alam · Selangor · Malaysia</span>
           <span className="flex items-center gap-2">
-            <span aria-hidden="true" className="block h-[7px] w-[7px] bg-lime-500" />
+            <span aria-hidden="true" className="block h-[7px] w-[7px] bg-chrome-state" />
             R&amp;D and software arm of the Polyaire Group
           </span>
           <span className="flex items-center gap-6">
-            <a href={`mailto:${EMAIL}`} className="transition-colors hover:text-lime-500">
+            <a href={`mailto:${EMAIL}`} className="transition-colors hover:text-chrome-link">
               {EMAIL}
             </a>
             <a
               href={LINKEDIN}
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-colors hover:text-lime-500"
+              className="transition-colors hover:text-chrome-link"
             >
               LinkedIn
             </a>
@@ -64,7 +64,7 @@ export function SiteHeader() {
             <Link
               href="/"
               aria-label="AirdroiTech home"
-              className="flex min-h-tap flex-1 items-center self-stretch focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500"
+              className="flex min-h-tap flex-1 items-center self-stretch focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link"
             >
               <BrandLogo />
             </Link>
@@ -102,7 +102,7 @@ export function SiteHeader() {
             )}
             <Link
               href="/get-in-touch/"
-              className="flex items-center border-l border-chrome-line bg-teal-600 px-[clamp(22px,2.4vw,38px)] text-[15px] font-semibold text-white transition-colors hover:bg-chrome-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500"
+              className="flex items-center border-l border-chrome-line bg-teal-600 px-[clamp(22px,2.4vw,38px)] text-[15px] font-semibold text-white transition-colors hover:bg-chrome-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link"
               onMouseEnter={() => setPanelOpen(false)}
               onFocus={() => setPanelOpen(false)}
             >
@@ -112,7 +112,7 @@ export function SiteHeader() {
 
           {/* Theme switch, every width. Outside <nav>: it changes appearance, it does not navigate. */}
           <div className="flex flex-none items-center justify-center border-l border-chrome-line px-[6px]">
-            <ThemeToggle className="text-chrome-body hover:text-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500" />
+            <ThemeToggle className="text-chrome-body hover:text-chrome-link focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link" />
           </div>
 
           {/* 375 hamburger */}
@@ -121,11 +121,11 @@ export function SiteHeader() {
             onClick={() => setDrawerOpen(true)}
             aria-label="Open navigation"
             aria-expanded={drawerOpen}
-            className="flex w-[62px] flex-none flex-col items-center justify-center gap-[5px] border-l border-chrome-line focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500 lg:hidden"
+            className="flex w-[62px] flex-none flex-col items-center justify-center gap-[5px] border-l border-chrome-line focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link lg:hidden"
           >
             <span aria-hidden="true" className="block h-[1.5px] w-[22px] bg-chrome-ink" />
             <span aria-hidden="true" className="block h-[1.5px] w-[22px] bg-chrome-ink" />
-            <span aria-hidden="true" className="block h-[1.5px] w-[22px] bg-lime-500" />
+            <span aria-hidden="true" className="block h-[1.5px] w-[22px] bg-chrome-state" />
           </button>
         </div>
 
@@ -134,12 +134,12 @@ export function SiteHeader() {
 
         {/* 3d — Projects mega panel, 1440 */}
         {panelOpen && (
-          <div className="absolute left-0 top-full hidden w-full border-b border-chrome-line bg-grey-900 lg:grid lg:grid-cols-3">
+          <div className="absolute left-0 top-full hidden w-full border-b border-chrome-line bg-chrome-plate lg:grid lg:grid-cols-3">
             {PRODUCTS.map((p) => (
               <Link
                 key={p.href}
                 href={p.href}
-                className="border-l border-chrome-line px-7 pb-[30px] pt-[26px] transition-colors hover:bg-chrome-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500"
+                className="border-l border-chrome-line px-7 pb-[30px] pt-[26px] transition-colors hover:bg-chrome-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link"
                 onClick={() => setPanelOpen(false)}
               >
                 <ImageSlot
@@ -151,7 +151,7 @@ export function SiteHeader() {
                   fit="contain"
                 />
                 <p className="mt-4 font-display text-[22px] font-bold text-chrome-ink">{p.name}</p>
-                <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.08em] text-grey-400">
+                <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.08em] text-chrome-meta">
                   {p.descriptor}
                 </p>
               </Link>

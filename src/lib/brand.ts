@@ -23,7 +23,7 @@ export const INK = '#131A17';
 export const CONTRAST = {
   '#2F7F59': { onWhite: 4.88, whiteOn: 4.88, inkOn: 3.35, bodyText: true },
   '#4F9934': { onWhite: 3.54, whiteOn: 3.54, inkOn: 4.63, bodyText: false },
-  '#A0D233': { onWhite: 1.79, whiteOn: 1.79, inkOn: 9.17, bodyText: false },
+  '#A0D233': { onWhite: 1.79, whiteOn: 1.79, inkOn: 9.89, bodyText: false },
   '#8E9093': { onWhite: 3.2, whiteOn: 3.2, inkOn: 5.11, bodyText: false },
 } as const;
 
@@ -37,3 +37,22 @@ export const FORBIDDEN_PAIRS = [
 
 /** Sequential scale for charts and zone diagrams. Monotonic in lightness. */
 export const SEQUENTIAL = ['#123122', '#2F7F59', '#4F9934', '#A0D233'] as const;
+
+/**
+ * Chrome surfaces (header, footer, drawer, homepage console) by theme.
+ *
+ * These back the --chrome-* CSS variables in globals.css, which tailwind.config.ts
+ * exposes as chrome.*. Light values and every ratio below are brand-guardian's
+ * ruling of 2026-09-13, recomputed from WCAG 2.1 relative luminance. All light
+ * hexes are already in scripts/brand-check.mjs's APPROVED set.
+ *
+ * `link` carries text, focus rings and hover borders; it must hold 4.5:1.
+ * `state` is passive non-text only (dots, ticks, dial arc, progress); it holds
+ * 3:1 but NOT 4.5:1 on plate/rail, so it must never carry a character.
+ */
+export const CHROME_THEME = {
+  link: { dark: '#A0D233', light: '#235E42', lightRatio: '6.38–7.63:1' },
+  state: { dark: '#A0D233', light: '#5E7C1E', lightRatio: '4.01–4.80:1', textAllowed: false },
+  meta: { dark: '#8E9093', light: '#5A5D60', lightRatio: '5.54–6.63:1' },
+  grid: { dark: '#1A231F', light: '#74777A', lightRatio: '3.77–4.50:1' },
+} as const;

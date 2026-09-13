@@ -56,14 +56,14 @@ export function RoomRail({ rooms, index, onIndex, onRoom, dragging, onDragging }
               aria-current={active ? 'true' : undefined}
               className={`flex flex-1 items-center gap-[14px] border-b border-chrome-line px-[24px] text-left font-mono text-[12px] uppercase tracking-[0.12em] transition-colors duration-200 ${
                 active
-                  ? 'bg-chrome-plate text-lime-500'
+                  ? 'bg-chrome-plate text-chrome-link'
                   : 'text-chrome-body hover:bg-chrome-hover'
               }`}
             >
               <span
                 aria-hidden="true"
                 className={`h-[2px] w-[18px] flex-none ${
-                  active ? 'bg-lime-500' : 'bg-chrome-border'
+                  active ? 'bg-chrome-state' : 'bg-chrome-border'
                 }`}
               />
               {r.label}

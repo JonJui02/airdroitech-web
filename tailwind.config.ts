@@ -74,26 +74,38 @@ const config: Config = {
       bad: { DEFAULT: '#A33B2E', bg: '#FBEDEA' },
 
       /**
-       * Chrome — the always-dark surfaces (header, hero, footer, mega panel).
-       * These are FIXED in both themes because they belong to a surface that is
-       * dark regardless of the viewer's theme, so they are literals in the
-       * design rather than tokens that flip. Named here so no component ever
-       * carries a raw hex.
+       * Chrome — header, footer, mobile drawer and the homepage console.
+       *
+       * These used to be fixed dark literals. They now resolve through CSS
+       * variables in globals.css, defined in all three theme tiers (bare :root =
+       * light, prefers-color-scheme dark, [data-theme]), so the surfaces follow
+       * the theme like everything else. Values: brand-guardian ruling, 2026-09-13.
+       *
+       * Plain var() colours cannot take Tailwind opacity modifiers (bg-x/90);
+       * none are used.
+       *
+       * link  — anything that was text/decoration/outline/hover-border lime.
+       *         Lime in dark, teal-700 in light (6.4–7.6:1).
+       * state — passive non-text indicators: dots, ticks, dial arc and knob,
+       *         progress. Lime in dark, lime-700 in light (4.0–4.8:1). Never text.
        */
       chrome: {
-        rail: '#0A0F0D', // utility rail
-        ground: '#0E1411', // header / hero / footer ground
-        plate: '#161E1A', // mega panel ground
-        line: '#232D28', // chrome hairline
-        hover: '#1C2621', // mega-menu hover, progress track, footer ghost type
-        grid: '#1A231F', // hero column rules
-        meta: '#8E9093', // = grey.400, the dark-ground text floor — never grey.500 or darker
-        ink: '#EAEEEB', // headings on dark chrome (13.7:1 on chrome.ground)
-        body: '#C3CBC6', // running text on dark chrome (11.9:1 on chrome.ground)
-        border: '#45564C', // secondary button border on dark
-        'line-dark': '#454E4A', // --line-strong in dark
-        'ink-hover': '#2B3531', // ink button hover on the lime field
-        'primary-hover': '#3C9B6D', // primary hover on dark
+        rail: 'var(--chrome-rail)',
+        ground: 'var(--chrome-ground)',
+        plate: 'var(--chrome-plate)',
+        line: 'var(--chrome-line)',
+        hover: 'var(--chrome-hover)',
+        grid: 'var(--chrome-grid)',
+        meta: 'var(--chrome-meta)',
+        ink: 'var(--chrome-ink)',
+        body: 'var(--chrome-body)',
+        border: 'var(--chrome-border)',
+        'line-dark': 'var(--chrome-line-dark)',
+        // Only ever sits on the lime field, which does not rotate — stays fixed.
+        'ink-hover': '#2B3531',
+        'primary-hover': 'var(--chrome-primary-hover)',
+        link: 'var(--chrome-link)',
+        state: 'var(--chrome-state)',
       },
 
       /** Text colours that only ever sit on the lime field. */

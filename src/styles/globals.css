@@ -16,6 +16,24 @@
 :root {
   color-scheme: light;
 
+  /* Chrome surfaces (header, footer, drawer, console). brand-guardian ruling 2026-09-13. */
+  --chrome-rail: #e9ebec;
+  --chrome-ground: #ffffff;
+  --chrome-plate: #f5f6f7;
+  --chrome-line: #d6d9db;
+  --chrome-hover: #eef7f2;
+  --chrome-grid: #74777a;
+  --chrome-meta: #5a5d60;
+  --chrome-ink: #131a17;
+  --chrome-body: #424547;
+  --chrome-border: #2f7f59;
+  --chrome-line-dark: #8e9093;
+  --chrome-primary-hover: #235e42;
+  --chrome-link: #235e42;
+  --chrome-state: #5e7c1e;
+  /* Focus ring: lime is 1.79:1 on white, so light uses teal-700. */
+  --focus: #235e42;
+
   --ground: #ffffff;
   --surface: #f5f6f7;
   --ink: #131a17;
@@ -49,6 +67,24 @@
   :root:not([data-theme='light']) {
     color-scheme: dark;
 
+    /* Chrome surfaces (header, footer, drawer, console). brand-guardian ruling 2026-09-13. */
+    --chrome-rail: #0a0f0d;
+    --chrome-ground: #0e1411;
+    --chrome-plate: #161e1a;
+    --chrome-line: #232d28;
+    --chrome-hover: #1c2621;
+    --chrome-grid: #1a231f;
+    --chrome-meta: #8e9093;
+    --chrome-ink: #eaeeeb;
+    --chrome-body: #c3cbc6;
+    --chrome-border: #45564c;
+    --chrome-line-dark: #454e4a;
+    --chrome-primary-hover: #3c9b6d;
+    --chrome-link: #a0d233;
+    --chrome-state: #a0d233;
+    /* Focus ring: lime is 1.79:1 on white, so light uses teal-700. */
+    --focus: #a0d233;
+
     --ground: #0e1411;
     --surface: #131a17;
     --ink: #eaeeeb;
@@ -70,6 +106,24 @@
 
 :root[data-theme='dark'] {
   color-scheme: dark;
+
+  /* Chrome surfaces (header, footer, drawer, console). brand-guardian ruling 2026-09-13. */
+  --chrome-rail: #0a0f0d;
+  --chrome-ground: #0e1411;
+  --chrome-plate: #161e1a;
+  --chrome-line: #232d28;
+  --chrome-hover: #1c2621;
+  --chrome-grid: #1a231f;
+  --chrome-meta: #8e9093;
+  --chrome-ink: #eaeeeb;
+  --chrome-body: #c3cbc6;
+  --chrome-border: #45564c;
+  --chrome-line-dark: #454e4a;
+  --chrome-primary-hover: #3c9b6d;
+  --chrome-link: #a0d233;
+  --chrome-state: #a0d233;
+  /* Focus ring: lime is 1.79:1 on white, so light uses teal-700. */
+  --focus: #a0d233;
 
   --ground: #0e1411;
   --surface: #131a17;
@@ -117,7 +171,7 @@
 
   /* Never leave a browser-default focus outline. */
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--focus);
     outline-offset: 2px;
   }
 }
@@ -212,4 +266,36 @@
     transition-duration: 250ms !important;
     transition-timing-function: ease !important;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Brand sweep on the homepage h1.
+
+   Lime clipped to glyphs is 1.79:1 on a white ground and fails even the 3:1
+   large-text floor (brand-guardian, 2026-09-13), so in light theme the word
+   renders as solid ink. The gradient is a dark-theme flourish.
+
+   Deliberately driven by the same three-tier cascade as every token, NOT by a
+   Tailwind dark: variant: darkMode is keyed to [data-theme="dark"] only, so
+   dark: would never fire for a visitor whose OS is dark but who has not used
+   the toggle.
+   --------------------------------------------------------------------------- */
+.brand-sweep-text {
+  color: var(--ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]) .brand-sweep-text {
+    background-image: linear-gradient(100deg, #2f7f59 0%, #4f9934 52%, #a0d233 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+:root[data-theme=dark] .brand-sweep-text {
+  background-image: linear-gradient(100deg, #2f7f59 0%, #4f9934 52%, #a0d233 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

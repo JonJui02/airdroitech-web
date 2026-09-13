@@ -33,7 +33,7 @@ export function RoomLegal({ className = '' }: { className?: string }) {
           <Link
             key={l.href}
             href={l.href}
-            className="inline-flex items-center py-1 underline decoration-chrome-border [text-underline-offset:4px] transition-colors duration-200 hover:text-lime-500 hover:decoration-lime-500"
+            className="inline-flex items-center py-1 underline decoration-chrome-border [text-underline-offset:4px] transition-colors duration-200 hover:text-chrome-link hover:decoration-chrome-link"
           >
             {l.label}
           </Link>

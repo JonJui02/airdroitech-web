@@ -30,7 +30,7 @@ export function ScrollProgress() {
 
   return (
     <div className="h-[2px] w-full bg-chrome-hover" aria-hidden="true">
-      <div className="h-full bg-lime-500" style={{ width: `${pct}%` }} />
+      <div className="h-full bg-chrome-state" style={{ width: `${pct}%` }} />
     </div>
   );
 }

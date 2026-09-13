@@ -32,7 +32,7 @@ export function RoomDock({ rooms, index }: { rooms: Room[]; index: number }) {
 
       <span
         aria-live="polite"
-        className="font-mono text-[12.5px] uppercase tracking-[0.14em] text-lime-500"
+        className="font-mono text-[12.5px] uppercase tracking-[0.14em] text-chrome-link"
       >
         {at(rooms, index).label} · {readout(index, total)}
       </span>
@@ -42,7 +42,7 @@ export function RoomDock({ rooms, index }: { rooms: Room[]; index: number }) {
           <span
             key={r.key}
             className={`h-[3px] w-[34px] transition-colors duration-200 ${
-              i === index ? 'bg-lime-500' : 'bg-chrome-line'
+              i === index ? 'bg-chrome-state' : 'bg-chrome-line'
             }`}
           />
         ))}

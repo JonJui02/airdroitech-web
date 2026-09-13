@@ -14,7 +14,7 @@ export function HomePane({ zone, onZone, onOpenProjects }: HomePaneProps) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex flex-1 flex-col justify-center px-[40px] py-[44px]">
-        <p className="font-mono text-[12.5px] uppercase tracking-[0.18em] text-lime-500">
+        <p className="font-mono text-[12.5px] uppercase tracking-[0.18em] text-chrome-link">
           {HERO_EYEBROW}
         </p>
 
@@ -23,11 +23,10 @@ export function HomePane({ zone, onZone, onOpenProjects }: HomePaneProps) {
           {/*
             The page's single instance of the brand sweep — the logo's own
             teal→green→lime gradient, used here and nowhere else.
-            `color` is the fallback for anything that cannot clip to text.
+            In light theme it renders as solid ink — lime clipped to glyphs is 1.79:1 on white. See .brand-sweep-text in globals.css.
           */}
           <span
-            className="block bg-brand-sweep bg-clip-text text-transparent"
-            style={{ color: '#A0D233' }}
+            className="block brand-sweep-text"
           >
             Intelligence
           </span>
@@ -62,7 +61,7 @@ export function HomePane({ zone, onZone, onOpenProjects }: HomePaneProps) {
         className="flex-none border-t border-chrome-line bg-chrome-plate"
       >
         <div className="flex items-center gap-3 border-b border-chrome-line px-[22px] py-[14px]">
-          <span aria-hidden="true" className="h-[8px] w-[8px] flex-none bg-lime-500" />
+          <span aria-hidden="true" className="h-[8px] w-[8px] flex-none bg-chrome-state" />
           <span className="font-mono text-[11.5px] uppercase tracking-[0.16em] text-chrome-meta">
             Zone control
           </span>

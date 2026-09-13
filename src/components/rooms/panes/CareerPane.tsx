@@ -43,7 +43,7 @@ export function CareerPane({ roles }: { roles: Role[] }) {
               {String(i + 1).padStart(2, '0')}
             </span>
             <span className="flex-1 text-[16px] text-chrome-ink">{role.title}</span>
-            <span className="font-mono text-[11.5px] uppercase tracking-[0.12em] text-lime-500">
+            <span className="font-mono text-[11.5px] uppercase tracking-[0.12em] text-chrome-link">
               {role.team}
             </span>
           </li>

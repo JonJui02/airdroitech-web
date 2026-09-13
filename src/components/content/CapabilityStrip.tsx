@@ -11,7 +11,7 @@ export function CapabilityStrip() {
         {CAPABILITIES.map((c, i) => (
           <li key={c} className="flex items-center gap-[clamp(12px,1.4vw,26px)]">
             {i > 0 && (
-              <span aria-hidden="true" className="text-lime-500">
+              <span aria-hidden="true" className="text-chrome-link">
                 +
               </span>
             )}

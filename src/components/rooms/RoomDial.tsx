@@ -105,7 +105,7 @@ export function RoomDial({ rooms, index, onIndex, size, dragging, onDragging }: 
           cy="102"
           r={R_GROOVE}
           fill="none"
-          className="stroke-lime-500"
+          className="stroke-chrome-state"
           strokeWidth="14"
           strokeDasharray={`${(C * (index + 1)) / total} ${C}`}
           transform="rotate(-90 102 102)"
@@ -127,7 +127,7 @@ export function RoomDial({ rooms, index, onIndex, size, dragging, onDragging }: 
             strokeWidth={lg ? 2 : 3}
             strokeLinecap="round"
           />
-          <circle cx="102" cy="30" r={lg ? 6.5 : 9} className="fill-lime-500" />
+          <circle cx="102" cy="30" r={lg ? 6.5 : 9} className="fill-chrome-state" />
         </g>
       </svg>
 

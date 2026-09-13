@@ -44,7 +44,7 @@ export function DeviceDetail({ product, onBack }: DeviceDetailProps) {
           ref={backRef}
           type="button"
           onClick={onBack}
-          className="min-h-tap border border-chrome-border px-[14px] py-[9px] font-mono text-[11.5px] uppercase tracking-[0.14em] text-lime-500 transition-colors duration-200 hover:border-lime-500"
+          className="min-h-tap border border-chrome-border px-[14px] py-[9px] font-mono text-[11.5px] uppercase tracking-[0.14em] text-chrome-link transition-colors duration-200 hover:border-chrome-link"
         >
           <span aria-hidden="true">← </span>All devices
         </button>
@@ -70,7 +70,7 @@ export function DeviceDetail({ product, onBack }: DeviceDetailProps) {
               >
                 <span
                   aria-hidden="true"
-                  className="mt-[5px] h-[6px] w-[6px] flex-none bg-lime-500"
+                  className="mt-[5px] h-[6px] w-[6px] flex-none bg-chrome-state"
                 />
                 {f.label}
               </li>
@@ -82,14 +82,14 @@ export function DeviceDetail({ product, onBack }: DeviceDetailProps) {
             <OutboundLink
               href={product.official.href}
               site={product.official.site}
-              className="inline-flex min-h-tap items-center border border-chrome-border px-5 font-semibold text-lime-500 transition-colors duration-200 hover:border-lime-500"
+              className="inline-flex min-h-tap items-center border border-chrome-border px-5 font-semibold text-chrome-link transition-colors duration-200 hover:border-chrome-link"
             >
               Official site
             </OutboundLink>
             <button
               type="button"
               onClick={onBack}
-              className="inline-flex min-h-tap items-center border border-chrome-border px-5 font-semibold text-lime-500 transition-colors duration-200 hover:border-lime-500"
+              className="inline-flex min-h-tap items-center border border-chrome-border px-5 font-semibold text-chrome-link transition-colors duration-200 hover:border-chrome-link"
             >
               Back to devices
             </button>
@@ -169,7 +169,7 @@ function GalleryArrow({ direction, onClick }: { direction: -1 | 1; onClick: () =
       type="button"
       onClick={onClick}
       aria-label={direction === -1 ? 'Previous image' : 'Next image'}
-      className="pointer-events-auto flex min-h-tap min-w-tap items-center justify-center border border-chrome-border bg-chrome-ground/90 font-mono text-[15px] text-lime-500 transition-colors duration-200 hover:border-lime-500"
+      className="pointer-events-auto flex min-h-tap min-w-tap items-center justify-center border border-chrome-border bg-chrome-ground font-mono text-[15px] text-chrome-link transition-colors duration-200 hover:border-chrome-link"
     >
       <span aria-hidden="true">{direction === -1 ? '◄' : '►'}</span>
     </button>

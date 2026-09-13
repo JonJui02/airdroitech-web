@@ -4,9 +4,9 @@ import { ColumnLabel } from '@/components/ui/Eyebrow';
 import { ADDRESS_LINES, COMPANY_LINE, EMAIL, LINKEDIN, POLYAIRE, PRODUCTS } from '@/lib/site';
 
 const ROW =
-  'flex min-h-[40px] items-center text-chrome-body transition-colors hover:text-white ' +
+  'flex min-h-[40px] items-center text-chrome-body transition-colors hover:text-chrome-ink ' +
   'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ' +
-  'focus-visible:outline-lime-500';
+  'focus-visible:outline-chrome-link';
 
 const COMPANY_LINKS = [
   { label: 'About', href: '/what-we-do/' },
@@ -31,7 +31,7 @@ export function Footer() {
           </address>
           <a
             href={`mailto:${EMAIL}`}
-            className="mt-4 inline-flex min-h-tap items-center text-lime-500 underline [text-underline-offset:4px]"
+            className="mt-4 inline-flex min-h-tap items-center text-chrome-link underline [text-underline-offset:4px]"
           >
             {EMAIL}
           </a>
@@ -40,7 +40,7 @@ export function Footer() {
             href={LINKEDIN}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-tap items-center text-lime-500 underline [text-underline-offset:4px]"
+            className="inline-flex min-h-tap items-center text-chrome-link underline [text-underline-offset:4px]"
           >
             LinkedIn
           </a>
@@ -81,7 +81,7 @@ export function Footer() {
             href={POLYAIRE}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 inline-flex min-h-tap items-center text-lime-500 underline [text-underline-offset:4px]"
+            className="mt-3 inline-flex min-h-tap items-center text-chrome-link underline [text-underline-offset:4px]"
           >
             polyaire.com.au ↗
           </a>
@@ -104,7 +104,7 @@ export function Footer() {
         <span>{COMPANY_LINE}</span>
         <Link
           href="/data-protection-and-privacy-policy/"
-          className="min-h-tap inline-flex items-center transition-colors hover:text-lime-500"
+          className="min-h-tap inline-flex items-center transition-colors hover:text-chrome-link"
         >
           Data &amp; Privacy Policy
         </Link>

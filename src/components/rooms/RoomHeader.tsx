@@ -40,7 +40,7 @@ export function RoomHeader({ rooms, room, onRoom }: RoomHeaderProps) {
                 <span
                   aria-hidden="true"
                   className={`h-[7px] w-[7px] flex-none ${
-                    active ? 'bg-lime-500' : 'bg-chrome-border'
+                    active ? 'bg-chrome-state' : 'bg-chrome-border'
                   }`}
                 />
                 {r.label}
@@ -52,7 +52,7 @@ export function RoomHeader({ rooms, room, onRoom }: RoomHeaderProps) {
       </nav>
 
       <div className="flex flex-none items-center justify-center border-l border-chrome-line px-[10px]">
-        <ThemeToggle className="text-chrome-body hover:text-lime-500" />
+        <ThemeToggle className="text-chrome-body hover:text-chrome-link" />
       </div>
     </header>
   );

@@ -21,7 +21,7 @@ export function RoomReadMore({
   return (
     <Link
       href={page.href}
-      className={`inline-flex min-h-tap items-center gap-2 font-semibold text-lime-500 underline decoration-chrome-border [text-underline-offset:5px] transition-colors duration-200 hover:decoration-lime-500 ${className}`}
+      className={`inline-flex min-h-tap items-center gap-2 font-semibold text-chrome-link underline decoration-chrome-border [text-underline-offset:5px] transition-colors duration-200 hover:decoration-chrome-link ${className}`}
     >
       {page.label}
       <span aria-hidden="true">→</span>

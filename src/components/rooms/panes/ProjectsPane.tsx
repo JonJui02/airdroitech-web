@@ -41,7 +41,7 @@ export function ProjectsPane({ onOpen, page }: ProjectsPaneProps) {
             className="flex flex-col items-stretch bg-chrome-plate p-[22px] text-left transition-colors duration-200 hover:bg-chrome-hover"
           >
             <span className="flex items-center gap-[10px]">
-              <span aria-hidden="true" className="h-[7px] w-[7px] flex-none bg-lime-500" />
+              <span aria-hidden="true" className="h-[7px] w-[7px] flex-none bg-chrome-state" />
               <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-chrome-meta">
                 {p.tag}
               </span>
@@ -64,7 +64,7 @@ export function ProjectsPane({ onOpen, page }: ProjectsPaneProps) {
             <span className="mt-[10px] block text-[14.5px] leading-[1.6] text-chrome-body">
               {p.copy}
             </span>
-            <span className="mt-auto block pt-[18px] text-[16px] font-semibold text-lime-500">
+            <span className="mt-auto block pt-[18px] text-[16px] font-semibold text-chrome-link">
               Open device <span aria-hidden="true">→</span>
             </span>
           </button>

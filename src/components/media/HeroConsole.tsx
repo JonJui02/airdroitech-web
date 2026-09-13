@@ -52,11 +52,11 @@ export function HeroConsole() {
     >
       {/* Title bar */}
       <div className="flex items-center gap-3 border-b border-chrome-line px-[clamp(14px,1.6vw,22px)] py-[clamp(10px,1.1vw,14px)]">
-        <span className="h-2 w-2 shrink-0 rounded-full bg-lime-500" />
-        <p className="font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.16em] text-grey-400">
+        <span className="h-2 w-2 shrink-0 rounded-full bg-chrome-state" />
+        <p className="font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.16em] text-chrome-meta">
           Zone control
         </p>
-        <p className="ml-auto hidden font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.16em] text-grey-400 sm:block">
+        <p className="ml-auto hidden font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.16em] text-chrome-meta sm:block">
           4 zones · 1 system
         </p>
       </div>
@@ -72,7 +72,7 @@ export function HeroConsole() {
           >
             <p
               className={`font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.14em] ${
-                (z.name === ACTIVE) ? 'text-white' : 'text-grey-400'
+                (z.name === ACTIVE) ? 'text-white' : 'text-chrome-meta'
               }`}
             >
               {z.name}
@@ -83,7 +83,7 @@ export function HeroConsole() {
             </p>
             <p
               className={`mt-2 font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.1em] ${
-                (z.name === ACTIVE) ? 'text-white' : 'text-grey-400'
+                (z.name === ACTIVE) ? 'text-white' : 'text-chrome-meta'
               }`}
             >
               {z.state}
@@ -95,10 +95,10 @@ export function HeroConsole() {
       {/* Load curve */}
       <div className="border-t border-chrome-line px-[clamp(14px,1.6vw,22px)] pb-[clamp(12px,1.4vw,18px)] pt-[clamp(14px,1.6vw,20px)]">
         <div className="flex items-baseline justify-between">
-          <p className="font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.16em] text-grey-400">
+          <p className="font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.16em] text-chrome-meta">
             Conditioning load
           </p>
-          <p className="font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.16em] text-grey-400">
+          <p className="font-mono text-[clamp(10px,0.8vw,11.5px)] uppercase tracking-[0.16em] text-chrome-meta">
             24 h
           </p>
         </div>

@@ -100,7 +100,7 @@ export function RoomShell({ roles }: RoomShellProps) {
   return (
     <main
       id="main"
-      className="on-dark flex h-[100dvh] flex-col overflow-hidden border border-chrome-line bg-chrome-ground"
+      className="flex h-[100dvh] flex-col overflow-hidden border border-chrome-line bg-chrome-ground"
     >
       {/* ---------------- desktop ---------------- */}
       <div className="hidden min-h-0 flex-1 flex-col lg:flex">
@@ -158,10 +158,10 @@ export function RoomShell({ roles }: RoomShellProps) {
       <div className="flex min-h-0 flex-1 flex-col lg:hidden">
         <header className="flex min-h-[62px] flex-none items-center gap-3 border-b border-chrome-line px-[20px]">
           <BrandLogo height="24px" />
-          <span className="ml-auto font-mono text-[10.5px] uppercase tracking-[0.14em] text-lime-500">
+          <span className="ml-auto font-mono text-[10.5px] uppercase tracking-[0.14em] text-chrome-link">
             {readout(index, total)}
           </span>
-          <ThemeToggle className="-mr-2 text-chrome-body hover:text-lime-500" />
+          <ThemeToggle className="-mr-2 text-chrome-body hover:text-chrome-link" />
         </header>
 
         <div className="flex flex-none items-center gap-[18px] border-b border-chrome-line bg-chrome-plate px-[20px] py-[18px]">
@@ -180,7 +180,7 @@ export function RoomShell({ roles }: RoomShellProps) {
             <p className="mt-[6px] font-display text-[32px] font-bold leading-none text-chrome-ink">
               {at(rooms, index).label}
             </p>
-            <p className="mt-2 font-mono text-[10.5px] uppercase tracking-[0.14em] text-lime-500">
+            <p className="mt-2 font-mono text-[10.5px] uppercase tracking-[0.14em] text-chrome-link">
               Turn the ring to move
             </p>
           </div>
@@ -291,7 +291,7 @@ function MobilePane({
   if (room === 'PROJECTS' && device !== null) {
     const p = at(PROJECT_COPY, device);
     return (
-      <div className="animate-sheet-in border-t border-lime-500 bg-chrome-plate px-[20px] pb-[26px] pt-[22px]">
+      <div className="animate-sheet-in border-t border-chrome-state bg-chrome-plate px-[20px] pb-[26px] pt-[22px]">
         <div className="flex items-start">
           <h2 className="font-display text-[34px] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
             {p.name}
@@ -300,7 +300,7 @@ function MobilePane({
             type="button"
             onClick={onCloseDevice}
             aria-label="Close device detail"
-            className="ml-auto min-h-tap min-w-tap text-[22px] text-lime-500"
+            className="ml-auto min-h-tap min-w-tap text-[22px] text-chrome-link"
           >
             <span aria-hidden="true">×</span>
           </button>
@@ -318,7 +318,7 @@ function MobilePane({
 
   return (
     <div className="animate-pane-in-sm px-[20px] py-[22px]">
-      <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-lime-500">{c.kicker}</p>
+      <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-chrome-link">{c.kicker}</p>
       <h2 className="mt-[12px] font-display text-[36px] font-bold leading-[0.96] tracking-[-0.03em] text-chrome-ink">
         {c.title}
       </h2>
@@ -362,7 +362,7 @@ function MobilePane({
               <span className="mt-2 block text-[14.5px] leading-[1.55] text-chrome-body">
                 {p.copy}
               </span>
-              <span className="mt-3 block text-[15px] font-semibold text-lime-500">
+              <span className="mt-3 block text-[15px] font-semibold text-chrome-link">
                 Open device <span aria-hidden="true">→</span>
               </span>
             </button>

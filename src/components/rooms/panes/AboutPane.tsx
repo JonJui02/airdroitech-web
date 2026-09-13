@@ -23,7 +23,7 @@ interface AboutPaneProps {
 export function AboutPane({ caps, onToggle, page }: AboutPaneProps) {
   return (
     <div className="flex h-full flex-col justify-center overflow-y-auto px-[40px] py-[48px]">
-        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-lime-500">
+        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-chrome-link">
           {ABOUT_EYEBROW}
         </p>
 
@@ -35,7 +35,7 @@ export function AboutPane({ caps, onToggle, page }: AboutPaneProps) {
           {ABOUT_BODY}
         </p>
 
-        <p className="mt-[30px] font-mono text-[11.5px] uppercase tracking-[0.16em] text-lime-500">
+        <p className="mt-[30px] font-mono text-[11.5px] uppercase tracking-[0.16em] text-chrome-link">
           Capabilities
         </p>
 

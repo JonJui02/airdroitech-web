@@ -25,14 +25,14 @@ export function MobileRoomDock({
             aria-current={active ? 'true' : undefined}
             className={`flex flex-1 flex-col items-center justify-center gap-2 border-t-2 px-[2px] font-mono text-[9.5px] uppercase tracking-[0.08em] transition-colors duration-200 ${
               active
-                ? 'border-t-lime-500 text-lime-500'
+                ? 'border-t-chrome-state text-chrome-link'
                 : 'border-t-transparent text-chrome-meta'
             }`}
           >
             <span
               aria-hidden="true"
               className={`h-[16px] w-[16px] border border-current ${
-                active ? 'bg-lime-500' : ''
+                active ? 'bg-chrome-state' : ''
               }`}
             />
             {r.label}

@@ -33,7 +33,7 @@ WCAG 2.1 relative luminance, against `#FFFFFF` and ink `#131A17`.
 |---|---|---|---|
 | `#2F7F59` | **4.88:1** PASS AA | **4.88:1** PASS AA | 3.35:1 FAIL |
 | `#4F9934` | 3.54:1 large only | 3.54:1 large only | 4.63:1 PASS AA |
-| `#A0D233` | **1.79:1 NEVER** | **1.79:1 NEVER** | **9.17:1** PASS AAA |
+| `#A0D233` | **1.79:1 NEVER** | **1.79:1 NEVER** | **9.89:1** PASS AAA |
 | `#8E9093` | 3.20:1 large only | 3.20:1 large only | 5.11:1 PASS AA |
 
 "large only" means the pair clears 3:1 — legal at 24px regular / 18.7px bold and
@@ -198,3 +198,42 @@ table — see `docs/OPEN-DECISIONS.md`.*
 A genuinely new token must be added to **four places at once**:
 `tailwind.config.ts`, `src/styles/globals.css`, `src/lib/brand.ts`, and the
 approved set in `scripts/brand-check.mjs`.
+
+### Chrome, light theme
+
+Brand-guardian ruling, 2026-09-13. The header, footer, drawer and homepage
+console used to be dark in both themes; they now follow the theme through
+`--chrome-*` variables. Ratios are recomputed, against the ground each colour
+actually sits on (white ground, `#F5F6F7` plate, `#E9EBEC` rail).
+
+| Role | Dark | Light | Light ratio |
+|---|---|---|---|
+| Ground | `#0E1411` | `#FFFFFF` | — |
+| Plate | `#161E1A` | `#F5F6F7` | surface only |
+| Rail | `#0A0F0D` | `#E9EBEC` | surface only |
+| Line | `#232D28` | `#D6D9DB` | decorative divider |
+| Hover fill | `#1C2621` | `#EEF7F2` | ink on it 16.18:1 |
+| Grid / dial groove | `#1A231F` | `#74777A` | 3.77–4.50:1 |
+| Meta labels | `#8E9093` | `#5A5D60` | 5.54–6.63:1 |
+| Ink | `#EAEEEB` | `#131A17` | 14.78–17.68:1 |
+| Body | `#C3CBC6` | `#424547` | 8.08–9.66:1 |
+| Border | `#45564C` | `#2F7F59` | 4.08–4.88:1 |
+| **Link** (text, focus, hover border) | `#A0D233` | `#235E42` | 6.38–7.63:1 |
+| **State** (dots, ticks, dial, progress — never text) | `#A0D233` | `#5E7C1E` | 4.01–4.80:1 |
+
+**Testable rules:**
+
+- Lime (`#A0D233`) never sits on a light chrome ground as text, border or
+  focus ring — 1.79:1. Use `chrome-link`. The lime *field* (lime fill with ink
+  text, 9.89:1) is unchanged in both themes.
+- `chrome-state` clears 3:1 but not 4.5:1 on plate and rail. It is never a
+  text colour.
+- `grey-400` is not the light dial groove: 2.96:1 on the plate. Use `grey-500`.
+- The homepage h1 gradient is dark-theme only. Clipped to glyphs, its lime end
+  is 1.79:1 on white, below even the 3:1 large-text floor; light renders ink.
+- Theme branching goes through the CSS-variable cascade, never Tailwind
+  `dark:` — `darkMode` is keyed to `[data-theme]`, so `dark:` never fires for
+  a visitor on OS-dark who has not used the toggle.
+
+Known pre-existing issue, not introduced here: in dark, `chrome.border`
+`#45564C` on `#0E1411` is 2.39:1, below the 3:1 non-text floor.

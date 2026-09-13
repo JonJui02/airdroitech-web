@@ -89,14 +89,14 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
           <BrandLogo height="26px" />
         </div>
         <div className="flex flex-none items-center justify-center border-l border-chrome-line px-[6px]">
-          <ThemeToggle className="text-chrome-ink hover:text-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500" />
+          <ThemeToggle className="text-chrome-ink hover:text-chrome-link focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link" />
         </div>
         <button
           ref={closeRef}
           type="button"
           onClick={onClose}
           aria-label="Close navigation"
-          className="flex w-[62px] flex-none items-center justify-center border-l border-chrome-line text-[26px] leading-none text-chrome-ink focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500"
+          className="flex w-[62px] flex-none items-center justify-center border-l border-chrome-line text-[26px] leading-none text-chrome-ink focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link"
         >
           <span aria-hidden="true">×</span>
         </button>
@@ -112,7 +112,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
         </Link>
 
         <section className="border-b border-chrome-line py-5">
-          <p className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-lime-500">
+          <p className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-chrome-link">
             Projects
           </p>
           <ul className="mt-2">
@@ -134,7 +134,7 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
         </section>
 
         <section className="border-b border-chrome-line py-5">
-          <p className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-lime-500">
+          <p className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-chrome-link">
             Career
           </p>
           <ul className="mt-2">
@@ -175,13 +175,13 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
           Contact us
         </Link>
 
-        <address className="mt-7 font-mono text-[12.5px] not-italic leading-[1.8] text-grey-400">
+        <address className="mt-7 font-mono text-[12.5px] not-italic leading-[1.8] text-chrome-meta">
           {ADDRESS_LINES.map((line) => (
             <span key={line} className="block">
               {line}
             </span>
           ))}
-          <a href={`mailto:${EMAIL}`} className="mt-3 block text-lime-500 underline">
+          <a href={`mailto:${EMAIL}`} className="mt-3 block text-chrome-link underline">
             {EMAIL}
           </a>
         </address>
