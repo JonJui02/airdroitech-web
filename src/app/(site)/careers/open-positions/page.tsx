@@ -102,7 +102,9 @@ export default function Page() {
                 {team}
               </h2>
               <span className="flex flex-none items-center gap-3 font-mono text-[12px] uppercase tracking-[0.14em] text-[color:var(--muted)]">
-                {roles.length} {roles.length === 1 ? 'role' : 'roles'}
+                {/* No count (user request 2026-09-13): nothing to update as roles change. */}
+                <span className="group-open/team:hidden">Show roles</span>
+                <span className="hidden group-open/team:inline">Hide roles</span>
                 <span className="flex h-[44px] w-[44px] items-center justify-center border border-[color:var(--line-strong)] text-[color:var(--link)]">
                   <Chevron className="h-5 w-5 transition-transform duration-200 group-open/team:rotate-180" />
                 </span>

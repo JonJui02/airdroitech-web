@@ -35,15 +35,15 @@ export interface Room {
  *
  * Every sub-state is a fact the repo can prove:
  *   Projects -> PRODUCTS.length
- *   Career   -> the number of role files
+ *   Career   -> "Join the team": no count to keep in sync (user request 2026-09-13)
  *   Contact  -> the city from ADDRESS_LINES
  *
- * The design's "8 open" is deliberately not used: all eight role files are
+ * The design's "8 open" is deliberately not used: every role file is
  * `status: needs-confirmation`, and docs/OPEN-DECISIONS.md #4 lists whether
- * they are still open as unresolved. "8 roles" states the count without
- * asserting availability.
+ * they are still open as unresolved. The Career label names no number and
+ * never says "open".
  */
-export function buildRooms(counts: { products: number; roles: number }): Room[] {
+export function buildRooms(counts: { products: number }): Room[] {
   return [
     { key: 'HOME', label: 'Home', sub: 'Overview' },
     {
@@ -61,7 +61,7 @@ export function buildRooms(counts: { products: number; roles: number }): Room[] 
     {
       key: 'CAREER',
       label: 'Career',
-      sub: `${counts.roles} roles`,
+      sub: 'Join the team',
       page: { href: '/careers/', label: 'Life at AirdroiTech' },
     },
     {

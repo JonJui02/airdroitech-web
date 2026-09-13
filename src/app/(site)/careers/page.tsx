@@ -40,7 +40,6 @@ const APPLY_MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent('Job applicat
 export default function Page() {
   const byTeam = getRolesByTeam();
   const teams = Object.keys(byTeam);
-  const roleCount = Object.values(byTeam).reduce((n, list) => n + list.length, 0);
 
   return (
     <>
@@ -177,11 +176,11 @@ export default function Page() {
         </h2>
         <p className="prose-measure mt-4 text-[color:var(--body)]">{ROLES_TEASER.body}</p>
         {/*
-          A count, never "open": every role file is status: needs-confirmation
-          and docs/OPEN-DECISIONS.md #4 is unresolved.
+          No count and never "open" (user request 2026-09-13): team names come from
+          the role files, so this line needs no upkeep as roles change.
         */}
         <p className="mt-4 font-mono text-[13px] uppercase tracking-[0.14em] text-[color:var(--muted)]">
-          {roleCount} roles · {teams.join(' · ')}
+          Roles across {teams.join(' · ')}
         </p>
         <div className="mt-7 flex flex-wrap gap-3">
           <Button href="/careers/open-positions/">See the roles</Button>

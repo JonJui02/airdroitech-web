@@ -53,8 +53,8 @@ export interface RoomShellProps {
  */
 export function RoomShell({ roles }: RoomShellProps) {
   const rooms = useMemo(
-    () => buildRooms({ products: PROJECT_COPY.length, roles: roles.length }),
-    [roles.length],
+    () => buildRooms({ products: PROJECT_COPY.length }),
+    [],
   );
   const total = rooms.length;
 
@@ -192,7 +192,7 @@ export function RoomShell({ roles }: RoomShellProps) {
           <MobilePane
             room={room}
             page={at(rooms, index).page}
-            roles={roles}
+
             device={device}
             onOpenDevice={openDevice}
             onCloseDevice={closeDevice}
@@ -223,7 +223,6 @@ interface Stat {
 function MobilePane({
   room,
   page,
-  roles,
   device,
   onOpenDevice,
   onCloseDevice,
@@ -231,13 +230,11 @@ function MobilePane({
 }: {
   room: RoomKey;
   page: Room['page'];
-  roles: Role[];
   device: number | null;
   onOpenDevice: (i: number, el: HTMLButtonElement) => void;
   onCloseDevice: () => void;
   onNext: () => void;
 }) {
-  const teams = new Set(roles.map((r) => r.team)).size;
 
   const content: Record<RoomKey, { kicker: string; title: string; accent?: string; copy: string; stats: Stat[] }> = {
     HOME: {
@@ -271,8 +268,9 @@ function MobilePane({
       accent: '‘Airdroitechie’',
       copy: CAREER_BODY,
       stats: [
-        { label: 'Roles', value: String(roles.length) },
-        { label: 'Teams', value: String(teams) },
+        // Deliberately vague (user request 2026-09-13): no numbers to keep in sync.
+        { label: 'Roles', value: 'Various' },
+        { label: 'Teams', value: 'Multiple' },
       ],
     },
     CONTACT: {
@@ -355,8 +353,8 @@ function MobilePane({
                 {s.label}
               </p>
               <p className="mt-2 font-display text-[22px] font-bold leading-none text-chrome-ink">
-                {/* Home facts count up and decode, as on desktop; other rooms stay plain. */}
-                {room === 'HOME' ? <CountUp key={`${room}-${s.label}`} value={s.value} replay /> : s.value}
+                {/* Every room's stats animate: numbers count up, words decode. */}
+                <CountUp key={`${room}-${s.label}`} value={s.value} replay />
               </p>
             </div>
           ))}

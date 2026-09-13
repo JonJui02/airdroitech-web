@@ -178,7 +178,11 @@ export function Carousel3D({
       last = now;
       const s = m.current;
 
-      if (s.inView && !s.drag) {
+      // While dragging, the pointer moves the ring directly; just keep painting so
+      // the slides follow the finger instead of freezing until release.
+      if (s.inView && s.drag) {
+        paint();
+      } else if (s.inView) {
         const running = !s.paused && !s.hover && !s.focus && now > s.holdUntil;
         if (s.target !== null) {
           s.vel = 0;
