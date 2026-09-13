@@ -5,8 +5,7 @@ import { Accent } from '@/components/ui/Accent';
 import { BrandLogo } from '@/components/shell/BrandLogo';
 import { ThemeToggle } from '@/components/shell/ThemeToggle';
 import type { Role } from '@/lib/roles';
-import { CAPABILITIES, EMAIL } from '@/lib/site';
-import { DEFAULT_ZONE } from '@/lib/zones';
+import { CAPABILITIES, EMAIL, COMPANY_FACTS } from '@/lib/site';
 import { MobileRoomDock } from './MobileRoomDock';
 import { RoomLegal } from './RoomLegal';
 import { RoomReadMore } from './RoomReadMore';
@@ -56,7 +55,6 @@ export function RoomShell({ roles }: RoomShellProps) {
   const total = rooms.length;
 
   const [index, setIndex] = useState(0);
-  const [zone, setZone] = useState(DEFAULT_ZONE);
   const [caps, setCaps] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(CAPABILITIES.map((c) => [c, true])),
   );
@@ -121,8 +119,6 @@ export function RoomShell({ roles }: RoomShellProps) {
           <div className="relative min-h-0 overflow-hidden">
             <div {...paneProps('HOME')} className="h-full animate-pane-in overflow-y-auto">
               <HomePane
-                zone={zone}
-                onZone={setZone}
                 onOpenProjects={() => goRoom('PROJECTS')}
               />
             </div>
@@ -193,7 +189,6 @@ export function RoomShell({ roles }: RoomShellProps) {
             room={room}
             page={at(rooms, index).page}
             roles={roles}
-            zone={zone}
             device={device}
             onOpenDevice={openDevice}
             onCloseDevice={closeDevice}
@@ -225,7 +220,6 @@ function MobilePane({
   room,
   page,
   roles,
-  zone,
   device,
   onOpenDevice,
   onCloseDevice,
@@ -234,7 +228,6 @@ function MobilePane({
   room: RoomKey;
   page: Room['page'];
   roles: Role[];
-  zone: string;
   device: number | null;
   onOpenDevice: (i: number, el: HTMLButtonElement) => void;
   onCloseDevice: () => void;
@@ -248,11 +241,8 @@ function MobilePane({
       title: 'Programming Intelligence',
       accent: 'Intelligence',
       copy: HERO_DECK,
-      stats: [
-        { label: 'Founded', value: '2021' },
-        { label: 'Markets', value: 'AU · MY' },
-        { label: 'Products', value: String(PROJECT_COPY.length) },
-      ],
+      // Same facts as the desktop strip; sources in src/lib/site.ts.
+      stats: COMPANY_FACTS.map((f) => ({ label: f.label, value: f.value })),
     },
     ABOUT: {
       kicker: 'Challenging the norm',
@@ -287,7 +277,7 @@ function MobilePane({
       accent: 'the team',
       copy: `Every enquiry reaches ${EMAIL}.`,
       stats: [
-        { label: 'Zones shown', value: zone },
+        { label: 'Office', value: 'Shah Alam' },
         { label: 'Polyaire', value: '30+' },
       ],
     },
@@ -336,7 +326,8 @@ function MobilePane({
       {c.stats.length > 0 ? (
         <div
           className="mt-[22px] grid gap-px border border-chrome-line bg-chrome-line"
-          style={{ gridTemplateColumns: `repeat(${c.stats.length}, minmax(0, 1fr))` }}
+          // Four facts wrap to two rows so labels never crush at 375px.
+          style={{ gridTemplateColumns: `repeat(${c.stats.length > 3 ? 2 : c.stats.length}, minmax(0, 1fr))` }}
         >
           {c.stats.map((s) => (
             <div key={s.label} className="bg-chrome-plate p-[14px]">

@@ -10,6 +10,13 @@ interface ImageSlotProps {
   label: string;
   sizes: string;
   priority?: boolean;
+  /**
+   * Serve the file exactly as supplied, skipping Next's resize and re-encode.
+   * For small photos (under ~1000px) where a second compression pass visibly
+   * softens them. Size the slot so it never shows the image above its native
+   * width on a 2x screen.
+   */
+  unoptimized?: boolean;
   className?: string;
   minHeight?: string;
   /**
@@ -54,6 +61,7 @@ export function ImageSlot({
   label,
   sizes,
   priority = false,
+  unoptimized = false,
   className = '',
   minHeight,
   fit = 'cover',
@@ -75,6 +83,7 @@ export function ImageSlot({
           fill
           sizes={sizes}
           priority={priority}
+          unoptimized={unoptimized}
           className={fit === 'contain' ? 'object-contain' : 'object-cover'}
         />
       </div>

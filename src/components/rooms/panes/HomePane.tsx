@@ -1,16 +1,14 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
-import { ZONES } from '@/lib/zones';
+import { COMPANY_FACTS } from '@/lib/site';
 import { HERO_DECK, HERO_EYEBROW } from './copy';
 
 interface HomePaneProps {
-  zone: string;
-  onZone: (z: string) => void;
   onOpenProjects: () => void;
 }
 
-export function HomePane({ zone, onZone, onOpenProjects }: HomePaneProps) {
+export function HomePane({ onOpenProjects }: HomePaneProps) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex flex-1 flex-col justify-center px-[40px] py-[44px]">
@@ -51,60 +49,35 @@ export function HomePane({ zone, onZone, onOpenProjects }: HomePaneProps) {
       </div>
 
       {/*
-        Zone strip. Illustrative, not live — see src/lib/zones.ts. The design's
-        "live" wording and pulsing indicator are deliberately not used: there is
-        no data source behind them and they would read as a status claim.
+        AirdroiTech at a glance — company facts in place of the old illustrative
+        zone strip (user request 2026-09-13). Sources in src/lib/site.ts.
       */}
-      <div
-        role="group"
-        aria-label="Illustration of per-zone climate control"
-        className="flex-none border-t border-chrome-line bg-chrome-plate"
-      >
+      <div className="flex-none border-t border-chrome-line bg-chrome-plate">
         <div className="flex items-center gap-3 border-b border-chrome-line px-[22px] py-[14px]">
           <span aria-hidden="true" className="h-[8px] w-[8px] flex-none bg-chrome-state" />
-          <span className="font-mono text-[11.5px] uppercase tracking-[0.16em] text-chrome-meta">
-            Zone control
-          </span>
+          <h2 className="font-mono text-[11.5px] font-normal uppercase tracking-[0.16em] text-chrome-meta">
+            AirdroiTech at a glance
+          </h2>
           <span className="ml-auto font-mono text-[11.5px] uppercase tracking-[0.16em] text-chrome-meta">
-            {zone} selected · {ZONES.length} zones
+            R&amp;D arm of the Polyaire Group
           </span>
         </div>
 
-        <div className="grid grid-cols-4 gap-px bg-chrome-line">
-          {ZONES.map((z) => {
-            const active = z.name === zone;
-            return (
-              <button
-                key={z.name}
-                type="button"
-                onClick={() => onZone(z.name)}
-                aria-pressed={active}
-                className={`px-[20px] py-[18px] text-left transition-colors duration-200 ${
-                  active ? 'bg-teal-600' : 'bg-chrome-plate hover:bg-chrome-hover'
-                }`}
-              >
-                <span
-                  className={`block font-mono text-[11px] uppercase tracking-[0.14em] ${
-                    active ? 'text-white' : 'text-chrome-meta'
-                  }`}
-                >
-                  {z.name}
-                </span>
-                <span className="mt-2 block font-display text-[38px] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
-                  {z.temp}
-                  <span className="align-super text-[0.42em]">°</span>
-                </span>
-                <span
-                  className={`mt-[6px] block font-mono text-[11px] uppercase tracking-[0.1em] ${
-                    active ? 'text-white' : 'text-chrome-meta'
-                  }`}
-                >
-                  {active ? 'Cooling' : z.state}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+        <dl className="grid grid-cols-4 gap-px bg-chrome-line">
+          {COMPANY_FACTS.map((fact) => (
+            <div
+              key={fact.label}
+              className="flex flex-col-reverse bg-chrome-plate px-[20px] py-[18px] transition-colors duration-200 hover:bg-chrome-hover"
+            >
+              <dt className="mt-[8px] font-mono text-[11px] uppercase tracking-[0.14em] text-chrome-meta">
+                {fact.label}
+              </dt>
+              <dd className="font-display text-[38px] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
+                {fact.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </div>
   );

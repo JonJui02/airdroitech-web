@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Button } from '@/components/ui/Button';
 import { Accent } from '@/components/ui/Accent';
 import { Eyebrow } from '@/components/ui/Eyebrow';
+import { ImageSlot } from '@/components/ui/ImageSlot';
 import { getRolesByTeam } from '@/lib/roles';
 import { EMAIL } from '@/lib/site';
 import {
@@ -44,20 +45,42 @@ export default function Page() {
     <>
       {/* ================= hero ================= */}
       <section className="gutter section-y">
-        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">
-          {CAREERS_HERO.eyebrow}
-        </Eyebrow>
-        <h1 className="mt-4 max-w-[16ch] font-display text-[clamp(48px,8vw,104px)] font-bold leading-[0.9] tracking-[-0.04em] text-[color:var(--ink)]">
-          <Accent text={CAREERS_HERO.title} accent="AirdroiTech" />
-        </h1>
-        <p className="mt-5 font-mono text-[13px] uppercase tracking-[0.16em] text-[color:var(--muted)]">
-          {CAREERS_HERO.established}
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Button href="/careers/open-positions/">See the roles</Button>
-          <Button href={APPLY_MAILTO} variant="secondary">
-            Email your CV
-          </Button>
+        <div className="grid items-center gap-[clamp(28px,4vw,72px)] lg:grid-cols-[minmax(0,1fr)_380px]">
+          <div>
+            <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">
+              {CAREERS_HERO.eyebrow}
+            </Eyebrow>
+            <h1 className="mt-4 max-w-[16ch] font-display text-[clamp(48px,8vw,104px)] font-bold leading-[0.9] tracking-[-0.04em] text-[color:var(--ink)]">
+              <Accent text={CAREERS_HERO.title} accent="AirdroiTech" />
+            </h1>
+            <p className="mt-5 font-mono text-[13px] uppercase tracking-[0.16em] text-[color:var(--muted)]">
+              {CAREERS_HERO.established}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button href="/careers/open-positions/">See the roles</Button>
+              <Button href={APPLY_MAILTO} variant="secondary">
+                Email your CV
+              </Button>
+            </div>
+              </div>
+
+          {/*
+            Lab photo, 740x415 as supplied. Capped at 380px wide so a 2x screen
+            shows it at about its native resolution, and served untouched
+            (unoptimized) so it is not recompressed. Sharper at larger sizes needs
+            a higher-resolution original.
+          */}
+          <ImageSlot
+            src="/hero/home-hero.jpg"
+            ratio="740/415"
+            alt="An AirdroiTech engineer in safety glasses soldering a green circuit board at a lab bench"
+            label="hero/home-hero.jpg"
+            sizes="(min-width: 1024px) 380px, min(380px, 100vw)"
+            fit="cover"
+            unoptimized
+            priority
+            className="max-w-[380px] border border-[color:var(--line)]"
+          />
         </div>
       </section>
 

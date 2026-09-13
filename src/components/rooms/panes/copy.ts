@@ -148,6 +148,11 @@ export const PROJECT_COPY: ProjectCopy[] = [
  */
 export const TEAM_PHOTOS = [
   {
+    src: '/team/adt-team-7.jpeg',
+    alt: 'The AirdroiTech team gathered in the office, most wearing matching black AirdroiTech hoodies',
+    caption: 'The team',
+  },
+  {
     src: '/team/adt-team-3.jpg',
     alt: 'The AirdroiTech team gathered in the office lounge for a group photo',
     caption: 'The team, Shah Alam',
@@ -163,8 +168,28 @@ export const TEAM_PHOTOS = [
     caption: 'Training session',
   },
   {
+    src: '/team/adt-team-5.jfif',
+    alt: 'An AirdroiTech team member presenting at a screen on a stand while two colleagues listen from the sofas',
+    caption: 'Team meeting',
+  },
+  {
+    src: '/team/adt-team-6 (1).jpeg',
+    alt: 'AirdroiTech staff, many in baju Melayu, taking a group selfie at a dinner',
+    caption: 'Festive dinner',
+  },
+  {
+    src: '/team/adt-team-4.jfif',
+    alt: 'A large group of AirdroiTech staff in festive outfits posing under string lights and hanging plants',
+    caption: 'Year-end gathering',
+  },
+  {
     src: '/team/adt-team.jpg',
     alt: 'Five AirdroiTech staff in pirate costume at the annual dinner, in front of a Pirate’s Paradise banner',
     caption: 'Annual dinner',
+  },
+  {
+    src: '/team/adt-team-8.jpeg',
+    alt: 'AirdroiTech staff in pirate hats and face paint taking a group selfie at a costume night',
+    caption: 'Costume night',
   },
 ];

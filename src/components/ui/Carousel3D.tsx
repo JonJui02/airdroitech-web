@@ -18,6 +18,8 @@ interface Carousel3DProps {
   ratio?: `${number}/${number}`;
   fit?: 'cover' | 'contain';
   sizes?: string;
+  /** Pass through to ImageSlot: serve small photos untouched. */
+  unoptimized?: boolean;
   /** Site pages use the semantic tokens; the homepage console uses chrome-*. */
   tone?: 'site' | 'chrome';
   /** Width of the front slide as a fraction of the stage. */
@@ -85,6 +87,7 @@ export function Carousel3D({
   ratio = '4/3',
   fit = 'cover',
   sizes = '(min-width: 1024px) 50vw, 90vw',
+  unoptimized = false,
   tone = 'site',
   itemWidth = 0.56,
   speed = 0.22,
@@ -278,7 +281,7 @@ export function Carousel3D({
   if (n === 1 && only) {
     return (
       <div className={className}>
-        <ImageSlot src={only.src} alt={only.alt} label={only.src} ratio={ratio} fit={fit} sizes={sizes} />
+        <ImageSlot src={only.src} alt={only.alt} label={only.src} ratio={ratio} fit={fit} sizes={sizes} unoptimized={unoptimized} />
       </div>
     );
   }
@@ -312,7 +315,7 @@ export function Carousel3D({
               className="flex-none snap-center"
               style={{ width: `${itemWidth * 100}%` }}
             >
-              <ImageSlot src={s.src} alt={s.alt} label={s.src} ratio={ratio} fit={fit} sizes={sizes} />
+              <ImageSlot src={s.src} alt={s.alt} label={s.src} ratio={ratio} fit={fit} sizes={sizes} unoptimized={unoptimized} />
             </div>
           ))}
         </div>
@@ -352,6 +355,7 @@ export function Carousel3D({
                   ratio={ratio}
                   fit={fit}
                   sizes={sizes}
+                  unoptimized={unoptimized}
                 />
               </div>
             ))}

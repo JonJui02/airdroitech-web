@@ -78,6 +78,22 @@ export const LINKEDIN = 'https://www.linkedin.com/company/airdroitech/';
 export const POLYAIRE = 'https://www.polyaire.com.au';
 export const COMPANY_LINE = '© AirdroiTech Sdn Bhd (1411956P)';
 
+/**
+ * AirdroiTech at a glance — shown in the homepage console instead of the old
+ * illustrative zone strip.
+ *
+ * Sources: "Est since 2021" and "30+ AirdroiTechies" were supplied by the user
+ * on 2026-09-13. Products counts the three product pages; markets are the
+ * Australian products built from the Malaysian office. Update the headcount
+ * here when it changes — nothing else hard-codes it.
+ */
+export const COMPANY_FACTS = [
+  { label: 'Established', value: '2021' },
+  { label: 'AirdroiTechies', value: '30+' },
+  { label: 'Products', value: '3' },
+  { label: 'Markets', value: 'AU · MY' },
+] as const;
+
 export const LOGO = {
   src: '/brand/airdroitech-logo-header.png',
   width: 300,

@@ -128,15 +128,22 @@ export default function Page() {
               ))}
             </ul>
 
-            {/* Every supplied team photo, same 4:3 frame so the heights match. */}
+            {/*
+              Every supplied team photo, same 4:3 frame so the heights match.
+              The photos are 627–800px wide, so the carousel is capped at 600px
+              (front slide about 360px): a 2x screen shows each one at about its
+              native resolution, and unoptimized serves the files untouched
+              instead of recompressing them.
+            */}
             <Carousel3D
               slides={TEAM_PHOTOS}
               label="AirdroiTech team photos"
               ratio="4/3"
               fit="cover"
-              itemWidth={0.62}
-              sizes="(min-width: 1024px) 44vw, 80vw"
-              className="mt-10"
+              itemWidth={0.6}
+              sizes="(min-width: 640px) 360px, 60vw"
+              unoptimized
+              className="mt-10 max-w-[600px]"
             />
           </div>
         </div>
