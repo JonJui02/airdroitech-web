@@ -61,6 +61,15 @@ previous/next buttons plus arrow keys; under reduced motion it becomes a still
 swipeable row; and every image is in the server HTML. Do not remove a
 safeguard, and do not use the pattern anywhere else without asking.
 
+**Approved exception (user decision, 2026-09-13):** `src/components/ui/TypeText.tsx`
+types four headlines letter by letter (Programming Intelligence, We help you build
+your future, Talk to the team, Be an ‘Airdroitechie’), about one second each.
+Safeguards: the full heading is always in the server HTML and read whole by screen
+readers; letters keep their space so nothing shifts; typing only runs when the
+pre-paint script sets `tt-ready`, which it skips under reduced motion; and a CSS
+failsafe shows the text after 2.5s if JavaScript never runs. Do not remove a
+safeguard, and do not add typing to other headings without asking.
+
 ### 4. Every URL stays byte-identical
 
 Ten legacy URLs, all with a trailing slash, all preserved — including the

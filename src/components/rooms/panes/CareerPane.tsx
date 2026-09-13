@@ -1,5 +1,6 @@
 import { InkButton } from '@/components/ui/Button';
 import type { Role } from '@/lib/roles';
+import { TypeText } from '@/components/ui/TypeText';
 import { CAREER_ACTION, CAREER_BODY, CAREER_EYEBROW, CAREER_HEADING } from './copy';
 
 /**
@@ -23,7 +24,8 @@ export function CareerPane({ roles }: { roles: Role[] }) {
           {CAREER_EYEBROW}
         </p>
         <h2 className="mt-[14px] font-display text-[62px] font-bold leading-[0.92] tracking-[-0.035em] text-grey-900">
-          {CAREER_HEADING}
+          {/* No accent on the lime field (brand ruling); the caret uses the heading ink so it stays visible on lime. */}
+          <TypeText text={CAREER_HEADING} caret="currentColor" replay />
         </h2>
         <p className="mt-[18px] max-w-[56ch] text-[17px] leading-[1.62] text-onlime-body">
           {CAREER_BODY}

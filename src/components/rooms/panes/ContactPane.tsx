@@ -1,4 +1,4 @@
-import { Accent } from '@/components/ui/Accent';
+import { TypeText } from '@/components/ui/TypeText';
 import { ADDRESS_LINES, EMAIL, LINKEDIN, POLYAIRE } from '@/lib/site';
 import {
   CONTACT_EYEBROW,
@@ -24,7 +24,7 @@ export function ContactPane() {
           {CONTACT_EYEBROW}
         </p>
         <h2 className="mt-[14px] font-display text-[60px] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
-          <Accent text={CONTACT_HEADING} accent="the team" tone="chrome" />
+          <TypeText text={CONTACT_HEADING} accent="the team" tone="chrome" replay />
         </h2>
 
         <address className="mt-[22px] max-w-[56ch] text-[17px] not-italic leading-[1.7] text-chrome-body">

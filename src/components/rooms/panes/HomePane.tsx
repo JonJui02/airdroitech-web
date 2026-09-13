@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/Button';
 import { COMPANY_FACTS } from '@/lib/site';
 import { HERO_DECK, HERO_EYEBROW } from './copy';
+import { TypeText } from '@/components/ui/TypeText';
 
 interface HomePaneProps {
   onOpenProjects: () => void;
@@ -17,17 +18,9 @@ export function HomePane({ onOpenProjects }: HomePaneProps) {
         </p>
 
         <h1 className="mt-[16px] font-display text-[84px] font-bold leading-[0.88] tracking-[-0.04em] text-chrome-ink">
-          <span className="block">Programming</span>
-          {/*
-            The page's single instance of the brand sweep — the logo's own
-            teal→green→lime gradient, used here and nowhere else.
-            In light theme it renders as solid ink — lime clipped to glyphs is 1.79:1 on white. See .brand-sweep-text in globals.css.
-          */}
-          <span
-            className="block brand-sweep-text"
-          >
-            Intelligence
-          </span>
+          {/* Types in on load and every time the Home room reopens. The accent keeps
+            the brand sweep gradient, the page's one instance of it. */}
+          <TypeText text="Programming Intelligence" accent="Intelligence" tone="chrome" sweep splitAccent replay />
         </h1>
 
         <p className="mt-[24px] max-w-[50ch] text-[18px] leading-[1.55] text-chrome-body">

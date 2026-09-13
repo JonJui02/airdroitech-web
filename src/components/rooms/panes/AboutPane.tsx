@@ -1,6 +1,6 @@
 'use client';
 
-import { Accent } from '@/components/ui/Accent';
+import { TypeText } from '@/components/ui/TypeText';
 import { CAPABILITIES } from '@/lib/site';
 import { RoomReadMore } from '../RoomReadMore';
 import type { Room } from '../rooms';
@@ -29,7 +29,7 @@ export function AboutPane({ caps, onToggle, page }: AboutPaneProps) {
         </p>
 
         <h2 className="mt-[14px] max-w-[20ch] font-display text-[clamp(38px,4.2vw,60px)] font-bold leading-[0.98] tracking-[-0.032em] text-chrome-ink">
-          <Accent text={ABOUT_HEADING} accent="your future" tone="chrome" />
+          <TypeText text={ABOUT_HEADING} accent="your future" tone="chrome" replay />
         </h2>
 
         <p className="mt-[20px] max-w-[60ch] text-[17px] leading-[1.62] text-chrome-body">

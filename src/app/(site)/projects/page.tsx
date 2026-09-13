@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Accent } from '@/components/ui/Accent';
+import { TypeText } from '@/components/ui/TypeText';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { Tilt } from '@/components/ui/Tilt';
@@ -72,7 +73,7 @@ export default function Page() {
 
       <section className="gutter band-y border-t border-[color:var(--line)] bg-[color:var(--tint)]">
         <h2 className="font-display text-[clamp(26px,3.2vw,44px)] font-bold leading-[1.06] tracking-[-0.03em] text-[color:var(--ink)]">
-          <Accent text="Be an ‘Airdroitechie’" accent="‘Airdroitechie’" />
+          <TypeText text="Be an ‘Airdroitechie’" accent="‘Airdroitechie’" />
         </h2>
         <p className="prose-measure mt-4 text-[color:var(--body)]">
           Are you a tech enthusiast looking for a career journey? The hard work and dedication of

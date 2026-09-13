@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Button } from '@/components/ui/Button';
 import { Accent } from '@/components/ui/Accent';
+import { TypeText } from '@/components/ui/TypeText';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { getRolesByTeam } from '@/lib/roles';
@@ -172,7 +173,7 @@ export default function Page() {
       <section className="gutter band-y border-t border-[color:var(--line)] bg-[color:var(--tint)]">
         <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">{ROLES_TEASER.label}</Eyebrow>
         <h2 className="mt-4 font-display text-[clamp(30px,4vw,56px)] font-bold leading-[1.04] tracking-[-0.03em] text-[color:var(--ink)]">
-          <Accent text="Be an ‘Airdroitechie’" accent="‘Airdroitechie’" />
+          <TypeText text="Be an ‘Airdroitechie’" accent="‘Airdroitechie’" />
         </h2>
         <p className="prose-measure mt-4 text-[color:var(--body)]">{ROLES_TEASER.body}</p>
         {/*

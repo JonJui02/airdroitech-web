@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { Accent } from '@/components/ui/Accent';
+import { TypeText } from '@/components/ui/TypeText';
 import { BrandLogo } from '@/components/shell/BrandLogo';
 import { ThemeToggle } from '@/components/shell/ThemeToggle';
 import type { Role } from '@/lib/roles';
@@ -317,7 +318,12 @@ function MobilePane({
     <div className="animate-pane-in-sm px-[20px] py-[22px]">
       <p className={`font-mono text-[11px] uppercase tracking-[0.16em] ${room === 'HOME' ? 'text-chrome-link' : 'text-chrome-meta'}`}>{c.kicker}</p>
       <h2 className="mt-[12px] font-display text-[36px] font-bold leading-[0.96] tracking-[-0.03em] text-chrome-ink">
-        <Accent text={c.title} accent={c.accent} tone="chrome" sweep={room === 'HOME'} />
+        {room === 'PROJECTS' ? (
+            <Accent text={c.title} accent={c.accent} tone="chrome" />
+          ) : (
+            // key={room} remounts per room, so each room title types in again.
+            <TypeText key={room} text={c.title} accent={c.accent} tone="chrome" sweep={room === 'HOME'} replay />
+          )}
       </h2>
       <p className="mt-[14px] text-[15.5px] leading-[1.62] text-chrome-body">{c.copy}</p>
 

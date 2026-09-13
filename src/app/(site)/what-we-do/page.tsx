@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Accent } from '@/components/ui/Accent';
+import { TypeText } from '@/components/ui/TypeText';
 import { Carousel3D } from '@/components/ui/Carousel3D';
 import { TEAM_PHOTOS } from '@/components/rooms/panes/copy';
 import { Eyebrow } from '@/components/ui/Eyebrow';
@@ -198,7 +199,7 @@ export default function Page() {
       {/* ================= careers CTA ================= */}
       <section className="gutter band-y border-t border-[color:var(--line)] bg-[color:var(--tint)]">
         <h2 className="font-display text-[clamp(26px,3.2vw,44px)] font-bold leading-[1.06] tracking-[-0.03em] text-[color:var(--ink)]">
-          <Accent text="Be an ‘Airdroitechie’" accent="‘Airdroitechie’" />
+          <TypeText text="Be an ‘Airdroitechie’" accent="‘Airdroitechie’" />
         </h2>
         <div className="mt-7 flex flex-wrap gap-3">
           <Button href="/careers/">See open positions</Button>
