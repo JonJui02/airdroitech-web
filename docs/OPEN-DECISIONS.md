@@ -18,7 +18,7 @@ anything marked **NEEDED**.
 |---|---|---|
 | 1 | **Real team names, titles and photos** for the four leadership cards — or a decision to drop the individual cards and keep only the group list. Live site currently shows `MothR`, `FathR`, `STL`, and one card with a role and bio but no name. | About |
 | 2 | **Actual headcount**, and whether the counters stay at all. Live counters read `0` on About and `1` on Careers, with a stray `500` beside one. | Home, About, Careers |
-| 3 | **Where "Order Now" on AirTouch Beam should go** — Polyaire store, distributor locator, or an enquiry form. ADT runs no commerce. | Beam page |
+| 3 | ~~**Where "Order Now" on AirTouch Beam should go** — Polyaire store, distributor locator, or an enquiry form. ADT runs no commerce.~~ **Resolved 2026-09-13:** visitors go to the official AirTouch Home site (airtouchhome.com.au), which sells and supports Beam. Every product page now ends with links to its official site — AirTouch 5, AirTouch Home, AirTouch Secure, AirTouch Beam, PolyPlan — opened in a new tab. Beam's Matter support was confirmed at the same time. | Beam page |
 | 4 | **Are all eight listed roles still open**, and is there a job description per role to publish? All eight MDX files are `status: needs-confirmation` with `TODO` bodies. | Careers, Open positions |
 | 5 | **Newsletter list** — keep it, and if so which provider replaces the popup plugin? "Sign up for News" currently appears as bare text on two pages. | Forms |
 | 6 | **Where CV files may legally be stored, and for how long**, under Malaysia's PDPA. Vercel Blob's region matters. No real applicant data should land in Blob before this is answered. | Forms |

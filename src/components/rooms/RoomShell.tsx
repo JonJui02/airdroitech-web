@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { BrandLogo } from '@/components/shell/BrandLogo';
+import { ThemeToggle } from '@/components/shell/ThemeToggle';
 import type { Role } from '@/lib/roles';
 import { CAPABILITIES, EMAIL } from '@/lib/site';
 import { DEFAULT_ZONE } from '@/lib/zones';
@@ -160,6 +161,7 @@ export function RoomShell({ roles }: RoomShellProps) {
           <span className="ml-auto font-mono text-[10.5px] uppercase tracking-[0.14em] text-lime-500">
             {readout(index, total)}
           </span>
+          <ThemeToggle className="-mr-2 text-chrome-body hover:text-lime-500" />
         </header>
 
         <div className="flex flex-none items-center gap-[18px] border-b border-chrome-line bg-chrome-plate px-[20px] py-[18px]">

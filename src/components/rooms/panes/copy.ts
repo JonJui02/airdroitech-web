@@ -1,3 +1,4 @@
+import { OFFICIAL, type OfficialLink } from '@/lib/official';
 import { PRODUCTS } from '@/lib/site';
 
 /**
@@ -42,11 +43,13 @@ export interface ProjectCopy {
   /**
    * What the product does.
    *
-   * Every line is read off the supplied product imagery — no capability is
-   * inferred, extrapolated or invented. The `from` field names the image each
-   * claim comes from so it can be checked against the source.
+   * Every line is read off the supplied product imagery or the official product
+   * site — no capability is inferred, extrapolated or invented. The `from`
+   * field names the source so it can be checked.
    */
   features: { label: string; from: string }[];
+  /** The product's official site, opened in a new tab from the device detail. */
+  official: OfficialLink;
 }
 
 export const PROJECT_COPY: ProjectCopy[] = [
@@ -71,6 +74,7 @@ export const PROJECT_COPY: ProjectCopy[] = [
       { label: 'Camera view', from: 'ATH-device.webp' },
       { label: 'Local weather and air quality', from: 'ATH-device.webp' },
     ],
+    official: OFFICIAL.airtouchHome,
   },
   {
     kicker: 'Matter-enabled companion',
@@ -91,16 +95,17 @@ export const PROJECT_COPY: ProjectCopy[] = [
     ],
     /*
      * at-beam-content.webp shows one Beam and three DIFFERENT split systems.
-     * That is a statement about compatibility across makes, which matches the
-     * repo's own "any split-system air conditioner" — NOT a claim that one
-     * Beam drives three units at once. Do not upgrade this line to imply
-     * multi-unit control without confirmation.
+     * That is a statement about compatibility across makes — and the official
+     * FAQ confirms "One Beam unit controls one air conditioner". Do not upgrade
+     * any line here to imply multi-unit control.
      */
     features: [
       { label: 'Works with any split system', from: 'at-beam-content.webp' },
       { label: 'Wireless — no rewiring', from: 'at-beam-content.webp' },
-      { label: 'Matter-enabled', from: 'PRODUCTS[1].tag' },
+      { label: 'Matter-enabled', from: 'PRODUCTS[1].tag — confirmed by user 2026-09-13' },
+      { label: 'Apple Home, Google and Alexa', from: 'airtouchhome.com.au Beam page' },
     ],
+    official: OFFICIAL.airtouchBeam,
   },
   {
     kicker: 'Air conditioning CAD software',
@@ -129,6 +134,7 @@ export const PROJECT_COPY: ProjectCopy[] = [
       { label: 'Area, volume, air flow and load per zone', from: 'polyplan-content.webp' },
       { label: 'Layout, capacity, components and pricing', from: 'polyplan-content.webp' },
     ],
+    official: OFFICIAL.polyplan,
   },
 ];
 

@@ -190,3 +190,26 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Theme cross-fade.
+
+   ThemeToggle adds .theme-switching to <html> for the length of ONE switch, so
+   ordinary hover and focus transitions are not slowed the rest of the time.
+
+   Scoped to prefers-reduced-motion: no-preference. These declarations are
+   !important and more specific than the global reduced-motion clamp, so
+   without the media query they would override it; under reduced motion the
+   switch is instant.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-switching,
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after {
+    transition-property: background-color, border-color, color, fill, stroke,
+      text-decoration-color, outline-color !important;
+    transition-duration: 250ms !important;
+    transition-timing-function: ease !important;
+  }
+}

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useRef } from 'react';
 import { BrandLogo } from './BrandLogo';
+import { ThemeToggle } from './ThemeToggle';
 import { ADDRESS_LINES, EMAIL, PRODUCTS } from '@/lib/site';
 
 const FOCUSABLE =
@@ -86,6 +87,9 @@ export function MobileDrawer({ open, onClose }: MobileDrawerProps) {
       <div className="sticky top-0 z-10 flex min-h-[62px] items-stretch border-b border-chrome-line bg-chrome-ground">
         <div className="flex flex-1 items-center gutter-l">
           <BrandLogo height="26px" />
+        </div>
+        <div className="flex flex-none items-center justify-center border-l border-chrome-line px-[6px]">
+          <ThemeToggle className="text-chrome-ink hover:text-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500" />
         </div>
         <button
           ref={closeRef}

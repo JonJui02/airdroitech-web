@@ -2,7 +2,13 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
+import { OutboundLink } from '@/components/ui/OutboundLink';
 import type { ProductPageCopy } from '@/app/(site)/projects/projects-copy';
+
+const PRIMARY =
+  'inline-flex min-h-[54px] items-center px-7 text-[16px] font-semibold bg-teal-600 text-white hover:bg-[color:var(--primary-hover)]';
+const SECONDARY =
+  'inline-flex min-h-[54px] items-center px-7 text-[16px] font-semibold border-[1.5px] border-[color:var(--btn2-border)] text-[color:var(--link)] hover:border-[color:var(--btn2-border-hover)]';
 
 /**
  * The shared layout for the three product pages.
@@ -10,6 +16,10 @@ import type { ProductPageCopy } from '@/app/(site)/projects/projects-copy';
  * One component rather than three near-identical pages: the three differ only
  * in copy and imagery, and a shared shell keeps the heading order, landmark
  * structure and CTA identical across them.
+ *
+ * Each page ends by sending the visitor to the product's official site, where
+ * purchase, access and support actually live. Those links open in a new tab
+ * with a short fade (OutboundLink), so the visitor keeps this site behind.
  *
  * Nothing here has a hidden resting state. The legacy product pages were part
  * of the same blank-section failure as About.
@@ -20,7 +30,7 @@ export function ProductPage({
   siblings,
 }: {
   product: ProductPageCopy;
-  /** Page-specific closing action. Beam's destination is still undecided. */
+  /** Optional page-specific internal action, rendered before the official links. */
   action?: { label: string; href: string; note?: string };
   siblings: { name: string; href: string }[];
 }) {
@@ -66,7 +76,11 @@ export function ProductPage({
               ) : null}
 
               {section.items ? (
-                <ul className="grid gap-px border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2">
+                <ul
+                  className={`grid gap-px border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2 ${
+                    section.body ? 'mt-8' : ''
+                  }`}
+                >
                   {section.items.map((item) => (
                     <li key={item.title} className="bg-[color:var(--ground)] px-6 py-6">
                       <p className="font-display text-[19px] font-bold tracking-[-0.01em] text-[color:var(--ink)]">
@@ -78,6 +92,12 @@ export function ProductPage({
                     </li>
                   ))}
                 </ul>
+              ) : null}
+
+              {section.note ? (
+                <p className="prose-measure mt-5 border-l-2 border-[color:var(--line-strong)] pl-4 text-[14px] leading-[1.6] text-[color:var(--muted)]">
+                  {section.note}
+                </p>
               ) : null}
 
               {section.figure ? (
@@ -97,16 +117,32 @@ export function ProductPage({
         </section>
       ))}
 
-      {action ? (
-        <section className="gutter band-y border-t border-[color:var(--line)] bg-[color:var(--tint)]">
-          <Button href={action.href}>{action.label}</Button>
-          {action.note ? (
-            <p className="mt-4 max-w-[52ch] text-[15px] leading-[1.6] text-[color:var(--body)]">
-              {action.note}
-            </p>
-          ) : null}
-        </section>
-      ) : null}
+      <section className="gutter band-y border-t border-[color:var(--line)] bg-[color:var(--tint)]">
+        {action ? (
+          <div className="mb-8">
+            <Button href={action.href}>{action.label}</Button>
+            {action.note ? (
+              <p className="mt-4 max-w-[52ch] text-[15px] leading-[1.6] text-[color:var(--body)]">
+                {action.note}
+              </p>
+            ) : null}
+          </div>
+        ) : null}
+
+        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">On the official site</Eyebrow>
+        <p className="mt-3 max-w-[52ch] text-[17px] leading-[1.6] text-[color:var(--body)]">
+          {product.official.note}
+        </p>
+        <ul className="mt-6 flex flex-wrap gap-3">
+          {product.official.links.map((link, i) => (
+            <li key={link.href}>
+              <OutboundLink href={link.href} site={link.site} className={i === 0 ? PRIMARY : SECONDARY}>
+                {link.label}
+              </OutboundLink>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <section className="gutter band-y border-t border-[color:var(--line)]">
         <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">Other projects</Eyebrow>

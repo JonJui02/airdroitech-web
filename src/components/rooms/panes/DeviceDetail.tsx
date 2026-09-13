@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/Button';
 import { ImageSlot } from '@/components/ui/ImageSlot';
+import { OutboundLink } from '@/components/ui/OutboundLink';
 import type { ProjectCopy } from './copy';
 
 interface DeviceDetailProps {
@@ -78,6 +79,13 @@ export function DeviceDetail({ product, onBack }: DeviceDetailProps) {
 
           <div className="mt-[26px] flex flex-wrap gap-3">
             <Button href={product.href}>Full project page</Button>
+            <OutboundLink
+              href={product.official.href}
+              site={product.official.site}
+              className="inline-flex min-h-tap items-center border border-chrome-border px-5 font-semibold text-lime-500 transition-colors duration-200 hover:border-lime-500"
+            >
+              Official site
+            </OutboundLink>
             <button
               type="button"
               onClick={onBack}

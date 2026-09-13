@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
+import { themeInitScript } from '@/lib/theme';
 import '@/styles/globals.css';
 
 // Self-hosted at build time by next/font: no runtime Google Fonts request, so
@@ -56,7 +57,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-MY" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en-MY" suppressHydrationWarning className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      <head>
+        {/*
+          Restores a stored light/dark choice before first paint, so there is no
+          flash of the wrong theme. suppressHydrationWarning on <html> is for
+          exactly this: the attribute can differ from the server render.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body>
         <a
           href="#main"

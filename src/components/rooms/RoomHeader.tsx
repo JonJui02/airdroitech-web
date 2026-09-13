@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { BrandLogo } from '@/components/shell/BrandLogo';
+import { ThemeToggle } from '@/components/shell/ThemeToggle';
 import type { Room, RoomKey } from './rooms';
 
 interface RoomHeaderProps {
@@ -49,6 +50,10 @@ export function RoomHeader({ rooms, room, onRoom }: RoomHeaderProps) {
           );
         })}
       </nav>
+
+      <div className="flex flex-none items-center justify-center border-l border-chrome-line px-[10px]">
+        <ThemeToggle className="text-chrome-body hover:text-lime-500" />
+      </div>
     </header>
   );
 }

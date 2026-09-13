@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { BrandLogo } from './BrandLogo';
 import { MobileDrawer } from './MobileDrawer';
 import { ScrollProgress } from './ScrollProgress';
+import { ThemeToggle } from './ThemeToggle';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { EMAIL, LINKEDIN, NAV, PRODUCTS } from '@/lib/site';
 
@@ -108,6 +109,11 @@ export function SiteHeader() {
               Contact
             </Link>
           </nav>
+
+          {/* Theme switch, every width. Outside <nav>: it changes appearance, it does not navigate. */}
+          <div className="flex flex-none items-center justify-center border-l border-chrome-line px-[6px]">
+            <ThemeToggle className="text-chrome-body hover:text-lime-500 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-lime-500" />
+          </div>
 
           {/* 375 hamburger */}
           <button

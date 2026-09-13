@@ -1,22 +1,21 @@
 import type { Metadata } from 'next';
 import { ProductPage } from '@/components/content/ProductPage';
-import { POLYAIRE } from '@/lib/site';
 import { BEAM } from '../projects-copy';
 
 /**
  * Route: /projects/airtouch-beam/  (URL unchanged from the legacy site)
- * Copy:  ../projects-copy.ts — ported from the legacy page.
+ * Copy:  ../projects-copy.ts — legacy AirdroiTech page plus the official
+ *        airtouchhome.com.au Beam page.
  *
- * The legacy page closes with "Order Now". AirdroiTech runs no commerce, so
- * that button implies a checkout that does not exist. docs/OPEN-DECISIONS.md #3
- * is the open question — Polyaire store, distributor locator, or an enquiry
- * form. Until it is answered, CONTENT-SKELETON's stated interim applies: label
- * it "Where to buy" and point at Polyaire, which is true today.
+ * The legacy page closed with "Order Now", implying a checkout AirdroiTech does
+ * not run (docs/OPEN-DECISIONS.md #3). Resolved by the user on 2026-09-13:
+ * visitors go to the official AirTouch Home site, which sells and supports
+ * Beam. ProductPage renders that as the page's official-site links.
  */
 export const metadata: Metadata = {
   title: 'AirTouch Beam',
   description:
-    'AirTouch Beam — your AC’s smart companion. Turns any split-system air conditioner into a smart, Matter-enabled unit with geofencing and scheduling.',
+    'AirTouch Beam — your AC’s smart companion. Makes any split-system air conditioner smart, with geofencing, scheduling, and Apple Home, Google Home and Alexa voice control.',
   alternates: { canonical: '/projects/airtouch-beam/' },
 };
 
@@ -24,11 +23,6 @@ export default function Page() {
   return (
     <ProductPage
       product={BEAM}
-      action={{
-        label: 'Where to buy ↗',
-        href: POLYAIRE,
-        note: 'AirTouch Beam is sold through Polyaire, Australia’s largest air-conditioning wholesale network. AirdroiTech builds the product and does not sell it directly.',
-      }}
       siblings={[
         { name: 'AirTouch', href: '/projects/airtouch/' },
         { name: 'PolyPlan', href: '/projects/polyplan/' },

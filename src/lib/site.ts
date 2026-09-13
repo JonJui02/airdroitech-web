@@ -38,7 +38,9 @@ export const PRODUCTS = [
     href: '/projects/polyplan/',
     descriptor: 'CAD software for HVAC professionals',
     tag: 'CAD',
-    asset: 'projects/polyplan.webp',
+    // The laptop shot is the one Polyaire's own PolyPlan page uses, and it ships
+    // with real transparency — no matte cut needed.
+    asset: 'projects/laptop-polyplan.webp',
   },
 ] as const;
 
