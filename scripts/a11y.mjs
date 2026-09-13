@@ -10,11 +10,18 @@
  * entirely: whatever Chrome is installed is the Chrome we test in. No driver,
  * no browser download, no per-machine pinning.
  *
- * Usage:
- *   npm run a11y                      # http://localhost:3000/
- *   npm run a11y -- /what-we-do/ /projects/
+ * Usage (routes WITHOUT a leading slash — see toUrl):
+ *   npm run a11y                              # http://localhost:3000/
+ *   npm run a11y -- . what-we-do projects     # "." is the homepage
  *   npm run a11y -- https://staging.example.com/
+ *   npm run a11y -- --theme both . projects   # audit light AND dark
  *   CHROME_PATH=/path/to/chrome npm run a11y
+ *
+ * --theme light|dark|both emulates prefers-color-scheme for each page. The
+ * site follows the OS whenever no explicit choice is stored, and every audit
+ * runs in a fresh profile with empty storage, so the emulated scheme is the
+ * theme that renders. Without the flag, Chrome's own default applies — which
+ * cannot prove contrast in both themes.
  *
  * Exits 1 if any violation is found, so it can gate a build.
  */
@@ -55,7 +62,23 @@ function toUrl(target) {
   return route ? `${BASE}/${route}/` : `${BASE}/`;
 }
 
-const args = process.argv.slice(2);
+// ---- arguments -------------------------------------------------------------
+const rawArgs = process.argv.slice(2);
+const args = [];
+let themeFlag = null;
+for (let i = 0; i < rawArgs.length; i++) {
+  if (rawArgs[i] === '--theme') themeFlag = rawArgs[++i] ?? '';
+  else args.push(rawArgs[i]);
+}
+
+if (themeFlag !== null && !['light', 'dark', 'both'].includes(themeFlag)) {
+  console.error(`\n--theme must be light, dark or both (got "${themeFlag}").\n`);
+  process.exit(2);
+}
+
+/** null = no emulation: Chrome's default colour scheme. */
+const SCHEMES = themeFlag === 'both' ? ['light', 'dark'] : themeFlag ? [themeFlag] : [null];
+
 let targets;
 try {
   targets = (args.length ? args : ['/']).map(toUrl);
@@ -64,6 +87,7 @@ try {
   process.exit(2);
 }
 
+// ---- chrome ----------------------------------------------------------------
 function findChrome() {
   if (process.env.CHROME_PATH) return process.env.CHROME_PATH;
   const byPlatform = {
@@ -191,13 +215,26 @@ const AXE_RUN = `axe.run(document, { runOnly: { type: 'tag', values: ${JSON.stri
     passes: r.passes.length,
   }))`;
 
-async function auditPage(cdp, url) {
+/**
+ * @param {string | null} colorScheme  'light' | 'dark' to emulate, null for default.
+ */
+async function auditPage(cdp, url, colorScheme) {
   const { targetId } = await cdp.send('Target.createTarget', { url: 'about:blank' });
   const { sessionId } = await cdp.send('Target.attachToTarget', { targetId, flatten: true });
 
   try {
     await cdp.send('Page.enable', {}, sessionId);
     await cdp.send('Runtime.enable', {}, sessionId);
+
+    // Set before navigation so the pre-paint theme script and first render
+    // both see the emulated preference.
+    if (colorScheme) {
+      await cdp.send(
+        'Emulation.setEmulatedMedia',
+        { features: [{ name: 'prefers-color-scheme', value: colorScheme }] },
+        sessionId,
+      );
+    }
 
     const loaded = cdp.once('Page.loadEventFired', sessionId);
     await cdp.send('Page.navigate', { url }, sessionId);
@@ -224,17 +261,17 @@ async function auditPage(cdp, url) {
 
 const IMPACT_ORDER = { critical: 0, serious: 1, moderate: 2, minor: 3 };
 
-function report(url, { violations, passes }) {
+function report(label, { violations, passes }) {
   const total = violations.reduce((n, v) => n + v.nodes.length, 0);
   const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
   if (!violations.length) {
-    console.log(`PASS  ${url}  — ${passes} checks passed, 0 violations`);
+    console.log(`PASS  ${label}  — ${passes} checks passed, 0 violations`);
     return 0;
   }
 
   console.log(
-    `FAIL  ${url}  — ${plural(total, 'violation')} across ${plural(violations.length, 'rule')} (${passes} checks passed)`,
+    `FAIL  ${label}  — ${plural(total, 'violation')} across ${plural(violations.length, 'rule')} (${passes} checks passed)`,
   );
 
   const sorted = [...violations].sort(
@@ -254,6 +291,7 @@ function report(url, { violations, passes }) {
   return total;
 }
 
+// ---- main ------------------------------------------------------------------
 const { child, userDataDir, port } = await launchChrome();
 let failures = 0;
 let cdp;
@@ -264,12 +302,16 @@ try {
   cdp = await CDP.connect(webSocketDebuggerUrl);
 
   const axeVersion = require('axe-core/package.json').version;
+  const schemeNote = SCHEMES[0] === null ? '' : ` · ${SCHEMES.join(' + ')}`;
   console.log(
-    `axe-core ${axeVersion} · WCAG 2.1 AA · ${targets.length} page${targets.length === 1 ? '' : 's'}\n`,
+    `axe-core ${axeVersion} · WCAG 2.1 AA · ${targets.length} page${targets.length === 1 ? '' : 's'}${schemeNote}\n`,
   );
 
   for (const url of targets) {
-    failures += report(url, await auditPage(cdp, url));
+    for (const scheme of SCHEMES) {
+      const label = scheme ? `${url} [${scheme}]` : url;
+      failures += report(label, await auditPage(cdp, url, scheme));
+    }
   }
 } catch (err) {
   console.error(`\nAudit failed: ${err.message}`);
