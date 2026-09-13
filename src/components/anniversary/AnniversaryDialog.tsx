@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { COMPANY_FACTS } from '@/lib/site';
+import { ANNIVERSARY_OPEN_EVENT } from './anniversary-bus';
 
 /**
  * Fifth-year welcome dialog — homepage only, once per visitor.
@@ -63,10 +64,23 @@ export function AnniversaryDialog() {
     dontShowRef.current = dontShow;
   }, [dontShow]);
 
+  // Automatic appearance — suppressed once the visitor has seen or dismissed it.
   useEffect(() => {
     if (alreadyHandled()) return;
     const t = window.setTimeout(() => setOpen(true), OPEN_DELAY_MS);
     return () => window.clearTimeout(t);
+  }, []);
+
+  // On-demand open from the gift box. Deliberately ignores the storage above:
+  // someone clicking the gift is asking for the dialog, so it must always come,
+  // including after "Don't show this again".
+  useEffect(() => {
+    const onRequest = () => {
+      setDontShow(false);
+      setOpen(true);
+    };
+    window.addEventListener(ANNIVERSARY_OPEN_EVENT, onRequest);
+    return () => window.removeEventListener(ANNIVERSARY_OPEN_EVENT, onRequest);
   }, []);
 
   const close = useCallback(() => {

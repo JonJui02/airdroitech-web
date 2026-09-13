@@ -5,6 +5,8 @@ import { CountUp } from '@/components/ui/CountUp';
 import { COMPANY_FACTS } from '@/lib/site';
 import { HERO_DECK, HERO_EYEBROW } from './copy';
 import { TypeText } from '@/components/ui/TypeText';
+import { GiftBox } from '@/components/anniversary/GiftBox';
+import { FLAGS } from '@/lib/flags';
 
 interface HomePaneProps {
   onOpenProjects: () => void;
@@ -13,7 +15,8 @@ interface HomePaneProps {
 export function HomePane({ onOpenProjects }: HomePaneProps) {
   return (
     <div className="flex h-full flex-col">
-      <div className="flex flex-1 flex-col justify-center px-[40px] py-[44px]">
+      <div className="flex flex-1 items-center gap-[40px] px-[40px] py-[44px]">
+        <div className="min-w-0 flex-1">
         <p className="font-mono text-[12.5px] uppercase tracking-[0.18em] text-chrome-link">
           {HERO_EYEBROW}
         </p>
@@ -39,7 +42,19 @@ export function HomePane({ onOpenProjects }: HomePaneProps) {
           <Button href="/careers/" variant="secondary">
             Work with us
           </Button>
+          </div>
         </div>
+
+        {/*
+          Fifth-year gift box — TEMPORARY, gated on FLAGS.anniversary so it
+          disappears with the dialog. Sits beside the headline; flex-none so it
+          never squeezes the copy column.
+        */}
+        {FLAGS.anniversary && (
+          <div className="flex-none">
+            <GiftBox size={150} />
+          </div>
+        )}
       </div>
 
       {/*

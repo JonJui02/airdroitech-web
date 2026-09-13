@@ -22,6 +22,8 @@ import { CareerPane } from './panes/CareerPane';
 import { ContactPane } from './panes/ContactPane';
 import { DeviceDetail } from './panes/DeviceDetail';
 import { HomePane } from './panes/HomePane';
+import { GiftBox } from '@/components/anniversary/GiftBox';
+import { FLAGS } from '@/lib/flags';
 import { ProjectsPane } from './panes/ProjectsPane';
 import {
   ABOUT_BODY,
@@ -340,6 +342,17 @@ function MobilePane({
       <p className="mt-[14px] text-[15.5px] leading-[1.62] text-chrome-body">{c.copy}</p>
 
       <RoomReadMore page={page} className="mt-[14px] text-[15.5px]" />
+
+      {/*
+        Fifth-year gift box on the Home room only — TEMPORARY, gated on
+        FLAGS.anniversary. Smaller than the desktop one and centred, so it reads
+        as an invitation rather than competing with the headline at 375px.
+      */}
+      {room === 'HOME' && FLAGS.anniversary ? (
+        <div className="mt-[22px] flex justify-center border border-chrome-line bg-chrome-plate py-[20px]">
+          <GiftBox size={112} />
+        </div>
+      ) : null}
 
       {c.stats.length > 0 ? (
         <div

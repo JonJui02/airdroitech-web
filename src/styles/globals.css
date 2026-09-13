@@ -861,3 +861,87 @@ html.tt-ready .count-text[data-count='play'] .count-live {
     }
   }
 }
+
+@layer components {
+  /* ---------------------------------------------------------------------------
+     Fifth-year gift box (TEMPORARY — see src/lib/flags.ts).
+     Delete this block with the dialog.
+  --------------------------------------------------------------------------- */
+  .gift-stage {
+    perspective: 640px;
+  }
+
+  .gift-svg {
+    transform-style: preserve-3d;
+    /* Visible and fully opaque at rest — the bob only moves it. */
+    animation: gift-bob 3.4s ease-in-out infinite;
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+
+  .gift-glow {
+    background: radial-gradient(circle at 50% 62%, color-mix(in srgb, #a0d233 30%, transparent), transparent 62%);
+    opacity: 0.55;
+    animation: gift-pulse 3.4s ease-in-out infinite;
+  }
+
+  .gift-lid {
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .gift-bow {
+    transform-origin: 70px 50px;
+    transition: transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Hover and keyboard focus get the same treatment: the lid lifts, the box
+     turns slightly into the light, the bow gives a little. */
+  .gift:hover .gift-svg,
+  .gift:focus-visible .gift-svg {
+    transform: rotateX(6deg) rotateY(-10deg) scale(1.04);
+  }
+
+  .gift:hover .gift-lid,
+  .gift:focus-visible .gift-lid {
+    transform: translateY(-9px);
+  }
+
+  .gift:hover .gift-bow,
+  .gift:focus-visible .gift-bow {
+    transform: scale(1.08) rotate(-3deg);
+  }
+
+  .gift:active .gift-svg {
+    transform: rotateX(4deg) rotateY(-6deg) scale(0.98);
+  }
+
+  @keyframes gift-bob {
+    0%, 100% { transform: translateY(0) rotateY(-2deg); }
+    50%      { transform: translateY(-7px) rotateY(3deg); }
+  }
+
+  @keyframes gift-pulse {
+    0%, 100% { opacity: 0.38; transform: scale(0.94); }
+    50%      { opacity: 0.62; transform: scale(1.04); }
+  }
+
+  /*
+    Reduced motion: the box is completely still. It still lifts its lid on
+    hover and focus, because that is a direct response to the pointer or the
+    keyboard rather than ambient movement — but nothing loops, and nothing
+    moves on its own.
+  */
+  @media (prefers-reduced-motion: reduce) {
+    .gift-svg,
+    .gift-glow {
+      animation: none;
+    }
+    .gift-svg {
+      transform: none;
+    }
+    .gift-glow {
+      opacity: 0.45;
+      transform: none;
+    }
+  }
+}
