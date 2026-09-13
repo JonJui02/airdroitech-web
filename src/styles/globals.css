@@ -57,6 +57,24 @@
   --hover-fill: #2f7f59;
   --on-fill: #ffffff;
   --on-fill-line: #d7ebe1; /* teal-100: hairlines and dots, 3.92:1 on the fill */
+  /* Neumorphic room dial (RoomDial.tsx) — the one shadow exception, brand-guardian
+     ruling 2026-09-13 (docs/BRAND.md "Dial shading"). Built only from white, black and
+     chrome tokens; no new hex. */
+  --neu-hi-lg: color-mix(in srgb, white 85%, transparent);
+  --neu-hi-sm: color-mix(in srgb, white 85%, transparent);
+  --neu-lo: color-mix(in srgb, var(--chrome-body) 20%, transparent);
+  --neu-in-lo: color-mix(in srgb, var(--chrome-body) 22%, transparent);
+  --neu-in-hi: color-mix(in srgb, white 70%, transparent);
+  --neu-knob-lo: color-mix(in srgb, var(--chrome-body) 22%, transparent);
+  /* Unfilled track under the progress arc: 3.67:1 against chrome-state in light. */
+  --neu-track: var(--chrome-line);
+  --neu-ridge: color-mix(in srgb, var(--chrome-body) 30%, transparent);
+  --neu-knob-face: linear-gradient(145deg, color-mix(in srgb, white 40%, transparent), color-mix(in srgb, var(--chrome-body) 6%, transparent));
+  --neu-raised-lg: -6px -6px 12px var(--neu-hi-lg), 6px 6px 12px var(--neu-lo);
+  --neu-raised-sm: -6px -6px 12px var(--neu-hi-sm), 6px 6px 12px var(--neu-lo);
+  --neu-inset: inset 2px 2px 4px var(--neu-in-lo), inset -2px -2px 4px var(--neu-in-hi);
+  --neu-knob-lg: -3px -3px 8px var(--neu-hi-lg), 3px 3px 8px var(--neu-knob-lo);
+  --neu-knob-sm: -3px -3px 8px var(--neu-hi-sm), 3px 3px 8px var(--neu-knob-lo);
   --glow-a: #2f7f59;
   --glow-b: #a0d233;
   --glow-a-mix: 0%;
@@ -116,6 +134,16 @@
     --green: #4f9934;
     --tint: #16241c;
     --page: #0e1411;
+    /* Dial: the highlight is the surface lightened, never a flat white glow. */
+    --neu-hi-lg: color-mix(in srgb, var(--chrome-ground) 70%, white 30%);
+    --neu-hi-sm: color-mix(in srgb, var(--chrome-plate) 70%, white 30%);
+    --neu-lo: color-mix(in srgb, black 55%, transparent);
+    --neu-in-lo: color-mix(in srgb, black 50%, transparent);
+    --neu-in-hi: color-mix(in srgb, var(--chrome-rail) 60%, white 20%);
+    --neu-knob-lo: color-mix(in srgb, black 55%, transparent);
+    --neu-track: var(--chrome-grid);
+    --neu-ridge: color-mix(in srgb, var(--chrome-body) 25%, transparent);
+    --neu-knob-face: linear-gradient(145deg, color-mix(in srgb, white 5%, transparent), color-mix(in srgb, black 25%, transparent));
     --plate: #161e1a;
     --btn2-border: #45564c;
     --btn2-border-hover: #a0d233;
@@ -160,6 +188,16 @@
   --green: #4f9934;
   --tint: #16241c;
   --page: #0e1411;
+  /* Dial: the highlight is the surface lightened, never a flat white glow. */
+  --neu-hi-lg: color-mix(in srgb, var(--chrome-ground) 70%, white 30%);
+  --neu-hi-sm: color-mix(in srgb, var(--chrome-plate) 70%, white 30%);
+  --neu-lo: color-mix(in srgb, black 55%, transparent);
+  --neu-in-lo: color-mix(in srgb, black 50%, transparent);
+  --neu-in-hi: color-mix(in srgb, var(--chrome-rail) 60%, white 20%);
+  --neu-knob-lo: color-mix(in srgb, black 55%, transparent);
+  --neu-track: var(--chrome-grid);
+  --neu-ridge: color-mix(in srgb, var(--chrome-body) 25%, transparent);
+  --neu-knob-face: linear-gradient(145deg, color-mix(in srgb, white 5%, transparent), color-mix(in srgb, black 25%, transparent));
   --plate: #161e1a;
   --btn2-border: #45564c;
   --btn2-border-hover: #a0d233;
@@ -629,7 +667,8 @@
 }
 
 a.hover-box:focus-visible,
-button.hover-box:focus-visible {
+button.hover-box:focus-visible,
+summary.hover-box:focus-visible {
   background-color: var(--hover-fill);
   border-color: var(--hover-fill);
   color: var(--on-fill);

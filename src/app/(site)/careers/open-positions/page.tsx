@@ -10,19 +10,22 @@ import { ROLES_TEASER } from '../careers-copy';
 
 /**
  * Route: /careers/open-positions/  (URL unchanged from the legacy site — do not rename)
- * Job:   List the roles and route applications.
+ * Job:   Let a visitor scan the roles and read only the ones that interest them.
  *
- * Roles and descriptions come from src/content/roles/*.mdx (ported from the
- * legacy page). Every role renders expanded — no collapsed rows — so no
- * description sits behind a click.
+ * Layout (user request 2026-09-13 — the fully expanded page read as a wall of
+ * text): each team is a collapsible list, open by default so every role title
+ * is visible at once; each role is a dropdown whose job description and apply
+ * button open on click.
  *
- * No application form yet (user decision, 2026-09-13): each role applies by
- * email until Resend is configured and docs/OPEN-DECISIONS.md #6 (CV storage
- * under PDPA) is answered. Nothing here collects personal data.
+ * Native <details>/<summary>: every description is in the server HTML, so it
+ * stays crawlable and Ctrl+F finds (and in Chromium browsers opens) it. This is
+ * a disclosure, not a carousel — CLAUDE.md #3's resting-state rule holds: role
+ * titles are always visible, and nothing is parked at opacity 0.
  *
- * Every role file is `status: needs-confirmation` (OPEN-DECISIONS #4), so the
- * page never says a role is currently open and asks applicants to confirm
- * availability by email.
+ * Roles come from src/content/roles/*.mdx. No application form yet (user
+ * decision 2026-09-13): each role applies by email. Every role file is
+ * `status: needs-confirmation` (OPEN-DECISIONS #4), so the page never says a
+ * role is currently open.
  */
 export const metadata: Metadata = {
   title: 'Open positions',
@@ -50,9 +53,27 @@ const mdComponents = {
 const applyHref = (title: string) =>
   `mailto:${EMAIL}?subject=${encodeURIComponent(`Application: ${title}`)}`;
 
+/** Down chevron; rotates to point up while its dropdown is open. */
+function Chevron({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  );
+}
+
 export default function Page() {
-  const byTeam = getRolesByTeam();
-  const teams = Object.entries(byTeam);
+  const teams = Object.entries(getRolesByTeam());
 
   return (
     <>
@@ -67,72 +88,64 @@ export default function Page() {
           All you need to know, to be a part of AirdroiTech!
         </p>
         <p className="prose-measure mt-5 text-[color:var(--body)]">
-          Roles are listed as they appear on our careers page. To apply, or to check a role is still
+          Open any role to read its job description. To apply, or to check a role is still
           available, email your CV to {EMAIL} with the role in the subject line.
         </p>
-
-        {/* Jump list: every role is on this page; this only shortens the scroll. */}
-        <nav aria-label="Roles" className="mt-8 grid gap-6 sm:grid-cols-2">
-          {teams.map(([team, roles]) => (
-            <div key={team}>
-              <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-[color:var(--eyebrow)]">
-                {team}
-              </p>
-              <ul className="mt-2">
-                {roles.map((role) => (
-                  <li key={role.slug}>
-                    <a
-                      href={`#${role.slug}`}
-                      className="inline-flex min-h-tap items-center text-[color:var(--link)] underline-offset-4 hover:underline"
-                    >
-                      {role.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </nav>
       </section>
 
       {/* ================= roles, by team ================= */}
       {teams.map(([team, roles]) => (
         <section key={team} className="gutter band-y border-t border-[color:var(--line)]">
-          <h2 className="font-display text-[clamp(30px,4vw,56px)] font-bold leading-[1.04] tracking-[-0.03em] text-[color:var(--ink)]">
-            {team}
-          </h2>
+          <details open className="group/team">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
+              <h2 className="font-display text-[clamp(30px,4vw,56px)] font-bold leading-[1.04] tracking-[-0.03em] text-[color:var(--ink)]">
+                {team}
+              </h2>
+              <span className="flex flex-none items-center gap-3 font-mono text-[12px] uppercase tracking-[0.14em] text-[color:var(--muted)]">
+                {roles.length} {roles.length === 1 ? 'role' : 'roles'}
+                <span className="flex h-[44px] w-[44px] items-center justify-center border border-[color:var(--line-strong)] text-[color:var(--link)]">
+                  <Chevron className="h-5 w-5 transition-transform duration-200 group-open/team:rotate-180" />
+                </span>
+              </span>
+            </summary>
 
-          <div className="mt-8 grid gap-px border border-[color:var(--line)] bg-[color:var(--line)]">
-            {roles.map((role) => (
-              <article
-                key={role.slug}
-                id={role.slug}
-                className="hover-box scroll-mt-[120px] bg-[color:var(--ground)] px-[clamp(20px,3vw,40px)] py-[clamp(24px,3vw,40px)]"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-4">
-                  <div>
-                    <h3 className="font-display text-[clamp(22px,2.4vw,32px)] font-bold leading-[1.1] tracking-[-0.02em] text-[color:var(--ink)]">
-                      {role.title}
-                    </h3>
-                    <p className="mt-2 font-mono text-[12px] uppercase tracking-[0.12em] text-[color:var(--muted)]">
-                      {[role.team, role.location, role.type].filter(Boolean).join(' · ')}
-                    </p>
+            <div className="mt-8 grid animate-pane-in-fast gap-px border border-[color:var(--line)] bg-[color:var(--line)]">
+              {roles.map((role) => (
+                <details key={role.slug} id={role.slug} className="group/role scroll-mt-[120px] bg-[color:var(--ground)]">
+                  <summary className="hover-box flex cursor-pointer list-none items-center justify-between gap-4 bg-[color:var(--ground)] px-[clamp(20px,3vw,40px)] py-[clamp(18px,2vw,26px)] [&::-webkit-details-marker]:hidden">
+                    <span className="min-w-0">
+                      <h3 className="font-display text-[clamp(20px,2.2vw,28px)] font-bold leading-[1.15] tracking-[-0.02em] text-[color:var(--ink)]">
+                        {role.title}
+                      </h3>
+                      <span className="mt-2 block font-mono text-[12px] uppercase tracking-[0.12em] text-[color:var(--muted)]">
+                        {[role.location, role.type].filter(Boolean).join(' · ')}
+                      </span>
+                    </span>
+                    <span className="flex flex-none items-center gap-3 font-mono text-[12px] uppercase tracking-[0.14em] text-[color:var(--link)]">
+                      <span className="hidden sm:inline">
+                        <span className="group-open/role:hidden">Read job description</span>
+                        <span className="hidden group-open/role:inline">Hide</span>
+                      </span>
+                      <Chevron className="h-5 w-5 transition-transform duration-200 group-open/role:rotate-180" />
+                    </span>
+                  </summary>
+
+                  <div className="animate-pane-in-fast border-t border-[color:var(--line)] px-[clamp(20px,3vw,40px)] pb-[clamp(24px,3vw,40px)] pt-[clamp(18px,2vw,26px)]">
+                    <Button href={applyHref(role.title)} variant="secondary">
+                      Email your CV
+                    </Button>
+                    <div className="prose-measure mt-2">
+                      <MDXRemote
+                        source={role.body.replace(/<!--[\s\S]*?-->/g, '')}
+                        components={mdComponents}
+                        options={{ mdxOptions: { format: 'md' } }}
+                      />
+                    </div>
                   </div>
-                  <Button href={applyHref(role.title)} variant="secondary">
-                    Email your CV
-                  </Button>
-                </div>
-
-                <div className="prose-measure mt-2">
-                  <MDXRemote
-                    source={role.body.replace(/<!--[\s\S]*?-->/g, '')}
-                    components={mdComponents}
-                    options={{ mdxOptions: { format: 'md' } }}
-                  />
-                </div>
-              </article>
-            ))}
-          </div>
+                </details>
+              ))}
+            </div>
+          </details>
         </section>
       ))}
 

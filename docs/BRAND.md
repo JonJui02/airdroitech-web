@@ -347,3 +347,25 @@ page fills with colour on hover with its text staying readable.
 
 Square corners everywhere (`globals.css` base layer). One approved exception, by
 user request 2026-09-13: the `/careers/` hero photo has 14px rounded corners.
+
+### Dial shading (shadow exception)
+
+Brand-guardian ruling, 2026-09-13. The base rule "Square corners everywhere.
+Hairline borders, not shadows." is waived for exactly one element: the
+room-selector dial (`RoomDial.tsx`), by user request, for a neumorphic
+turned-dial feel. Scope: the dial's circular body only — its container is
+round so the shadow reads as a circle. No other element gets `box-shadow`; the
+image tilt stays shadow-free.
+
+All shadow and highlight colours are `color-mix()` of `white`, `black` and
+existing `--chrome-*` tokens (`--neu-*` in `globals.css`) — no new hex. In dark,
+the highlight is the dial's own surface lightened, never a flat white glow.
+
+| Pair | Light | Dark |
+|---|---|---|
+| `chrome-state` arc vs dial body | 4.78:1 desktop / 4.61:1 mobile | 10.43:1 / 9.52:1 |
+| `chrome-state` arc vs unfilled track | 3.67:1 (track `--chrome-line`) | 9.01:1 (track `--chrome-grid`) |
+
+The old light track (`--chrome-grid` under `chrome-state`) measured 1.16:1 and
+was replaced as part of this ruling. Grip ridges use a tint of `--chrome-body`
+only. The settle animation is a CSS transition, so reduced motion collapses it.
