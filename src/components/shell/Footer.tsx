@@ -88,17 +88,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/*
-        Ghosted statement line. Near-invisible against the ground by design: it is
-        decoration, carries no information, and every fact near it is stated in
-        real contrast above. aria-hidden so it is not announced either.
-      */}
-      <p
-        aria-hidden="true"
-        className="mt-[clamp(40px,4.4vw,80px)] font-display text-[clamp(30px,5.6vw,84px)] font-bold leading-[0.95] tracking-[-0.035em] text-chrome-hover"
-      >
-        Programming Intelligence
-      </p>
 
       <div className="mt-[clamp(24px,2.6vw,40px)] flex flex-wrap items-center justify-between gap-4 border-t border-chrome-line pt-5 font-mono text-[12px] text-chrome-meta">
         <span>{COMPANY_LINE}</span>

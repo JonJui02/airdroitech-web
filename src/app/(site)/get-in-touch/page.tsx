@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { Button } from '@/components/ui/Button';
 import { Accent } from '@/components/ui/Accent';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { ImageSlot } from '@/components/ui/ImageSlot';
-import { Tilt } from '@/components/ui/Tilt';
 import { ADDRESS_LINES, EMAIL, LINKEDIN } from '@/lib/site';
 
 /**
@@ -42,36 +40,20 @@ export default function Page() {
     <>
       {/* ================= hero ================= */}
       <section className="gutter section-y">
-        <div className="grid items-center gap-[clamp(24px,4vw,72px)] lg:grid-cols-[1fr_minmax(0,420px)]">
-          <div>
-            <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">Get in touch</Eyebrow>
-            <h1 className="mt-4 max-w-[14ch] font-display text-[clamp(44px,7vw,96px)] font-bold leading-[0.92] tracking-[-0.04em] text-[color:var(--ink)]">
-              <Accent text="Get in touch with AirdroiTech!" accent="AirdroiTech" />
-            </h1>
-            <ul className="mt-7 flex flex-wrap gap-x-[clamp(14px,2.4vw,36px)] gap-y-2 font-display text-[clamp(24px,2.8vw,38px)] font-bold tracking-[-0.02em] text-[color:var(--ink)]">
-              <li>Inquiries?</li>
-              <li>Questions?</li>
-              <li>Ideas?</li>
-            </ul>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button href={MAILTO}>Tell us!</Button>
-              <Button href={LINKEDIN} variant="secondary">
-                LinkedIn ↗
-              </Button>
-            </div>
-          </div>
-
-          <Tilt>
-            <ImageSlot
-              src="/illustration/adt-get-in-touch-3d.webp"
-              ratio="1/1"
-              alt="A hand holding a phone showing the AirdroiTech mark"
-              label="illustration/adt-get-in-touch-3d.webp"
-              sizes="(min-width: 1024px) 420px, 80vw"
-              fit="contain"
-              priority
-            />
-          </Tilt>
+        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">Get in touch</Eyebrow>
+        <h1 className="mt-4 max-w-[14ch] font-display text-[clamp(44px,7vw,96px)] font-bold leading-[0.92] tracking-[-0.04em] text-[color:var(--ink)]">
+          <Accent text="Get in touch with AirdroiTech!" accent="AirdroiTech" />
+        </h1>
+        <ul className="mt-7 flex flex-wrap gap-x-[clamp(14px,2.4vw,36px)] gap-y-2 font-display text-[clamp(24px,2.8vw,38px)] font-bold tracking-[-0.02em] text-[color:var(--ink)]">
+          <li>Inquiries?</li>
+          <li>Questions?</li>
+          <li>Ideas?</li>
+        </ul>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Button href={MAILTO}>Tell us!</Button>
+          <Button href={LINKEDIN} variant="secondary">
+            LinkedIn ↗
+          </Button>
         </div>
       </section>
 
@@ -95,31 +77,19 @@ export default function Page() {
       <section className="gutter band-y border-t border-[color:var(--line)]">
         <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
           <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">Location</Eyebrow>
-          <div className="grid items-center gap-[clamp(20px,3vw,56px)] md:grid-cols-[1fr_minmax(0,260px)]">
-            <div>
-              <address className="font-display text-[clamp(20px,2.2vw,30px)] font-bold not-italic leading-[1.35] tracking-[-0.01em] text-[color:var(--ink)]">
-                {ADDRESS_LINES.map((line) => (
-                  <span key={line} className="block">
-                    {line}
-                  </span>
-                ))}
-              </address>
-              <p className="mt-6">
-                <Button href={MAPS} variant="ghost">
-                  Open in Google Maps ↗
-                </Button>
-              </p>
-            </div>
-            <Tilt>
-              <ImageSlot
-                src="/illustration/adt-located.webp"
-                ratio="1/1"
-                alt="A map pin carrying the AirdroiTech mark, marking the office location"
-                label="illustration/adt-located.webp"
-                sizes="260px"
-                fit="contain"
-              />
-            </Tilt>
+          <div>
+            <address className="font-display text-[clamp(20px,2.2vw,30px)] font-bold not-italic leading-[1.35] tracking-[-0.01em] text-[color:var(--ink)]">
+              {ADDRESS_LINES.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+            </address>
+            <p className="mt-6">
+              <Button href={MAPS} variant="ghost">
+                Open in Google Maps ↗
+              </Button>
+            </p>
           </div>
         </div>
       </section>

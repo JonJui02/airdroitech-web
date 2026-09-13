@@ -1,5 +1,4 @@
 import { Accent } from '@/components/ui/Accent';
-import { ImageSlot } from '@/components/ui/ImageSlot';
 import { ADDRESS_LINES, EMAIL, LINKEDIN, POLYAIRE } from '@/lib/site';
 import {
   CONTACT_EYEBROW,
@@ -19,7 +18,7 @@ import {
 export function ContactPane() {
   return (
     <div className="grid h-full grid-rows-[1fr_auto]">
-      <div className="grid min-h-0 grid-cols-1 lg:grid-cols-[1fr_minmax(0,320px)]">
+      <div className="grid min-h-0 grid-cols-1">
         <div className="flex flex-col justify-center overflow-y-auto px-[40px] py-[44px]">
         <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-chrome-meta">
           {CONTACT_EYEBROW}
@@ -51,35 +50,6 @@ export function ContactPane() {
           </div>
         </div>
 
-        {/*
-          The two supplied brand illustrations. Their white mattes have been
-          cut (scripts/matte-cut.mjs), so they sit directly on the chrome
-          ground with no plate.
-        */}
-        <div className="grid grid-rows-2 gap-px border-chrome-line bg-chrome-line max-lg:hidden lg:border-l">
-          <div className="hover-box bg-chrome-plate p-[22px]">
-            <ImageSlot
-              src="/illustration/adt-get-in-touch-3d.webp"
-              ratio="1/1"
-              alt="A hand holding a phone showing the AirdroiTech mark"
-              label="illustration/adt-get-in-touch-3d.webp"
-              sizes="320px"
-              fit="contain"
-              className="h-full"
-            />
-          </div>
-          <div className="hover-box bg-chrome-plate p-[22px]">
-            <ImageSlot
-              src="/illustration/adt-located.webp"
-              ratio="1/1"
-              alt="A map pin carrying the AirdroiTech mark, marking the office location"
-              label="illustration/adt-located.webp"
-              sizes="320px"
-              fit="contain"
-              className="h-full"
-            />
-          </div>
-        </div>
       </div>
 
       <div className="flex flex-none flex-wrap items-center gap-[36px] border-t border-chrome-line bg-chrome-plate px-[40px] py-[28px]">
