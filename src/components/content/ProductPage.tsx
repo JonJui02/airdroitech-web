@@ -81,8 +81,16 @@ export function ProductPage({
                     section.body ? 'mt-8' : ''
                   }`}
                 >
-                  {section.items.map((item) => (
-                    <li key={item.title} className="bg-[color:var(--ground)] px-6 py-6">
+                  {section.items.map((item, i, all) => (
+                    <li
+                      key={item.title}
+                      className={`bg-[color:var(--ground)] px-6 py-6 ${
+                        // An odd count in a two-column grid leaves the last row
+                        // half empty, and the 1px grid gap shows through as a
+                        // solid grey block. The last item spans both columns.
+                        all.length % 2 === 1 && i === all.length - 1 ? 'sm:col-span-2' : ''
+                      }`}
+                    >
                       <p className="font-display text-[19px] font-bold tracking-[-0.01em] text-[color:var(--ink)]">
                         {item.title}
                       </p>
