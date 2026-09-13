@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { Accent } from '@/components/ui/Accent';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
+import { Tilt } from '@/components/ui/Tilt';
 import { INDEX, PRODUCT_PAGES } from './projects-copy';
 
 /**
@@ -41,14 +42,14 @@ export default function Page() {
             className="group grid items-center gap-[clamp(24px,3.4vw,72px)] lg:grid-cols-2"
           >
             <div className={i % 2 === 1 ? 'lg:order-last' : ''}>
-              <ImageSlot
+              <Tilt><ImageSlot
                 src={product.hero.src}
                 ratio="16/10"
                 alt={product.hero.alt}
                 label={product.hero.src}
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 fit="contain"
-              />
+              /></Tilt>
             </div>
 
             <div>
@@ -56,7 +57,7 @@ export default function Page() {
                 {product.kicker}
               </Eyebrow>
               <h2 className="mt-3 font-display text-[clamp(34px,4.6vw,64px)] font-bold leading-[1.02] tracking-[-0.035em] text-[color:var(--ink)]">
-                {product.name}
+                <span className="hover-sweep">{product.name}</span>
               </h2>
               <p className="mt-4 max-w-[40ch] font-display text-[clamp(18px,1.8vw,24px)] font-bold leading-[1.3] tracking-[-0.015em] text-[color:var(--ink)]">
                 {product.summary}

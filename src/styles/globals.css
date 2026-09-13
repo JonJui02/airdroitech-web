@@ -345,45 +345,49 @@
   background-repeat: no-repeat;
 }
 
-/* / — homepage console. Chrome surfaces take the teal tone (brand-guardian 2026-09-13). */
+/* / — homepage console, grey 9%. Grey, not lime: the console already carries the
+   site's one solid-lime element (the Career room field). brand-guardian 2026-09-13. */
 [data-tone='home'] {
-  --page: #eef5f2;
-  --chrome-ground: #eef5f2;
-  --chrome-plate: #e6f0eb;
-  --chrome-rail: #deebe4;
-  --chrome-hover: #dae8e1;
+  --page: #f5f5f5;
+  --ground: #fcfcfc;
+  --surface: #f0f1f1;
+  --tint: #ebebec;
+  --chrome-ground: #f5f5f5;
+  --chrome-plate: #f1f2f2;
+  --chrome-rail: #eeeeef;
+  --chrome-hover: #ebebec;
 }
 
-/* /what-we-do/ — green 10% */
+/* /what-we-do/ — lime 9% */
 [data-tone='about'] {
-  --page: #edf5eb;
-  --ground: #f8fbf7;
-  --surface: #e6f1e3;
-  --tint: #deecd8;
-  --glow-a: #4f9934;
-  --glow-b: #2f7f59;
-  --glow-a-mix: 9%;
-  --glow-b-mix: 7%;
-}
-
-/* /projects/ — teal 6% */
-[data-tone='projects'] {
-  --page: #f3f7f5;
-  --ground: #fcfdfd;
-  --surface: #eaf2ee;
-  --tint: #e0ece6;
+  --page: #f6fbed;
+  --ground: #fcfef9;
+  --surface: #f3f9e4;
+  --tint: #eef7da;
   --glow-a: #2f7f59;
   --glow-b: #4f9934;
   --glow-a-mix: 9%;
   --glow-b-mix: 7%;
 }
 
-/* /projects/airtouch/ — teal 10% */
+/* /projects/ — grey 6% */
+[data-tone='projects'] {
+  --page: #f8f8f9;
+  --ground: #fdfdfd;
+  --surface: #f4f4f4;
+  --tint: #eeeeef;
+  --glow-a: #2f7f59;
+  --glow-b: #8e9093;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /projects/airtouch/ — lime 11% */
 [data-tone='airtouch'] {
-  --page: #eaf2ee;
-  --ground: #f7faf8;
-  --surface: #e2ede8;
-  --tint: #d7e7df;
+  --page: #f5fae9;
+  --ground: #fafdf5;
+  --surface: #f1f8e0;
+  --tint: #ecf6d6;
   --glow-a: #2f7f59;
   --glow-b: #4f9934;
   --glow-a-mix: 9%;
@@ -402,14 +406,14 @@
   --glow-b-mix: 7%;
 }
 
-/* /projects/polyplan/ — green 7% */
+/* /projects/polyplan/ — lime 7% */
 [data-tone='polyplan'] {
-  --page: #f3f8f1;
-  --ground: #fcfdfc;
-  --surface: #ecf4e9;
-  --tint: #e3efdf;
-  --glow-a: #4f9934;
-  --glow-b: #2f7f59;
+  --page: #f8fcf1;
+  --ground: #fefefc;
+  --surface: #f5fae9;
+  --tint: #f0f8de;
+  --glow-a: #2f7f59;
+  --glow-b: #4f9934;
   --glow-a-mix: 9%;
   --glow-b-mix: 7%;
 }
@@ -426,36 +430,36 @@
   --glow-b-mix: 7%;
 }
 
-/* /careers/open-positions/ — grey 9% */
+/* /careers/open-positions/ — lime 5% */
 [data-tone='roles'] {
-  --page: #f5f5f5;
-  --ground: #fcfcfc;
-  --surface: #f0f1f1;
-  --tint: #ebebec;
-  --glow-a: #4f9934;
-  --glow-b: #8e9093;
-  --glow-a-mix: 9%;
-  --glow-b-mix: 7%;
-}
-
-/* /get-in-touch/ — teal 12% */
-[data-tone='contact'] {
-  --page: #e6f0eb;
-  --ground: #f3f7f5;
-  --surface: #deebe4;
-  --tint: #d3e4dc;
+  --page: #fafdf5;
+  --ground: #fefefc;
+  --surface: #f6fbed;
+  --tint: #f2f9e2;
   --glow-a: #2f7f59;
   --glow-b: #4f9934;
   --glow-a-mix: 9%;
   --glow-b-mix: 7%;
 }
 
-/* /thank-you/ — teal 4% */
+/* /get-in-touch/ — grey 10% */
+[data-tone='contact'] {
+  --page: #f4f4f4;
+  --ground: #fafbfb;
+  --surface: #efeff0;
+  --tint: #eaeaea;
+  --glow-a: #2f7f59;
+  --glow-b: #8e9093;
+  --glow-a-mix: 9%;
+  --glow-b-mix: 7%;
+}
+
+/* /thank-you/ — lime 6% */
 [data-tone='thanks'] {
-  --page: #f7faf8;
-  --ground: #fcfdfd;
-  --surface: #eef5f2;
-  --tint: #e4eee9;
+  --page: #f9fcf3;
+  --ground: #fefefc;
+  --surface: #f6fbeb;
+  --tint: #f1f8e0;
   --glow-a: #2f7f59;
   --glow-b: #4f9934;
   --glow-a-mix: 9%;
@@ -470,14 +474,14 @@
   --tint: #f1f2f2;
 }
 
-/* 404 — grey 11% */
+/* 404 — lime 12% */
 [data-tone='missing'] {
-  --page: #f3f3f3;
-  --ground: #f9f9fa;
-  --surface: #eeeeef;
-  --tint: #e8e9e9;
-  --glow-a: #8e9093;
-  --glow-b: #2f7f59;
+  --page: #f4fae7;
+  --ground: #f9fcf3;
+  --surface: #f0f8de;
+  --tint: #ebf6d4;
+  --glow-a: #2f7f59;
+  --glow-b: #4f9934;
   --glow-a-mix: 9%;
   --glow-b-mix: 7%;
 }
@@ -516,4 +520,56 @@
   --chrome-plate: inherit;
   --chrome-hover: inherit;
   --chrome-line: inherit;
+}
+
+/* ---------------------------------------------------------------------------
+   Hover sweep — the letters fill green from left to right on hover and drain
+   back on leave (user decision 2026-09-13). Used on the About Us title and
+   every project name.
+
+   The resting state is plain ink text. The clip-to-text trick only applies
+   where the browser supports it, and forced-colours mode drops it, so the
+   title can never render invisible.
+--------------------------------------------------------------------------- */
+.hover-sweep {
+  --sweep-base: var(--ink);
+  --sweep-fill: var(--heading-accent);
+}
+
+.hover-sweep-chrome {
+  --sweep-base: var(--chrome-ink);
+  --sweep-fill: var(--chrome-accent);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hover-sweep {
+    background-image: linear-gradient(90deg, var(--sweep-fill) 0 50%, var(--sweep-base) 50% 100%);
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hover-sweep:hover,
+  .group:hover .hover-sweep,
+  .group:focus-visible .hover-sweep {
+    background-position: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hover-sweep {
+    transition: background-position 480ms cubic-bezier(0.22, 0.7, 0.2, 1);
+  }
+}
+
+@media (forced-colors: active) {
+  .hover-sweep {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
 }

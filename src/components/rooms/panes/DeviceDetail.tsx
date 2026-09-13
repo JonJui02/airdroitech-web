@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/Button';
-import { ImageSlot } from '@/components/ui/ImageSlot';
+import { Carousel3D } from '@/components/ui/Carousel3D';
 import { OutboundLink } from '@/components/ui/OutboundLink';
 import type { ProjectCopy } from './copy';
 
@@ -56,7 +56,7 @@ export function DeviceDetail({ product, onBack }: DeviceDetailProps) {
       <div className="grid flex-1 grid-cols-2 overflow-hidden">
         <div className="flex flex-col justify-center overflow-y-auto px-[40px] py-[36px]">
           <h3 className="font-display text-[56px] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
-            {product.name}
+            <span className="hover-sweep hover-sweep-chrome">{product.name}</span>
           </h3>
           <p className="mt-[18px] max-w-[46ch] text-[16.5px] leading-[1.65] text-chrome-body">
             {product.copy}
@@ -103,75 +103,28 @@ export function DeviceDetail({ product, onBack }: DeviceDetailProps) {
 }
 
 /**
- * The product shots, as a left-to-right rail.
- *
- * Deliberately NOT a carousel in the banned sense: every shot is in the DOM,
- * laid out, and reachable — the rail is a scroll container with snap points,
- * the arrows only scroll it, and there is no auto-advance and no slide hidden
- * behind a gesture. CLAUDE.md non-negotiable #3 rules out hiding content
- * behind a gesture, not horizontal movement.
- *
- * The next shot peeks past the right edge (88% per slide), which is what tells
- * a viewer there is more without a caption saying so. A single shot fills the
- * rail and the arrows do not render.
+ * The product shots as a 3D coverflow carousel (src/components/ui/Carousel3D).
+ * Auto-loops, drags and flings; pauses on hover, focus and touch, has a pause
+ * button, and turns into a still row under reduced motion.
  */
 function DeviceGallery({ product }: { product: ProjectCopy }) {
-  const railRef = useRef<HTMLDivElement>(null);
-
   const shots = [
     { src: `/${product.asset}`, alt: `${product.name} — ${product.kicker}` },
     ...product.gallery,
   ];
 
-  function scrollRail(direction: -1 | 1) {
-    const rail = railRef.current;
-    if (!rail) return;
-    rail.scrollBy({ left: direction * rail.clientWidth * 0.88, behavior: 'smooth' });
-  }
-
   return (
-    <div className="relative min-h-0 border-l border-chrome-line">
-      <div
-        ref={railRef}
-        className="flex h-full snap-x snap-mandatory overflow-x-auto overflow-y-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        {shots.map((s) => (
-          <div
-            key={s.src}
-            className="flex h-full w-[88%] flex-none snap-center items-center p-[28px]"
-          >
-            <ImageSlot
-              src={s.src}
-              ratio="4/3"
-              alt={s.alt}
-              label={s.src}
-              sizes="(min-width: 1024px) 45vw, 90vw"
-              fit="contain"
-              className="w-full"
-            />
-          </div>
-        ))}
-      </div>
-
-      {shots.length > 1 ? (
-        <div className="pointer-events-none absolute inset-x-[14px] top-1/2 flex -translate-y-1/2 justify-between">
-          <GalleryArrow direction={-1} onClick={() => scrollRail(-1)} />
-          <GalleryArrow direction={1} onClick={() => scrollRail(1)} />
-        </div>
-      ) : null}
+    <div className="flex min-h-0 items-center overflow-y-auto border-l border-chrome-line px-[28px] py-[24px]">
+      <Carousel3D
+        slides={shots}
+        label={`${product.name} images`}
+        ratio="4/3"
+        fit="contain"
+        tone="chrome"
+        itemWidth={0.7}
+        sizes="(min-width: 1024px) 34vw, 80vw"
+        className="w-full"
+      />
     </div>
-  );
-}
-
-function GalleryArrow({ direction, onClick }: { direction: -1 | 1; onClick: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={direction === -1 ? 'Previous image' : 'Next image'}
-      className="pointer-events-auto flex min-h-tap min-w-tap items-center justify-center border border-chrome-border bg-chrome-ground font-mono text-[15px] text-chrome-link transition-colors duration-200 hover:border-chrome-link"
-    >
-      <span aria-hidden="true">{direction === -1 ? '◄' : '►'}</span>
-    </button>
   );
 }

@@ -2,6 +2,7 @@
 
 import { Accent } from '@/components/ui/Accent';
 import { ImageSlot } from '@/components/ui/ImageSlot';
+import { Tilt } from '@/components/ui/Tilt';
 import { RoomReadMore } from '../RoomReadMore';
 import type { Room } from '../rooms';
 import { PROJECT_COPY } from './copy';
@@ -39,7 +40,7 @@ export function ProjectsPane({ onOpen, page }: ProjectsPaneProps) {
             key={p.name}
             type="button"
             onClick={(e) => onOpen(i, e.currentTarget)}
-            className="flex flex-col items-stretch bg-chrome-plate p-[22px] text-left transition-colors duration-200 hover:bg-chrome-hover"
+            className="group flex flex-col items-stretch bg-chrome-plate p-[22px] text-left transition-colors duration-200 hover:bg-chrome-hover"
           >
             <span className="flex items-center gap-[10px]">
               <span aria-hidden="true" className="h-[7px] w-[7px] flex-none bg-chrome-state" />
@@ -49,18 +50,18 @@ export function ProjectsPane({ onOpen, page }: ProjectsPaneProps) {
             </span>
 
             <span className="mt-[18px] block">
-              <ImageSlot
+              <Tilt><ImageSlot
                 src={`/${p.asset}`}
                 ratio="16/10"
                 alt={`${p.name} — ${p.kicker}`}
                 label={p.asset}
                 sizes="(min-width: 1024px) 33vw, 100vw"
                 fit="contain"
-              />
+              /></Tilt>
             </span>
 
             <span className="mt-[18px] block font-display text-[26px] font-bold tracking-[-0.02em] text-chrome-ink">
-              {p.name}
+              <span className="hover-sweep hover-sweep-chrome">{p.name}</span>
             </span>
             <span className="mt-[10px] block text-[14.5px] leading-[1.6] text-chrome-body">
               {p.copy}

@@ -28,10 +28,9 @@ interface ImageSlotProps {
    * supplied product shots were JPEGs matted on white and the matte would not
    * blend with a themed ground.
    *
-   * The mattes have since been cut (scripts/matte-cut.mjs) and the product
-   * imagery is transparent WebP, so images sit directly on the page ground and
-   * nothing needs a plate. Kept only so a future non-transparent asset has an
-   * escape hatch — do not reach for it otherwise.
+   * The product imagery keeps its original supplied backgrounds (user decision,
+   * 2026-09-13; see assets-src/README.md), so `contain` images show their own
+   * ground. Not currently used.
    */
   padded?: boolean;
 }

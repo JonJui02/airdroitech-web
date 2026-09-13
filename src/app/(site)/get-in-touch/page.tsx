@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/Button';
 import { Accent } from '@/components/ui/Accent';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
+import { Tilt } from '@/components/ui/Tilt';
 import { ADDRESS_LINES, EMAIL, LINKEDIN } from '@/lib/site';
 
 /**
@@ -60,15 +61,17 @@ export default function Page() {
             </div>
           </div>
 
-          <ImageSlot
-            src="/illustration/adt-get-in-touch-3d.webp"
-            ratio="1/1"
-            alt="A hand holding a phone showing the AirdroiTech mark"
-            label="illustration/adt-get-in-touch-3d.webp"
-            sizes="(min-width: 1024px) 420px, 80vw"
-            fit="contain"
-            priority
-          />
+          <Tilt>
+            <ImageSlot
+              src="/illustration/adt-get-in-touch-3d.webp"
+              ratio="1/1"
+              alt="A hand holding a phone showing the AirdroiTech mark"
+              label="illustration/adt-get-in-touch-3d.webp"
+              sizes="(min-width: 1024px) 420px, 80vw"
+              fit="contain"
+              priority
+            />
+          </Tilt>
         </div>
       </section>
 
@@ -107,14 +110,16 @@ export default function Page() {
                 </Button>
               </p>
             </div>
-            <ImageSlot
-              src="/illustration/adt-located.webp"
-              ratio="1/1"
-              alt="A map pin carrying the AirdroiTech mark, marking the office location"
-              label="illustration/adt-located.webp"
-              sizes="260px"
-              fit="contain"
-            />
+            <Tilt>
+              <ImageSlot
+                src="/illustration/adt-located.webp"
+                ratio="1/1"
+                alt="A map pin carrying the AirdroiTech mark, marking the office location"
+                label="illustration/adt-located.webp"
+                sizes="260px"
+                fit="contain"
+              />
+            </Tilt>
           </div>
         </div>
       </section>

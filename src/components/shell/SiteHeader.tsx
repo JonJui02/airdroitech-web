@@ -139,9 +139,11 @@ export function SiteHeader() {
               <Link
                 key={p.href}
                 href={p.href}
-                className="border-l border-chrome-line px-7 pb-[30px] pt-[26px] transition-colors hover:bg-chrome-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link"
+                className="group border-l border-chrome-line px-7 pb-[30px] pt-[26px] transition-colors duration-200 hover:bg-chrome-hover focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-[3px] focus-visible:outline-chrome-link"
                 onClick={() => setPanelOpen(false)}
               >
+                {/* The card content lifts on hover and settles back when the cursor leaves. */}
+                <span className="block transition-transform duration-200 ease-out group-hover:-translate-y-1.5 group-focus-visible:-translate-y-1.5 motion-reduce:transition-none">
                 <ImageSlot
                   src={`/${p.asset}`}
                   ratio="16/9"
@@ -154,6 +156,7 @@ export function SiteHeader() {
                 <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.08em] text-chrome-meta">
                   {p.descriptor}
                 </p>
+                </span>
               </Link>
             ))}
           </div>

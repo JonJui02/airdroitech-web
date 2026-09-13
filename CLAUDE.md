@@ -54,6 +54,13 @@ translate only, and skipped under `prefers-reduced-motion`. Never author
 `opacity-0` as a resting state. No parallax, no scroll-jacking, no carousels
 that hide content behind a gesture.
 
+**Approved exception (user decision, 2026-09-13):** `src/components/ui/Carousel3D.tsx`
+may auto-loop and respond to drag, because it keeps these safeguards: it
+pauses on hover, focus, touch and when off screen; it has a pause button and
+previous/next buttons plus arrow keys; under reduced motion it becomes a still
+swipeable row; and every image is in the server HTML. Do not remove a
+safeguard, and do not use the pattern anywhere else without asking.
+
 ### 4. Every URL stays byte-identical
 
 Ten legacy URLs, all with a trailing slash, all preserved — including the

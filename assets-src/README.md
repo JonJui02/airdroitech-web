@@ -2,9 +2,10 @@
 
 Original supplied artwork. **Not served** — nothing here is deployed.
 
-The product and illustration files were matted on white. `scripts/matte-cut.mjs`
-cuts the matte and writes a transparent WebP into `public/`, which is what the
-site actually loads. These originals stay so the cut can be re-run with a
+The product and illustration files were matted on white. On 2026-09-13 the
+user asked for the original backgrounds back, so `public/` now holds these
+originals re-encoded to WebP at the same paths, backgrounds untouched.
+`scripts/matte-cut.mjs` is kept in case transparent cut-outs are wanted again. These originals stay so the cut can be re-run with a
 different tolerance, or redone if a better source arrives.
 
 ```bash

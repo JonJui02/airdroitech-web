@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Accent } from '@/components/ui/Accent';
+import { Carousel3D } from '@/components/ui/Carousel3D';
+import { TEAM_PHOTOS } from '@/components/rooms/panes/copy';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ADDRESS_LINES, CAPABILITIES, POLYAIRE } from '@/lib/site';
 import { ABOUT_HERO, APPROACH, STORY, TEAM, VALUES } from './about-copy';
@@ -37,7 +39,7 @@ export default function Page() {
           {ABOUT_HERO.eyebrow}
         </Eyebrow>
         <h1 className="mt-4 max-w-[14ch] font-display text-[clamp(48px,8vw,104px)] font-bold leading-[0.9] tracking-[-0.04em] text-[color:var(--ink)]">
-          {ABOUT_HERO.title}
+          <span className="hover-sweep">{ABOUT_HERO.title}</span>
         </h1>
         <p className="mt-5 font-mono text-[13px] uppercase tracking-[0.16em] text-[color:var(--eyebrow)]">
           {ABOUT_HERO.established}
@@ -125,6 +127,17 @@ export default function Page() {
                 </li>
               ))}
             </ul>
+
+            {/* Every supplied team photo, same 4:3 frame so the heights match. */}
+            <Carousel3D
+              slides={TEAM_PHOTOS}
+              label="AirdroiTech team photos"
+              ratio="4/3"
+              fit="cover"
+              itemWidth={0.62}
+              sizes="(min-width: 1024px) 44vw, 80vw"
+              className="mt-10"
+            />
           </div>
         </div>
       </section>

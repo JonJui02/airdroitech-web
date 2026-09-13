@@ -3,6 +3,7 @@ import { Accent } from '@/components/ui/Accent';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
+import { Tilt } from '@/components/ui/Tilt';
 import { OutboundLink } from '@/components/ui/OutboundLink';
 import type { ProductPageCopy } from '@/app/(site)/projects/projects-copy';
 
@@ -40,14 +41,14 @@ export function ProductPage({
       <section className="gutter section-y">
         <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{product.kicker}</Eyebrow>
         <h1 className="mt-4 font-display text-[clamp(44px,7vw,96px)] font-bold leading-[0.92] tracking-[-0.04em] text-[color:var(--ink)]">
-          {product.name}
+          <span className="hover-sweep">{product.name}</span>
         </h1>
         <p className="mt-6 max-w-[40ch] font-display text-[clamp(20px,2.4vw,32px)] font-bold leading-[1.24] tracking-[-0.02em] text-[color:var(--ink)]">
           {product.lede}
         </p>
 
         <div className="mt-[clamp(28px,3.4vw,56px)]">
-          <ImageSlot
+          <Tilt><ImageSlot
             src={product.hero.src}
             ratio="16/9"
             alt={product.hero.alt}
@@ -55,7 +56,7 @@ export function ProductPage({
             sizes="100vw"
             fit="contain"
             priority
-          />
+          /></Tilt>
         </div>
       </section>
 

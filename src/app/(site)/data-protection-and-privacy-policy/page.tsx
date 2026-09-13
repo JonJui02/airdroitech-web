@@ -81,7 +81,10 @@ export default function Page() {
 
       <section className="gutter band-y border-t border-[color:var(--line)]">
         <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
-          <nav aria-label="Policy contents" className="lg:sticky lg:top-[120px] lg:self-start">
+          <nav
+            aria-label="Policy contents"
+            className="border border-[color:var(--line)] bg-[color:var(--surface)] p-5 lg:sticky lg:top-[120px] lg:self-start"
+          >
             <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">{PRIVACY_INTRO.label}</Eyebrow>
             <ul className="mt-4 space-y-1">
               {PRIVACY_SECTIONS.filter((s) => s.level === 2).map((s) => (

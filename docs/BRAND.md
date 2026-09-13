@@ -281,34 +281,41 @@ hex; it is now `#48A87A` (teal-400).
 
 ### Page tones (light mode)
 
-Every route wears its own light shade so light mode reads as layered colour,
-not flat near-white. brand-guardian ruling 2026-09-13; route shades adjusted
-so every page except legal is deeper than the old `#F7F9F8` ground. The privacy
-page stays the lightest tone on purpose (brand-guardian: legal is the calmest).
+Every route wears its own light shade so light mode is not one flat white.
+brand-guardian ruling 2026-09-13 (v2, after user review): pages mix and match
+**light lime** and **light grey** tints; teal and green are no longer used for
+page shades.
 
-Recipe: ONE brand hue (teal-600, green-600 or grey-400) mixed into white.
-`--page` = p%, `--ground` (card fill) = p−6% (min 1.5%), `--surface` = p+4%,
-`--tint` (CTA band) = p+9%. Glows are `color-mix()` of brand hexes at the top
-of the page — no new colour. Route map: `src/lib/tones.ts`.
+Recipe: ONE hue (lime-500 or grey-400) mixed into white. `--page` = p%,
+`--ground` (card fill) = p−6% (min 1.5%), `--surface` = p+4%, `--tint` (bands)
+= p+9%. Glows are `color-mix()` of teal/green/grey at the top of the page —
+never lime. Route map: `src/lib/tones.ts`.
 
 | Route | Hue | `--page` | `--ground` | `--tint` | Glow |
 |---|---|---|---|---|---|
-| / (console) | teal 8% | `#eef5f2` | chrome plate `#e6f0eb`, rail `#deebe4`, hover `#dae8e1` | — | none |
-| /what-we-do/ | green 10% | `#edf5eb` | `#f8fbf7` | `#deecd8` | green 9% + teal 7% |
-| /projects/ | teal 6% | `#f3f7f5` | `#fcfdfd` | `#e0ece6` | teal 9% + green 7% |
-| /projects/airtouch/ | teal 10% | `#eaf2ee` | `#f7faf8` | `#d7e7df` | teal 9% + green 7% |
+| / (console) | grey 9% | `#f5f5f5` | chrome plate `#f1f2f2`, rail `#eeeeef`, hover `#ebebec` | `#ebebec` | none |
+| /what-we-do/ | lime 9% | `#f6fbed` | `#fcfef9` | `#eef7da` | teal 9% + green 7% |
+| /projects/ | grey 6% | `#f8f8f9` | `#fdfdfd` | `#eeeeef` | teal 9% + grey 7% |
+| /projects/airtouch/ | lime 11% | `#f5fae9` | `#fafdf5` | `#ecf6d6` | teal 9% + green 7% |
 | /projects/airtouch-beam/ | grey 12% | `#f1f2f2` | `#f8f8f9` | `#e7e8e8` | teal 9% + grey 7% |
-| /projects/polyplan/ | green 7% | `#f3f8f1` | `#fcfdfc` | `#e3efdf` | green 9% + teal 7% |
+| /projects/polyplan/ | lime 7% | `#f8fcf1` | `#fefefc` | `#f0f8de` | teal 9% + green 7% |
 | /careers/ | grey 15% | `#eeeeef` | `#f5f5f5` | `#e4e4e5` | teal 9% + grey 7% |
-| /careers/open-positions/ | grey 9% | `#f5f5f5` | `#fcfcfc` | `#ebebec` | green 9% + grey 7% |
-| /get-in-touch/ | teal 12% | `#e6f0eb` | `#f3f7f5` | `#d3e4dc` | teal 9% + green 7% |
-| /thank-you/ | teal 4% | `#f7faf8` | `#fcfdfd` | `#e4eee9` | teal 9% + green 7% |
+| /careers/open-positions/ | lime 5% | `#fafdf5` | `#fefefc` | `#f2f9e2` | teal 9% + green 7% |
+| /get-in-touch/ | grey 10% | `#f4f4f4` | `#fafbfb` | `#eaeaea` | teal 9% + grey 7% |
+| /thank-you/ | lime 6% | `#f9fcf3` | `#fefefc` | `#f1f8e0` | teal 9% + green 7% |
 | /data-protection-and-privacy-policy/ (legal: calmest, no glow) | grey 3% | `#fcfcfc` | `#fdfdfd` | `#f1f2f2` | none |
-| 404 | grey 11% | `#f3f3f3` | `#f9f9fa` | `#e8e9e9` | grey 9% + teal 7% |
+| 404 | lime 12% | `#f4fae7` | `#f9fcf3` | `#ebf6d4` | teal 9% + green 7% |
 
-Worst text contrast across every surface and glow peak: `--muted` on the
-`/get-in-touch/` band, 5.02:1. Links/accent worst 5.78:1.
+Worst text contrast on any surface or glow peak: `--muted` on the `/careers/`
+glow peak, 5.13:1.
 
-**Rules:** no lime in glows (lime is spent once per screen on the main action);
-no glow on the privacy page; header and footer stay neutral on every route so
-the shared chrome never flickers between pages; dark mode ignores tones.
+**Rules:**
+
+- Lime page tint is capped at 12% so it reads as warm white, not as the accent.
+- A lime-toned route must not also carry a solid-lime interactive element on
+  the same screen. The console is grey for this reason (Career room field).
+- Raw lime `#A0D233` as a non-text mark (dot, bar, tick) on any light page fails
+  3:1 — use `#5E7C1E` instead.
+- No lime in glows; no glow on the privacy page, which stays the lightest tone.
+- Header and footer stay neutral on every route; dark mode ignores tones.
+- 3D tilt on images is transform and perspective only — no shadows.
