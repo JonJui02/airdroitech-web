@@ -1,3 +1,4 @@
+import { Accent } from '@/components/ui/Accent';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { ADDRESS_LINES, EMAIL, LINKEDIN, POLYAIRE } from '@/lib/site';
 import {
@@ -20,11 +21,11 @@ export function ContactPane() {
     <div className="grid h-full grid-rows-[1fr_auto]">
       <div className="grid min-h-0 grid-cols-1 lg:grid-cols-[1fr_minmax(0,320px)]">
         <div className="flex flex-col justify-center overflow-y-auto px-[40px] py-[44px]">
-        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-chrome-link">
+        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-chrome-meta">
           {CONTACT_EYEBROW}
         </p>
         <h2 className="mt-[14px] font-display text-[60px] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
-          {CONTACT_HEADING}
+          <Accent text={CONTACT_HEADING} accent="the team" tone="chrome" />
         </h2>
 
         <address className="mt-[22px] max-w-[56ch] text-[17px] not-italic leading-[1.7] text-chrome-body">

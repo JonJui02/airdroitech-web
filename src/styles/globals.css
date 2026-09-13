@@ -30,6 +30,7 @@
   --chrome-line-dark: #8e9093;
   --chrome-primary-hover: #235e42;
   --chrome-link: #235e42;
+  --chrome-accent: #235e42;
   --chrome-state: #5e7c1e;
   /* Focus ring: lime is 1.79:1 on white, so light uses teal-700. */
   --focus: #235e42;
@@ -43,6 +44,7 @@
   --line: #d6d9db;
   --line-strong: #8e9093;
   --link: #235e42;
+  --heading-accent: #235e42; /* one accent word per h1/h2 — brand-guardian 2026-09-13 */
   --primary: #2f7f59;
   --primary-hover: #235e42;
   --accent: #a0d233;
@@ -80,8 +82,9 @@
     --chrome-body: #c3cbc6;
     --chrome-border: #45564c;
     --chrome-line-dark: #454e4a;
-    --chrome-primary-hover: #3c9b6d;
+    --chrome-primary-hover: #48a87a;
     --chrome-link: #a0d233;
+    --chrome-accent: #8fc4ac;
     --chrome-state: #a0d233;
     /* Focus ring: lime is 1.79:1 on white, so light uses teal-700. */
     --focus: #a0d233;
@@ -95,8 +98,9 @@
     --line: #232d28;
     --line-strong: #454e4a;
     --link: #a0d233;
+    --heading-accent: #8fc4ac; /* teal-300, not lime: lime is the link colour */
     --primary: #2f7f59;
-    --primary-hover: #3c9b6d;
+    --primary-hover: #48a87a;
     --accent: #a0d233;
     --green: #4f9934;
     --tint: #16241c;
@@ -121,8 +125,9 @@
   --chrome-body: #c3cbc6;
   --chrome-border: #45564c;
   --chrome-line-dark: #454e4a;
-  --chrome-primary-hover: #3c9b6d;
+  --chrome-primary-hover: #48a87a;
   --chrome-link: #a0d233;
+  --chrome-accent: #8fc4ac;
   --chrome-state: #a0d233;
   /* Focus ring: lime is 1.79:1 on white, so light uses teal-700. */
   --focus: #a0d233;
@@ -136,8 +141,9 @@
   --line: #232d28;
   --line-strong: #454e4a;
   --link: #a0d233;
+  --heading-accent: #8fc4ac; /* teal-300, not lime: lime is the link colour */
   --primary: #2f7f59;
-  --primary-hover: #3c9b6d;
+  --primary-hover: #48a87a;
   --accent: #a0d233;
   --green: #4f9934;
   --tint: #16241c;
@@ -217,7 +223,8 @@
     --line: #232d28;
     --line-strong: #454e4a;
     --link: #a0d233;
-    --primary-hover: #3c9b6d;
+    --heading-accent: #8fc4ac; /* teal-300, not lime: lime is the link colour */
+    --primary-hover: #48a87a;
     --tint: #1c2621;
     --btn2-border: #45564c;
     --btn2-border-hover: #a0d233;

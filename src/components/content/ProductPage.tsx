@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Accent } from '@/components/ui/Accent';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
@@ -65,7 +66,7 @@ export function ProductPage({
         >
           <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
             <h2 className="font-display text-[clamp(20px,2vw,26px)] font-bold leading-[1.2] tracking-[-0.02em] text-[color:var(--ink)]">
-              {section.heading}
+              <Accent text={section.heading} accent={section.accent} />
             </h2>
 
             <div>

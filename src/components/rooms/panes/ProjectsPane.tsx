@@ -1,5 +1,6 @@
 'use client';
 
+import { Accent } from '@/components/ui/Accent';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { RoomReadMore } from '../RoomReadMore';
 import type { Room } from '../rooms';
@@ -22,7 +23,7 @@ export function ProjectsPane({ onOpen, page }: ProjectsPaneProps) {
     <div className="flex h-full flex-col">
       <div className="flex flex-none items-end justify-between px-[40px] pb-[20px] pt-[30px]">
         <h2 className="font-display text-[44px] font-bold leading-none tracking-[-0.03em] text-chrome-ink">
-          ADT Projects
+          <Accent text="ADT Projects" accent="Projects" tone="chrome" />
         </h2>
         <div className="flex items-center gap-[22px]">
           <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-chrome-meta">

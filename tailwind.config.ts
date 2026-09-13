@@ -106,7 +106,12 @@ const config: Config = {
         'primary-hover': 'var(--chrome-primary-hover)',
         link: 'var(--chrome-link)',
         state: 'var(--chrome-state)',
+        // One accent word in a console heading. Solid colour, never a gradient.
+        accent: 'var(--chrome-accent)',
       },
+
+      /** One accent word in a site-page h1/h2. See docs/BRAND.md. */
+      'heading-accent': 'var(--heading-accent)',
 
       /** Text colours that only ever sit on the lime field. */
       onlime: {

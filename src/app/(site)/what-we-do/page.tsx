@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { Accent } from '@/components/ui/Accent';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ADDRESS_LINES, CAPABILITIES, POLYAIRE } from '@/lib/site';
 import { ABOUT_HERO, APPROACH, STORY, TEAM, VALUES } from './about-copy';
@@ -107,10 +108,10 @@ export default function Page() {
       {/* ================= team ================= */}
       <section className="gutter band-y border-t border-[color:var(--line)]">
         <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
-          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{TEAM.label}</Eyebrow>
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">{TEAM.label}</Eyebrow>
           <div>
             <h2 className="font-display text-[clamp(30px,4vw,56px)] font-bold leading-[1.04] tracking-[-0.03em] text-[color:var(--ink)]">
-              {TEAM.heading}
+              <Accent text={TEAM.heading} accent="AirdroiTechies" />
             </h2>
             <p className="prose-measure mt-5 text-[color:var(--body)]">{TEAM.line}</p>
 
@@ -177,7 +178,7 @@ export default function Page() {
       {/* ================= careers CTA ================= */}
       <section className="gutter band-y border-t border-[color:var(--line)] bg-[color:var(--tint)]">
         <h2 className="font-display text-[clamp(26px,3.2vw,44px)] font-bold leading-[1.06] tracking-[-0.03em] text-[color:var(--ink)]">
-          Be an ‘Airdroitechie’
+          <Accent text="Be an ‘Airdroitechie’" accent="‘Airdroitechie’" />
         </h2>
         <div className="mt-7 flex flex-wrap gap-3">
           <Button href="/careers/">See open positions</Button>

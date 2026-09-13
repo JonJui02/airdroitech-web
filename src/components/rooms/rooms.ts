@@ -25,10 +25,7 @@ export interface Room {
    * things — one swapped a panel in place, the other left for /what-we-do/.
    * "Read more" makes the relationship visible.
    *
-   * Set ONLY for pages that are built. Career and Contact still resolve to
-   * scaffold stubs, and pointing the homepage's most prominent link at a page
-   * that says "Scaffold" is worse than no link. Add their `page` here when those
-   * routes are real.
+   * Set ONLY for pages that are built — never point a room at a scaffold stub.
    */
   page?: { href: string; label: string };
 }
@@ -61,8 +58,18 @@ export function buildRooms(counts: { products: number; roles: number }): Room[] 
       sub: `${counts.products} devices`,
       page: { href: '/projects/', label: 'All projects' },
     },
-    { key: 'CAREER', label: 'Career', sub: `${counts.roles} roles` },
-    { key: 'CONTACT', label: 'Contact', sub: 'Shah Alam' },
+    {
+      key: 'CAREER',
+      label: 'Career',
+      sub: `${counts.roles} roles`,
+      page: { href: '/careers/', label: 'Life at AirdroiTech' },
+    },
+    {
+      key: 'CONTACT',
+      label: 'Contact',
+      sub: 'Shah Alam',
+      page: { href: '/get-in-touch/', label: 'All contact details' },
+    },
   ];
 }
 

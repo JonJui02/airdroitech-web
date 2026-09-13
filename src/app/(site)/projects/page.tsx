@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { Accent } from '@/components/ui/Accent';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { INDEX, PRODUCT_PAGES } from './projects-copy';
@@ -24,9 +25,9 @@ export default function Page() {
   return (
     <>
       <section className="gutter section-y">
-        <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{INDEX.eyebrow}</Eyebrow>
+        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">{INDEX.eyebrow}</Eyebrow>
         <h1 className="mt-4 font-display text-[clamp(48px,8vw,104px)] font-bold leading-[0.9] tracking-[-0.04em] text-[color:var(--ink)]">
-          {INDEX.title}
+          <Accent text={INDEX.title} accent="Projects" />
         </h1>
       </section>
 
@@ -70,7 +71,7 @@ export default function Page() {
 
       <section className="gutter band-y border-t border-[color:var(--line)] bg-[color:var(--tint)]">
         <h2 className="font-display text-[clamp(26px,3.2vw,44px)] font-bold leading-[1.06] tracking-[-0.03em] text-[color:var(--ink)]">
-          Be an ‘Airdroitechie’
+          <Accent text="Be an ‘Airdroitechie’" accent="‘Airdroitechie’" />
         </h2>
         <p className="prose-measure mt-4 text-[color:var(--body)]">
           Are you a tech enthusiast looking for a career journey? The hard work and dedication of

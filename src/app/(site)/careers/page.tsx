@@ -1,34 +1,169 @@
 import type { Metadata } from 'next';
+import { Button } from '@/components/ui/Button';
+import { Accent } from '@/components/ui/Accent';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { getRolesByTeam } from '@/lib/roles';
+import { EMAIL } from '@/lib/site';
+import {
+  ACTIVITIES,
+  CAREERS_HERO,
+  PERKS,
+  PROGRAMMES,
+  ROLES_TEASER,
+  VALUES,
+} from './careers-copy';
 
 /**
- * Route: /careers/  (URL is unchanged from the legacy WordPress site — do not rename)
- * Job:   Convince a Klang Valley engineer to apply, then send them to the roles list.
- * Skeleton: docs/CONTENT-SKELETON.md -> "Career"
+ * Route: /careers/  (URL unchanged from the legacy WordPress site — do not rename)
+ * Job:   Convince a Klang Valley engineer to apply, then send them to the roles.
+ * Copy:  ./careers-copy.ts — ported from the legacy page; what was deliberately
+ *        left out (headcount counter, LinkedIn widget roles) is documented there.
  *
- * Blocks still to build:
- *   01 Hero (keep)             04 Values (keep)
- *   02 Perks (edit - icons leak raw labels: cookie/laptop/work/people)
- *   03 Programmes x3 (keep)    05 Life at ADT (edit or cut)
- *   06 Open roles teaser (edit) 07 Headcount counter (NEW - reads 1 today)
+ * No application form yet (user decision, 2026-09-13): applications go by
+ * email until Resend is configured and docs/OPEN-DECISIONS.md #6 (where CVs may
+ * be stored under PDPA) is answered. Nothing on this page collects personal data.
+ *
+ * The legacy "Our activities" tabs hid three of four panels behind a click;
+ * here all four render at once, so nothing depends on a gesture to be seen.
  */
-
 export const metadata: Metadata = {
   title: 'Career',
+  description:
+    'Work with AirdroiTech in Shah Alam: internship, engineering and shared services programmes, and the values we build on.',
   alternates: { canonical: '/careers/' },
 };
 
+const APPLY_MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent('Job application')}`;
+
 export default function Page() {
+  const byTeam = getRolesByTeam();
+  const teams = Object.keys(byTeam);
+  const roleCount = Object.values(byTeam).reduce((n, list) => n + list.length, 0);
+
   return (
-    <div className="mx-auto max-w-container px-5 py-12">
-      <p className="font-mono text-2xs uppercase tracking-[0.14em] text-[color:var(--muted)]">
-        /careers/
-      </p>
-      <h1 className="mt-3 text-3xl">Career</h1>
-      <p className="prose-measure mt-4">
-        Scaffold. Content blocks are specified in docs/CONTENT-SKELETON.md and
-        the visual design is pending Claude Design output — see
-        docs/CLAUDE-DESIGN-PROMPT.md.
-      </p>
-    </div>
+    <>
+      {/* ================= hero ================= */}
+      <section className="gutter section-y">
+        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">
+          {CAREERS_HERO.eyebrow}
+        </Eyebrow>
+        <h1 className="mt-4 max-w-[16ch] font-display text-[clamp(48px,8vw,104px)] font-bold leading-[0.9] tracking-[-0.04em] text-[color:var(--ink)]">
+          <Accent text={CAREERS_HERO.title} accent="AirdroiTech" />
+        </h1>
+        <p className="mt-5 font-mono text-[13px] uppercase tracking-[0.16em] text-[color:var(--muted)]">
+          {CAREERS_HERO.established}
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Button href="/careers/open-positions/">See the roles</Button>
+          <Button href={APPLY_MAILTO} variant="secondary">
+            Email your CV
+          </Button>
+        </div>
+      </section>
+
+      {/* ================= perks ================= */}
+      <section className="gutter band-y border-t border-[color:var(--line)]">
+        <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{PERKS.label}</Eyebrow>
+          <ul className="grid gap-px border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2 lg:grid-cols-3">
+            {PERKS.items.map((perk) => (
+              <li
+                key={perk}
+                className="flex items-center gap-3 bg-[color:var(--ground)] px-5 py-5 text-[color:var(--ink)]"
+              >
+                <span aria-hidden="true" className="h-[7px] w-[7px] flex-none bg-[color:var(--green)]" />
+                {perk}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ================= programmes ================= */}
+      <section className="gutter band-y border-t border-[color:var(--line)]">
+        <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">
+            {PROGRAMMES.label}
+          </Eyebrow>
+          <ul className="grid gap-px border border-[color:var(--line)] bg-[color:var(--line)] lg:grid-cols-3">
+            {PROGRAMMES.items.map((p) => (
+              <li key={p.title} className="bg-[color:var(--ground)] px-6 py-7">
+                <h2 className="font-display text-[clamp(26px,2.6vw,36px)] font-bold leading-[1.05] tracking-[-0.02em] text-[color:var(--ink)]">
+                  {p.title}
+                </h2>
+                <p className="mt-3 text-[15.5px] leading-[1.6] text-[color:var(--body)]">{p.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ================= values ================= */}
+      <section className="gutter band-y border-t border-[color:var(--line)]">
+        <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{VALUES.label}</Eyebrow>
+          <div>
+            <h2 className="flex flex-wrap items-baseline gap-x-[clamp(16px,3vw,48px)] gap-y-3 font-display text-[clamp(34px,5.4vw,72px)] font-bold leading-[1.02] tracking-[-0.035em] text-[color:var(--ink)]">
+              {VALUES.words.map((word) => (
+                <span key={word}>
+                  {word}
+                  <span aria-hidden="true" className="text-[color:var(--green)]">
+                    .
+                  </span>
+                </span>
+              ))}
+            </h2>
+            <p className="mt-4 font-mono text-[13px] uppercase tracking-[0.16em] text-[color:var(--eyebrow)]">
+              {VALUES.sub}
+            </p>
+            <p className="prose-measure mt-4 text-[color:var(--body)]">{VALUES.body}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= life at AirdroiTech ================= */}
+      <section className="gutter band-y border-t border-[color:var(--line)]">
+        <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
+          <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">
+            {ACTIVITIES.label}
+          </Eyebrow>
+          <ul className="grid gap-px border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2">
+            {ACTIVITIES.items.map((a) => (
+              <li key={a.tag} className="bg-[color:var(--ground)] px-6 py-7">
+                <p className="font-mono text-[12px] uppercase tracking-[0.14em] text-[color:var(--eyebrow)]">
+                  {a.tag}
+                </p>
+                <h2 className="mt-3 font-display text-[clamp(22px,2.2vw,30px)] font-bold leading-[1.1] tracking-[-0.02em] text-[color:var(--ink)]">
+                  {a.title}
+                </h2>
+                <p className="mt-3 text-[15.5px] leading-[1.6] text-[color:var(--body)]">{a.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* ================= roles teaser ================= */}
+      <section className="gutter band-y border-t border-[color:var(--line)] bg-[color:var(--tint)]">
+        <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">{ROLES_TEASER.label}</Eyebrow>
+        <h2 className="mt-4 font-display text-[clamp(30px,4vw,56px)] font-bold leading-[1.04] tracking-[-0.03em] text-[color:var(--ink)]">
+          <Accent text="Be an ‘Airdroitechie’" accent="‘Airdroitechie’" />
+        </h2>
+        <p className="prose-measure mt-4 text-[color:var(--body)]">{ROLES_TEASER.body}</p>
+        {/*
+          A count, never "open": every role file is status: needs-confirmation
+          and docs/OPEN-DECISIONS.md #4 is unresolved.
+        */}
+        <p className="mt-4 font-mono text-[13px] uppercase tracking-[0.14em] text-[color:var(--muted)]">
+          {roleCount} roles · {teams.join(' · ')}
+        </p>
+        <div className="mt-7 flex flex-wrap gap-3">
+          <Button href="/careers/open-positions/">See the roles</Button>
+          <Button href={APPLY_MAILTO} variant="secondary">
+            Email your CV to {EMAIL}
+          </Button>
+        </div>
+      </section>
+    </>
   );
 }

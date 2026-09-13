@@ -36,6 +36,8 @@ export interface ProductPageCopy {
   hero: { src: string; alt: string };
   sections: {
     heading: string;
+    /** One word/phrase in `heading` to colour. One or two per page — see docs/BRAND.md. */
+    accent?: string;
     body?: string;
     items?: { title: string; body: string }[];
     figure?: { src: string; alt: string };
@@ -59,6 +61,7 @@ export const AIRTOUCH: ProductPageCopy = {
   sections: [
     {
       heading: 'What our team built',
+      accent: 'our team',
       // Legacy: "Our team has contributed in making a Smart air conditioning
       // control offering ... adjustments for each zone". Agreement and article
       // fixed. Final sentence is the user's statement of what ADT engineered.
@@ -117,6 +120,7 @@ export const BEAM: ProductPageCopy = {
   sections: [
     {
       heading: 'How the AirTouch Beam was created',
+      accent: 'created',
       /*
        * Legacy: "Our Engineers have contribute greatly in the making of the
        * AirTouch Beam" — the grammar slip CLAUDE.md names explicitly. Fixed
@@ -210,6 +214,7 @@ export const POLYPLAN: ProductPageCopy = {
     },
     {
       heading: 'What our team does',
+      accent: 'our team',
       // Legacy: "The Airdroitech Software Web team handles PolyPlan by Polyaire.
       // By monitoring its daily support, Maintaining the system and enhancing
       // it by adding new features that transforms how HVAC professionals work".

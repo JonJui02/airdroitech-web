@@ -55,4 +55,6 @@ export const CHROME_THEME = {
   state: { dark: '#A0D233', light: '#5E7C1E', lightRatio: '3.81–4.54:1', textAllowed: false },
   meta: { dark: '#8E9093', light: '#5A5D60', lightRatio: '5.24–6.27:1' },
   grid: { dark: '#1A231F', light: '#74777A', lightRatio: '3.58–4.26:1' },
+  // Heading accent word (site --heading-accent, console chrome-accent). Solid only.
+  accent: { dark: '#8FC4AC', light: '#235E42', lightRatio: '6.04–7.22:1', darkRatio: '8.18–9.46:1' },
 } as const;

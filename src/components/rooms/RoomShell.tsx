@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { Accent } from '@/components/ui/Accent';
 import { BrandLogo } from '@/components/shell/BrandLogo';
 import { ThemeToggle } from '@/components/shell/ThemeToggle';
 import type { Role } from '@/lib/roles';
@@ -240,10 +241,11 @@ function MobilePane({
 }) {
   const teams = new Set(roles.map((r) => r.team)).size;
 
-  const content: Record<RoomKey, { kicker: string; title: string; copy: string; stats: Stat[] }> = {
+  const content: Record<RoomKey, { kicker: string; title: string; accent?: string; copy: string; stats: Stat[] }> = {
     HOME: {
       kicker: 'Smart home · IoT · AI',
       title: 'Programming Intelligence',
+      accent: 'Intelligence',
       copy: HERO_DECK,
       stats: [
         { label: 'Founded', value: '2021' },
@@ -254,6 +256,7 @@ function MobilePane({
     ABOUT: {
       kicker: 'Challenging the norm',
       title: ABOUT_HEADING,
+      accent: 'your future',
       copy: ABOUT_BODY,
       stats: [
         { label: 'Capabilities', value: String(CAPABILITIES.length) },
@@ -263,12 +266,14 @@ function MobilePane({
     PROJECTS: {
       kicker: 'Projects',
       title: 'ADT Projects',
+      accent: 'Projects',
       copy: 'Three products, built and maintained in Shah Alam.',
       stats: [],
     },
     CAREER: {
       kicker: 'Careers',
       title: CAREER_HEADING,
+      accent: '‘Airdroitechie’',
       copy: CAREER_BODY,
       stats: [
         { label: 'Roles', value: String(roles.length) },
@@ -278,6 +283,7 @@ function MobilePane({
     CONTACT: {
       kicker: 'Get in touch',
       title: CONTACT_HEADING,
+      accent: 'the team',
       copy: `Every enquiry reaches ${EMAIL}.`,
       stats: [
         { label: 'Zones shown', value: zone },
@@ -318,9 +324,9 @@ function MobilePane({
 
   return (
     <div className="animate-pane-in-sm px-[20px] py-[22px]">
-      <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-chrome-link">{c.kicker}</p>
+      <p className={`font-mono text-[11px] uppercase tracking-[0.16em] ${room === 'HOME' ? 'text-chrome-link' : 'text-chrome-meta'}`}>{c.kicker}</p>
       <h2 className="mt-[12px] font-display text-[36px] font-bold leading-[0.96] tracking-[-0.03em] text-chrome-ink">
-        {c.title}
+        <Accent text={c.title} accent={c.accent} tone="chrome" sweep={room === 'HOME'} />
       </h2>
       <p className="mt-[14px] text-[15.5px] leading-[1.62] text-chrome-body">{c.copy}</p>
 

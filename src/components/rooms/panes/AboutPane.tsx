@@ -1,5 +1,6 @@
 'use client';
 
+import { Accent } from '@/components/ui/Accent';
 import { CAPABILITIES } from '@/lib/site';
 import { RoomReadMore } from '../RoomReadMore';
 import type { Room } from '../rooms';
@@ -23,12 +24,12 @@ interface AboutPaneProps {
 export function AboutPane({ caps, onToggle, page }: AboutPaneProps) {
   return (
     <div className="flex h-full flex-col justify-center overflow-y-auto px-[40px] py-[48px]">
-        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-chrome-link">
+        <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-chrome-meta">
           {ABOUT_EYEBROW}
         </p>
 
         <h2 className="mt-[14px] max-w-[20ch] font-display text-[clamp(38px,4.2vw,60px)] font-bold leading-[0.98] tracking-[-0.032em] text-chrome-ink">
-          {ABOUT_HEADING}
+          <Accent text={ABOUT_HEADING} accent="your future" tone="chrome" />
         </h2>
 
         <p className="mt-[20px] max-w-[60ch] text-[17px] leading-[1.62] text-chrome-body">

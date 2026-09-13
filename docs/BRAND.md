@@ -246,3 +246,35 @@ actually sits on (`#F7F9F8` ground, `#EDF2F0` plate, `#DFE7E4` rail). Grounds re
 
 Known pre-existing issue, not introduced here: in dark, `chrome.border`
 `#45564C` on `#0E1411` is 2.39:1, below the 3:1 non-text floor.
+
+### Heading accent words
+
+Brand-guardian ruling, 2026-09-13. The "Programming **Intelligence**" idea —
+ink word plus green word — carried to other headings.
+
+| Token | Light | Dark | Worst ratio |
+|---|---|---|---|
+| `--heading-accent` (site pages) | `#235E42` teal-700 | `#8FC4AC` teal-300 | 6.04:1 light (tint band), 8.18:1 dark |
+| `chrome-accent` (console) | `#235E42` | `#8FC4AC` | 6.07:1 light (rail), 8.63:1 dark |
+
+No minimum size: both clear 4.5:1 on every ground a heading sits on.
+
+**Rules:**
+
+- Solid colour only. The gradient (`.brand-sweep-text`) stays the page's one
+  hero moment.
+- One accent word or short phrase per heading, h1 and h2 only — never h3,
+  card or feature titles.
+- One or two accented headings per page, on the headings that carry the argument.
+- A green eyebrow and a green heading word in the same block cancel each other
+  out. Where a heading takes an accent, that block's eyebrow goes back to grey.
+- Dark accents are NOT lime: lime is the link and focus colour, so a lime heading
+  word reads as clickable.
+- Never `--green` `#4F9934` for accent words: 2.80:1 on the light tint band.
+
+**No-accent zones:** the Career room heading on the lime field (no value passes
+there — teal-700 is 4.27:1, teal-300 1.10:1); legal and privacy headings; any
+heading that carries a status.
+
+Also from this ruling: the dark primary hover `#3C9B6D` was never an approved
+hex; it is now `#48A87A` (teal-400).
