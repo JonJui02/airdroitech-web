@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { RoomShell } from '@/components/rooms/RoomShell';
+import { AnniversaryDialog } from '@/components/anniversary/AnniversaryDialog';
+import { FLAGS } from '@/lib/flags';
 import { getRoles } from '@/lib/roles';
 
 /**
@@ -12,6 +14,11 @@ import { getRoles } from '@/lib/roles';
  * The site header and footer are NOT rendered here. They live in
  * src/app/(site)/layout.tsx, which wraps every other route; the console
  * supplies its own header, dock and <main id="main"> landmark.
+ *
+ * AnniversaryDialog is TEMPORARY — homepage only, once per visitor, and gated
+ * on FLAGS.anniversary so it can be switched off from Vercel without a code
+ * change. See src/lib/flags.ts. When it is retired, delete these two lines and
+ * the component directory; nothing else references it.
  */
 export const metadata: Metadata = {
   title: 'AirdroiTech Sdn Bhd',
@@ -21,5 +28,10 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <RoomShell roles={getRoles()} />;
+  return (
+    <>
+      <RoomShell roles={getRoles()} />
+      {FLAGS.anniversary && <AnniversaryDialog />}
+    </>
+  );
 }
