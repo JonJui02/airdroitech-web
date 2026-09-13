@@ -47,16 +47,20 @@ export function ProductPage({
           {product.lede}
         </p>
 
-        <div className="mt-[clamp(28px,3.4vw,56px)]">
-          <Tilt><ImageSlot
-            src={product.hero.src}
-            ratio="16/9"
-            alt={product.hero.alt}
-            label={product.hero.src}
-            sizes="100vw"
-            fit="contain"
-            priority
-          /></Tilt>
+        {/* Hero image: full width on phones and tablets, capped at a medium 760px and
+            centred on desktop (user request 2026-09-13). */}
+        <div className="mt-[clamp(28px,3.4vw,56px)] lg:mx-auto lg:max-w-[760px]">
+          <Tilt>
+            <ImageSlot
+              src={product.hero.src}
+              ratio="16/9"
+              alt={product.hero.alt}
+              label={product.hero.src}
+              sizes="(min-width: 1024px) 760px, 100vw"
+              fit="contain"
+              priority
+            />
+          </Tilt>
         </div>
       </section>
 
