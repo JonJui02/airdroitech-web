@@ -45,7 +45,7 @@ export default function Page() {
     <>
       {/* ================= hero ================= */}
       <section className="gutter section-y">
-        <div className="grid items-center gap-[clamp(28px,4vw,72px)] lg:grid-cols-[minmax(0,1fr)_380px]">
+        <div className="grid items-center gap-[clamp(28px,4vw,72px)] lg:grid-cols-2">
           <div>
             <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">
               {CAREERS_HERO.eyebrow}
@@ -65,7 +65,7 @@ export default function Page() {
               </div>
 
           {/*
-            Lab photo, 740x415 as supplied. Capped at 380px wide so a 2x screen
+            Lab photo, 740x415 as supplied. Capped at 380px wide and, on desktop, centred in the right half of the hero, so a 2x screen
             shows it at about its native resolution, and served untouched
             (unoptimized) so it is not recompressed. Sharper at larger sizes needs
             a higher-resolution original.
@@ -79,7 +79,7 @@ export default function Page() {
             fit="cover"
             unoptimized
             priority
-            className="max-w-[380px] border border-[color:var(--line)]"
+            className="max-w-[380px] border border-[color:var(--line)] lg:justify-self-center"
           />
         </div>
       </section>

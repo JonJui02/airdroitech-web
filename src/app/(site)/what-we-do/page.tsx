@@ -130,7 +130,7 @@ export default function Page() {
 
             {/*
               Every supplied team photo, same 4:3 frame so the heights match.
-              The photos are 627–800px wide, so the carousel is capped at 600px
+              Capped at 600px on mobile and tablet and 900px on desktop (front slide about 540px). The older photos are 627–800px wide, so the mobile cap is 600px
               (front slide about 360px): a 2x screen shows each one at about its
               native resolution, and unoptimized serves the files untouched
               instead of recompressing them.
@@ -141,9 +141,9 @@ export default function Page() {
               ratio="4/3"
               fit="cover"
               itemWidth={0.6}
-              sizes="(min-width: 640px) 360px, 60vw"
+              sizes="(min-width: 1024px) 540px, (min-width: 640px) 360px, 60vw"
               unoptimized
-              className="mt-10 max-w-[600px]"
+              className="mt-10 max-w-[600px] lg:max-w-[900px]"
             />
           </div>
         </div>
