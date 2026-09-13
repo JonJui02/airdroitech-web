@@ -24,7 +24,9 @@ export const PRODUCTS = [
     href: '/projects/airtouch/',
     descriptor: 'Smart home climate control',
     tag: 'CLIMATE',
-    asset: 'projects/airtouch.webp',
+    // The AirTouch Home console, transparent background (user-supplied 2026-09-13,
+    // replacing the deleted airtouch.webp).
+    asset: 'projects/ATH-device.webp',
   },
   {
     name: 'AirTouch Beam',

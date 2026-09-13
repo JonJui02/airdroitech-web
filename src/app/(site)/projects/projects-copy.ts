@@ -40,7 +40,8 @@ export interface ProductPageCopy {
     accent?: string;
     body?: string;
     items?: { title: string; body: string }[];
-    figure?: { src: string; alt: string };
+    /** ratio (CSS aspect-ratio) and maxWidth (px) keep small or odd-shaped images crisp. */
+    figure?: { src: string; alt: string; ratio?: string; maxWidth?: number };
     /** Small print under the section — used for the official Secure disclaimer. */
     note?: string;
   }[];
@@ -56,7 +57,7 @@ export const AIRTOUCH: ProductPageCopy = {
   summary: 'A whole new level of comfort and energy efficiency.',
   hero: {
     src: '/projects/ATH-device.webp',
-    alt: 'The AirTouch wall console showing zone tiles, a light dimmer, door and motion status, a camera view and local weather',
+    alt: 'The AirTouch Home wall console showing climate zones, lighting with a dimmer, garage door and motion status, a music player and a driveway camera',
   },
   sections: [
     {
@@ -66,10 +67,6 @@ export const AIRTOUCH: ProductPageCopy = {
       // control offering ... adjustments for each zone". Agreement and article
       // fixed. Final sentence is the user's statement of what ADT engineered.
       body: 'Our team contributed to a smart air-conditioning control offering integrated AC unit and zone control, individual temperature monitoring and adjustment for each zone in your home, and smartphone app control of your air conditioner. AirTouch Home, AirTouch Beam and AirTouch Secure are all engineered by the AirdroiTech team.',
-      figure: {
-        src: '/projects/airtouch.webp',
-        alt: 'The AirTouch console beside the AirTouch phone app',
-      },
     },
     {
       heading: 'AirTouch Home — the new look',
@@ -78,12 +75,25 @@ export const AIRTOUCH: ProductPageCopy = {
       // Home app ... easily toggle between modes" and "Add cameras, sensors,
       // doorbells, garage control and lighting ... all from one app".
       body: 'AirTouch Home brings air conditioning control and smart home management together in one app on AirTouch 5 — no more juggling remotes or switching between apps. It is a free upgrade: keep AirTouch 5 for air conditioning alone, or install AirTouch Home to add cameras, sensors, doorbells, garage control and lighting, and toggle between the two modes at any time.',
+      // Shown at no more than its real width (451px) so it stays sharp.
+      figure: {
+        src: '/projects/airtouch-home-closeup.webp',
+        alt: 'Close-up of the AirTouch Home screen: climate zones, a downlight dimmer, a front porch camera, local weather and air quality, and garage, front door and motion status',
+        ratio: '451/296',
+        maxWidth: 460,
+      },
     },
     {
       heading: 'AirTouch Secure',
       // Official: airtouchhome.com.au/pages/airtouch-secure-home. Component list
       // is the site's own "Security for AirTouch Home" navigation.
       body: 'AirTouch Secure is a range of smart monitoring devices that add to an AirTouch 5 system and are controlled through the AirTouch Home app. Alerts and full system control from anywhere; sensors, cameras and alarms; and do-it-yourself installation with no professional setup. The range includes an 8-piece indoor wireless Secure Kit, door and window sensors, motion sensors, a key fob, a doorbell, indoor and outdoor cameras, and a solar panel charger.',
+      figure: {
+        src: '/projects/AT_Secure_Kit.webp',
+        alt: 'The AirTouch Secure Kit: a hub, a speaker unit, two door and window sensors, two key fobs and two motion sensors',
+        ratio: '1016/470',
+        maxWidth: 640,
+      },
       // Verbatim from the official page. Kept because it is a safety statement,
       // not marketing, and omitting it would overstate the product.
       note: 'AirTouch Secure helps you monitor your home and receive alerts. Performance depends on connectivity, environment and setup. AirTouch Secure is not a substitute for professional security monitoring. Requires AirTouch 5 or above with AirTouch Home installed and an active WiFi connection.',

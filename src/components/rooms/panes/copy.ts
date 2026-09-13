@@ -60,19 +60,26 @@ export const PROJECT_COPY: ProjectCopy[] = [
     href: PRODUCTS[0].href,
     asset: PRODUCTS[0].asset,
     tag: PRODUCTS[0].tag,
+    // The main image (asset) is already the console, so the gallery adds the
+    // screen close-up and the Secure Kit rather than repeating it.
     gallery: [
       {
-        src: '/projects/ATH-device.webp',
-        alt: 'The AirTouch wall console showing zone tiles, a light dimmer, door and motion status, a camera view and local weather',
+        src: '/projects/airtouch-home-closeup.webp',
+        alt: 'Close-up of the AirTouch Home screen: climate zones, a downlight dimmer, a front porch camera, local weather and air quality, and garage, front door and motion status',
+      },
+      {
+        src: '/projects/AT_Secure_Kit.webp',
+        alt: 'The AirTouch Secure Kit: a hub, a speaker unit, two door and window sensors, two key fobs and two motion sensors',
       },
     ],
-    // All five read directly off the console screenshot in ATH-device.webp.
+    // All five read directly off the AirTouch Home screens in ATH-device.webp and
+    // airtouch-home-closeup.webp (weather and air quality appear only in the close-up).
     features: [
       { label: 'Per-zone temperature, mode and fan', from: 'ATH-device.webp' },
       { label: 'Lighting and dimming', from: 'ATH-device.webp' },
       { label: 'Door, garage and motion status', from: 'ATH-device.webp' },
       { label: 'Camera view', from: 'ATH-device.webp' },
-      { label: 'Local weather and air quality', from: 'ATH-device.webp' },
+      { label: 'Local weather and air quality', from: 'airtouch-home-closeup.webp' },
     ],
     official: OFFICIAL.airtouchHome,
   },

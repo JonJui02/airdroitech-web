@@ -115,13 +115,21 @@ export function ProductPage({
               ) : null}
 
               {section.figure ? (
-                <div className="mt-8">
+                <div
+                  className="mt-8"
+                  // An optional cap keeps small or square images at a sensible, sharp size.
+                  style={section.figure.maxWidth ? { maxWidth: section.figure.maxWidth } : undefined}
+                >
                   <ImageSlot
                     src={section.figure.src}
-                    ratio="16/9"
+                    ratio={section.figure.ratio ?? '16/9'}
                     alt={section.figure.alt}
                     label={section.figure.src}
-                    sizes="(min-width: 1024px) 66vw, 100vw"
+                    sizes={
+                      section.figure.maxWidth
+                        ? `(min-width: 640px) ${section.figure.maxWidth}px, 100vw`
+                        : '(min-width: 1024px) 66vw, 100vw'
+                    }
                     fit="contain"
                   />
                 </div>
