@@ -261,7 +261,7 @@ function MobilePane({
       kicker: 'Projects',
       title: 'ADT Projects',
       accent: 'Projects',
-      copy: 'Three products, built and maintained in Shah Alam.',
+      copy: 'Three Polyaire Group products.',
       stats: [],
     },
     CAREER: {

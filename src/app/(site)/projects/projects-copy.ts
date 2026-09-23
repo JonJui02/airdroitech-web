@@ -13,8 +13,11 @@ import { OFFICIAL, type OfficialLink } from '@/lib/official';
  *    facts. Prices, bundles and stock are deliberately NOT copied — they change,
  *    and AirdroiTech does not sell; visitors are sent to the official site.
  *
- * Per the user: AirTouch Home (the new look), AirTouch Beam and AirTouch Secure
- * are all engineered by the AirdroiTech team.
+ * Attribution (CEO direction, 2026-09-24): AirdroiTech keeps a low profile as
+ * the Polyaire Group's R&D and software arm. The pages never say AirdroiTech or
+ * "our team" built, engineered or maintains a product. Each page carries one
+ * neutral line, "[Product] is a Polyaire Group product.", and sends visitors to
+ * the official site.
  *
  * Brand phrases stay exactly as they are: "Bringing Your Ideas to Life",
  * "Your AC's Smart Companion", "Be an 'Airdroitechie'".
@@ -61,12 +64,11 @@ export const AIRTOUCH: ProductPageCopy = {
   },
   sections: [
     {
-      heading: 'What our team built',
-      accent: 'our team',
-      // Legacy: "Our team has contributed in making a Smart air conditioning
-      // control offering ... adjustments for each zone". Agreement and article
-      // fixed. Final sentence is the user's statement of what ADT engineered.
-      body: 'Our team contributed to a smart air-conditioning control offering integrated AC unit and zone control, individual temperature monitoring and adjustment for each zone in your home, and smartphone app control of your air conditioner. AirTouch Home, AirTouch Beam and AirTouch Secure are all engineered by the AirdroiTech team.',
+      heading: 'A Polyaire product',
+      accent: 'Polyaire',
+      // Attribution line per the CEO direction above. The feature sentence is
+      // the legacy page's, with the "our team contributed" framing removed.
+      body: 'AirTouch is a Polyaire Group product. It offers integrated AC unit and zone control, individual temperature monitoring and adjustment for each zone in your home, and smartphone app control of your air conditioner.',
     },
     {
       heading: 'AirTouch Home — the new look',
@@ -129,14 +131,11 @@ export const BEAM: ProductPageCopy = {
   },
   sections: [
     {
-      heading: 'How the AirTouch Beam was created',
-      accent: 'created',
-      /*
-       * Legacy: "Our Engineers have contribute greatly in the making of the
-       * AirTouch Beam" — the grammar slip CLAUDE.md names explicitly. Fixed
-       * here and merged with the R&D paragraph from the same page.
-       */
-      body: 'The AirTouch Beam is created through a meticulous, iterative process involving AirdroiTech’s R&D, hardware and software development, and extensive testing to ensure it meets the highest standards of performance and user experience. Our engineers contributed greatly: firmware engineers, hardware engineers and mobile developers worked together to bring it to life, each contributing their expertise to make managing air conditioning smarter, simpler and more efficient.',
+      heading: 'A Polyaire product',
+      accent: 'Polyaire',
+      // Replaces the legacy "Our Engineers have contribute greatly" section,
+      // per the CEO direction at the top of this file.
+      body: 'AirTouch Beam is a Polyaire Group product.',
       figure: {
         src: '/projects/at-beam-app.webp',
         alt: 'The AirTouch Beam app on a phone: the Lounge zone set to 23°, with heat, fan speed, swing and auto controls, a timer and programs',
@@ -223,13 +222,11 @@ export const POLYPLAN: ProductPageCopy = {
       note: 'PolyPlan is available to trade customers through a Polyaire Trade account.',
     },
     {
-      heading: 'What our team does',
-      accent: 'our team',
-      // Legacy: "The Airdroitech Software Web team handles PolyPlan by Polyaire.
-      // By monitoring its daily support, Maintaining the system and enhancing
-      // it by adding new features that transforms how HVAC professionals work".
-      // Brand spelling, sentence structure and agreement fixed.
-      body: 'The AirdroiTech software web team handles PolyPlan by Polyaire — monitoring its daily support, maintaining the system, and enhancing it with new features that transform how HVAC professionals work: faster designs, smarter quotes and a plan that stands out.',
+      heading: 'A Polyaire product',
+      accent: 'Polyaire',
+      // Replaces the legacy "The Airdroitech Software Web team handles PolyPlan"
+      // section, per the CEO direction at the top of this file.
+      body: 'PolyPlan is a Polyaire Group product.',
     },
     {
       heading: 'Rapid calculations and designs',

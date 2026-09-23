@@ -20,7 +20,7 @@ export const ABOUT_BODY =
 export const CAREER_EYEBROW = 'Careers';
 export const CAREER_HEADING = 'Be an ‘Airdroitechie’';
 export const CAREER_BODY =
-  'Are you a tech enthusiast looking for a career journey? The hard work and dedication of our team — the AirdroiTechies — pave the way for everything we ship.';
+  'Are you a tech enthusiast looking for a career journey? Join the AirdroiTechies in Shah Alam.';
 export const CAREER_ACTION = 'See open positions';
 
 export const CONTACT_EYEBROW = 'Get in touch';

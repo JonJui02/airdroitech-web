@@ -9,7 +9,7 @@ import { POLYPLAN } from '../projects-copy';
 export const metadata: Metadata = {
   title: 'PolyPlan',
   description:
-    'PolyPlan — CAD software for HVAC professionals, maintained and enhanced by the AirdroiTech software web team for Polyaire.',
+    'PolyPlan by Polyaire — cloud-based CAD software for HVAC professionals: calculate, design and quote air-conditioning installations.',
   alternates: { canonical: '/projects/polyplan/' },
 };
 

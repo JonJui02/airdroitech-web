@@ -1,7 +1,6 @@
 /**
- * Official product sites. AirdroiTech engineers these products but does not
- * sell or support them — purchase, pricing and support live with the product
- * owners, so the site sends visitors there rather than restating details that
+ * Official product sites. These are Polyaire Group products; purchase,
+ * pricing and support live on the official sites, so the site sends visitors there rather than restating details that
  * change (prices, bundles, stock).
  *
  * Every URL was read from the live official sites on 2026-09-13:
