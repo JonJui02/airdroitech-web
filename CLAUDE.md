@@ -78,6 +78,21 @@ server HTML and read by screen readers; an invisible copy holds the size so noth
 shifts; it only animates under `tt-ready` (not set for reduced motion); and a CSS
 failsafe shows the value after 2.5s if JavaScript never runs.
 
+**Approved exception (user decision, 2026-09-24):** `src/components/ui/ScrollStage.tsx`
+runs Apple-style scroll scenes built around the product imagery. On `/projects/`
+each product is pinned while its image swings up out of 3D, lands flat and its
+text steps in. On the three product pages the hero is pinned while the product
+stands up from a tilt, the title lifts away and the product zooms to fill the
+screen; section figures (not pinned) straighten out of 3D as they reach the
+middle of the screen. A brand-teal glow blooms behind each image. Scroll position
+drives it; nothing plays on a timer. Safeguards:
+the tall stage, the pin and every transform are CSS scoped to `html.tt-ready`,
+`prefers-reduced-motion: no-preference` and `min-height: 560px`, so layout is final
+before first paint and reduced motion gets the plain page; the CSS default of
+`--p` is the visible state, so no JavaScript means no motion; keyboard focus inside
+a stage forces that visible state. Do not remove a safeguard, and do not pin other
+pages without asking.
+
 ### 4. Every URL stays byte-identical
 
 Ten legacy URLs, all with a trailing slash, all preserved — including the

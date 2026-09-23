@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { Tilt } from '@/components/ui/Tilt';
+import { ScrollStage } from '@/components/ui/ScrollStage';
 import { OutboundLink } from '@/components/ui/OutboundLink';
 import type { ProductPageCopy } from '@/app/(site)/projects/projects-copy';
 
@@ -39,6 +40,10 @@ export function ProductPage({
   return (
     <>
       <section className="gutter section-y">
+        {/* Pinned scroll scene: the product stands up and zooms to fill the screen
+            as the title lifts away. */}
+        <ScrollStage mode="exit">
+        <div className="st st-out-text">
         <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{product.kicker}</Eyebrow>
         <h1 className="mt-4 font-display text-[clamp(44px,7vw,96px)] font-bold leading-[0.92] tracking-[-0.04em] text-[color:var(--ink)]">
           <span className="hover-sweep">{product.name}</span>
@@ -46,10 +51,11 @@ export function ProductPage({
         <p className="mt-6 max-w-[40ch] font-display text-[clamp(20px,2.4vw,32px)] font-bold leading-[1.24] tracking-[-0.02em] text-[color:var(--ink)]">
           {product.lede}
         </p>
+        </div>
 
         {/* Hero image: full width on phones and tablets, capped at a medium 760px and
             centred on desktop (user request 2026-09-13). */}
-        <div className="mt-[clamp(28px,3.4vw,56px)] lg:mx-auto lg:max-w-[760px]">
+        <div className="st st-out-img mt-[clamp(28px,3.4vw,56px)] w-full lg:mx-auto lg:max-w-[760px]">
           <Tilt>
             <ImageSlot
               src={product.hero.src}
@@ -62,6 +68,7 @@ export function ProductPage({
             />
           </Tilt>
         </div>
+        </ScrollStage>
       </section>
 
       {product.sections.map((section) => (
@@ -115,8 +122,9 @@ export function ProductPage({
               ) : null}
 
               {section.figure ? (
+                <ScrollStage mode="view" className="mt-8">
                 <div
-                  className="mt-8"
+                  className="st st-view"
                   // An optional cap keeps small or square images at a sensible, sharp size.
                   style={section.figure.maxWidth ? { maxWidth: section.figure.maxWidth } : undefined}
                 >
@@ -133,6 +141,7 @@ export function ProductPage({
                     fit="contain"
                   />
                 </div>
+                </ScrollStage>
               ) : null}
             </div>
           </div>

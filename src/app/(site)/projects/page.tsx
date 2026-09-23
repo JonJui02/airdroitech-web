@@ -6,6 +6,8 @@ import { TypeText } from '@/components/ui/TypeText';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { Tilt } from '@/components/ui/Tilt';
+import { ScrollStage } from '@/components/ui/ScrollStage';
+import { CAREER_BODY } from '@/components/rooms/panes/copy';
 import { INDEX, PRODUCT_PAGES } from './projects-copy';
 
 /**
@@ -19,7 +21,7 @@ import { INDEX, PRODUCT_PAGES } from './projects-copy';
 export const metadata: Metadata = {
   title: 'Projects',
   description:
-    'What AirdroiTech builds: AirTouch smart home climate control, AirTouch Beam, and PolyPlan CAD software for HVAC professionals.',
+    'AirTouch smart home climate control, AirTouch Beam, and PolyPlan CAD software for HVAC professionals — Polyaire Group products.',
   alternates: { canonical: '/projects/' },
 };
 
@@ -38,11 +40,13 @@ export default function Page() {
           key={product.slug}
           className="gutter band-y border-t border-[color:var(--line)]"
         >
+          {/* Pinned scroll scene: the product swings up out of 3D, then its text steps in. */}
+          <ScrollStage mode="enter">
           <Link
             href={`/projects/${product.slug}/`}
             className="hover-box group -m-[clamp(14px,1.6vw,28px)] grid items-center gap-[clamp(24px,3.4vw,72px)] p-[clamp(14px,1.6vw,28px)] lg:grid-cols-2"
           >
-            <div className={i % 2 === 1 ? 'lg:order-last' : ''}>
+            <div className={`st st-img ${i % 2 === 1 ? 'st-flip lg:order-last' : ''}`}>
               <Tilt><ImageSlot
                 src={product.hero.src}
                 ratio="16/10"
@@ -54,20 +58,21 @@ export default function Page() {
             </div>
 
             <div>
-              <Eyebrow className="tracking-[0.14em] text-[color:var(--eyebrow)]">
+              <Eyebrow className="st st-1 tracking-[0.14em] text-[color:var(--eyebrow)]">
                 {product.kicker}
               </Eyebrow>
-              <h2 className="mt-3 font-display text-[clamp(34px,4.6vw,64px)] font-bold leading-[1.02] tracking-[-0.035em] text-[color:var(--ink)]">
+              <h2 className="st st-2 mt-3 font-display text-[clamp(34px,4.6vw,64px)] font-bold leading-[1.02] tracking-[-0.035em] text-[color:var(--ink)]">
                 <span className="hover-sweep">{product.name}</span>
               </h2>
-              <p className="mt-4 max-w-[40ch] font-display text-[clamp(18px,1.8vw,24px)] font-bold leading-[1.3] tracking-[-0.015em] text-[color:var(--ink)]">
+              <p className="st st-3 mt-4 max-w-[40ch] font-display text-[clamp(18px,1.8vw,24px)] font-bold leading-[1.3] tracking-[-0.015em] text-[color:var(--ink)]">
                 {product.summary}
               </p>
-              <span className="mt-6 inline-block font-semibold text-[color:var(--link)] underline [text-underline-offset:5px] group-hover:no-underline">
+              <span className="st st-4 mt-6 inline-block font-semibold text-[color:var(--link)] underline [text-underline-offset:5px] group-hover:no-underline">
                 View project →
               </span>
             </div>
           </Link>
+          </ScrollStage>
         </section>
       ))}
 
@@ -76,8 +81,7 @@ export default function Page() {
           <TypeText text="Be an ‘Airdroitechie’" accent="‘Airdroitechie’" />
         </h2>
         <p className="prose-measure mt-4 text-[color:var(--body)]">
-          Are you a tech enthusiast looking for a career journey? The hard work and dedication of
-          our team — the AirdroiTechies — pave the way for everything we ship.
+          {CAREER_BODY}
         </p>
         <div className="mt-7 flex flex-wrap gap-3">
           <Button href="/careers/">See open positions</Button>

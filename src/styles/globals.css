@@ -1056,3 +1056,142 @@ html.tt-ready .count-text[data-count='play'] .count-live {
     .gift-rays { opacity: 0; }
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Scroll scenes — src/components/ui/ScrollStage.tsx.
+
+   Approved exception to the motion policy (user decision 2026-09-24): the
+   /projects/ index and the three product pages run Apple-style scroll scenes
+   built around the product imagery. Everything here is scoped to html.tt-ready
+   (set pre-paint, never under reduced motion), to no-preference, and to screens
+   tall enough to hold a pinned panel. Outside that scope the page is the plain,
+   flat, unpinned layout.
+
+   ScrollStage writes --p: <0 arriving, 0 pin starts, 1 pin releases (`view`:
+   0 entering, 1 centred). Each animated child (.st) maps --p to its own 0–1 --t
+   through --a and --b. The CSS default of --p is the visible state, so no
+   JavaScript means no motion, never hidden content. Focus inside a stage forces
+   that state too.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) and (min-height: 560px) {
+  html.tt-ready .stage {
+    --stage-top: 62px;
+    overflow-x: clip;
+  }
+  html.tt-ready .stage[data-stage='enter'] {
+    --p: 1;
+    height: 210svh;
+  }
+  html.tt-ready .stage[data-stage='exit'] {
+    --p: 0;
+    --lift: 0px;
+    --zoom: 1;
+    height: 220svh;
+  }
+  html.tt-ready .stage[data-stage='view'] {
+    --p: 1;
+  }
+  html.tt-ready .stage:is([data-stage='enter'], [data-stage='view']):focus-within {
+    --p: 1 !important;
+  }
+  html.tt-ready .stage[data-stage='exit']:focus-within {
+    --p: 0 !important;
+  }
+  html.tt-ready .stage:is([data-stage='enter'], [data-stage='exit']) > .stage-panel {
+    position: sticky;
+    top: var(--stage-top);
+    min-height: calc(100svh - var(--stage-top));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  /* The hero opens exactly where the plain page would put it. */
+  html.tt-ready .stage[data-stage='exit'] > .stage-panel {
+    justify-content: flex-start;
+  }
+  html.tt-ready .stage .st {
+    --t: clamp(0, (var(--p) - var(--a)) / (var(--b) - var(--a)), 1);
+    will-change: transform, opacity;
+  }
+
+  /* Brand glow that blooms behind a product as it lands. */
+  html.tt-ready .stage :is(.st-img, .st-out-img, .st-view) {
+    position: relative;
+    isolation: isolate;
+  }
+  html.tt-ready .stage :is(.st-img, .st-out-img, .st-view)::before {
+    content: '';
+    position: absolute;
+    inset: -14% -10%;
+    z-index: -1;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--glow-a) 55%, transparent), transparent);
+    filter: blur(28px);
+    opacity: calc(var(--glow, var(--t)) * 0.85);
+    pointer-events: none;
+  }
+
+  /* enter: the product swings up out of 3D, lands flat, then keeps a slow push
+     in while the text steps in beside it. */
+  html.tt-ready .st-img {
+    --a: -0.95;
+    --b: 0.3;
+    --u: clamp(0, (var(--p) - 0.3) / 0.7, 1);
+    --swing: -22deg;
+    transform-origin: 50% 90%;
+    transform: perspective(1400px)
+      translateY(calc((1 - var(--t)) * 22%))
+      rotateX(calc((1 - var(--t)) * 42deg))
+      rotateY(calc((1 - var(--t)) * var(--swing)))
+      scale(calc(0.5 + 0.5 * var(--t) + 0.07 * var(--u)));
+    opacity: calc(0.3 + 0.7 * var(--t));
+  }
+  html.tt-ready .st-img.st-flip {
+    --swing: 22deg;
+  }
+  html.tt-ready .st-1 { --a: 0.05; --b: 0.3; }
+  html.tt-ready .st-2 { --a: 0.12; --b: 0.37; }
+  html.tt-ready .st-3 { --a: 0.19; --b: 0.44; }
+  html.tt-ready .st-4 { --a: 0.26; --b: 0.51; }
+  html.tt-ready :is(.st-1, .st-2, .st-3, .st-4) {
+    transform: translateY(calc((1 - var(--t)) * 56px));
+    opacity: var(--t);
+  }
+
+  /* exit: the hero opens with the product tilted back like a screen being
+     opened. Scrolling stands it up, lifts the title away, and flies the product
+     to the centre, zoomed to fill the screen (--lift, --zoom from JS). */
+  html.tt-ready .st-out-text {
+    --a: 0;
+    --b: 0.4;
+    transform: translateY(calc(var(--t) * -96px));
+    opacity: calc(1 - var(--t));
+  }
+  html.tt-ready .st-out-img {
+    --a: 0;
+    --b: 0.7;
+    --glow: calc(0.35 + 0.65 * var(--t));
+    transform-origin: 50% 50%;
+    transform: perspective(1600px)
+      translateY(calc(var(--t) * var(--lift)))
+      rotateX(calc((1 - var(--t)) * 22deg))
+      scale(calc(0.92 + (var(--zoom) - 0.92) * var(--t)));
+  }
+
+  /* view: figures straighten out of 3D as they reach the middle of the screen. */
+  html.tt-ready .st-view {
+    --a: 0;
+    --b: 1;
+    transform-origin: 50% 100%;
+    transform: perspective(1400px)
+      translateY(calc((1 - var(--t)) * 48px))
+      rotateX(calc((1 - var(--t)) * 30deg))
+      scale(calc(0.8 + 0.2 * var(--t)));
+    opacity: calc(0.35 + 0.65 * var(--t));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-height: 560px) and (min-width: 1024px) {
+  html.tt-ready .stage {
+    --stage-top: calc(34px + clamp(62px, 5.2vw, 78px));
+  }
+}
