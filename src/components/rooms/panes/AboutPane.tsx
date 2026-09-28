@@ -2,6 +2,7 @@
 
 import { TypeText } from '@/components/ui/TypeText';
 import { CAPABILITIES } from '@/lib/site';
+import { RoomNext } from '../RoomNext';
 import { RoomReadMore } from '../RoomReadMore';
 import type { Room } from '../rooms';
 import { ABOUT_BODY, ABOUT_EYEBROW, ABOUT_HEADING } from './copy';
@@ -10,6 +11,8 @@ interface AboutPaneProps {
   caps: Record<string, boolean>;
   onToggle: (name: string) => void;
   page: Room['page'];
+  /** The room's named next step (ROOM_NEXT in ./copy). */
+  next?: { label: string; href: string; onGo?: () => void };
 }
 
 /**
@@ -21,7 +24,7 @@ interface AboutPaneProps {
  * and the control is what it looks like: a demonstration of the interface,
  * asserting nothing.
  */
-export function AboutPane({ caps, onToggle, page }: AboutPaneProps) {
+export function AboutPane({ caps, onToggle, page, next }: AboutPaneProps) {
   return (
     <div className="flex h-full flex-col justify-center overflow-y-auto px-[40px] py-[48px]">
         <p className="font-mono text-[12px] uppercase tracking-[0.16em] text-chrome-meta">
@@ -74,7 +77,10 @@ export function AboutPane({ caps, onToggle, page }: AboutPaneProps) {
           })}
         </div>
 
-        <RoomReadMore page={page} className="mt-[26px] text-[16px]" />
+        <div className="mt-[26px] flex flex-wrap items-center gap-x-[28px] gap-y-3">
+          {next ? <RoomNext {...next} /> : null}
+          <RoomReadMore page={page} className="text-[15px]" />
+        </div>
     </div>
   );
 }

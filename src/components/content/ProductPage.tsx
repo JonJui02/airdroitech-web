@@ -6,6 +6,7 @@ import { ImageSlot } from '@/components/ui/ImageSlot';
 import { Tilt } from '@/components/ui/Tilt';
 import { ScrollStage } from '@/components/ui/ScrollStage';
 import { OutboundLink } from '@/components/ui/OutboundLink';
+import { Breadcrumbs } from '@/components/shell/Breadcrumbs';
 import type { ProductPageCopy } from '@/app/(site)/projects/projects-copy';
 
 const PRIMARY =
@@ -40,6 +41,14 @@ export function ProductPage({
   return (
     <>
       <section className="gutter section-y">
+        <Breadcrumbs
+          className="-mt-3 mb-6"
+          trail={[
+            { label: 'Home', href: '/' },
+            { label: 'Projects', href: '/projects/' },
+            { label: product.name, href: `/projects/${product.slug}/` },
+          ]}
+        />
         {/* Pinned scroll scene: the product stands up and zooms to fill the screen
             as the title lifts away. */}
         <ScrollStage mode="exit">

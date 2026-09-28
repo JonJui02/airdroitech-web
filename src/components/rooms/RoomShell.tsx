@@ -9,6 +9,8 @@ import { ImageSlot } from '@/components/ui/ImageSlot';
 import type { Role } from '@/lib/roles';
 import { CAPABILITIES, EMAIL, COMPANY_FACTS } from '@/lib/site';
 import { RoomLegal } from './RoomLegal';
+import { RoomLink, RoomNext } from './RoomNext';
+import Link from 'next/link';
 import { RoomReadMore } from './RoomReadMore';
 import { RoomDial } from './RoomDial';
 import { RoomHeader } from './RoomHeader';
@@ -27,9 +29,18 @@ import {
   CAREER_HEADING,
   CONTACT_HEADING,
   HERO_DECK,
+  HOME_DOORS,
   PROJECT_COPY,
+  ROOM_NEXT,
 } from './panes/copy';
-import { at, buildRooms, wrapIndex, type Room, type RoomKey } from './rooms';
+import { at, buildRooms, type Room, type RoomKey } from './rooms';
+
+/** A room's named next step, if it has one. */
+interface NextStep {
+  label: string;
+  href: string;
+  onGo?: () => void;
+}
 
 export interface RoomShellProps {
   roles: Role[];
@@ -58,7 +69,6 @@ export function RoomShell({ roles }: RoomShellProps) {
     () => buildRooms({ products: PROJECT_COPY.length }),
     [],
   );
-  const total = rooms.length;
 
   const [index, setIndex] = useState(0);
   const [caps, setCaps] = useState<Record<string, boolean>>(() =>
@@ -101,6 +111,16 @@ export function RoomShell({ roles }: RoomShellProps) {
 
   const pageOf = (key: RoomKey) => rooms.find((r) => r.key === key)?.page;
 
+  const nextOf = (key: RoomKey): NextStep | undefined => {
+    if (!(key in ROOM_NEXT)) return undefined;
+    const n = ROOM_NEXT[key as keyof typeof ROOM_NEXT];
+    return {
+      label: n.label,
+      href: n.href,
+      onGo: 'room' in n ? () => goRoom(n.room) : undefined,
+    };
+  };
+
   /** Panel attributes for one layout's tab list: `d` desktop, `m` phone. */
   const panel = (base: 'd' | 'm', key: RoomKey) => ({
     role: 'tabpanel' as const,
@@ -126,9 +146,7 @@ export function RoomShell({ roles }: RoomShellProps) {
 
           <div className="relative z-[2] min-h-0 overflow-hidden">
             <div {...panel('d', 'HOME')} className="h-full animate-pane-in overflow-y-auto">
-              <HomePane
-                onOpenProjects={() => goRoom('PROJECTS')}
-              />
+              <HomePane onRoom={goRoom} />
             </div>
 
             <div {...panel('d', 'ABOUT')} className="h-full animate-pane-in overflow-y-auto">
@@ -136,12 +154,13 @@ export function RoomShell({ roles }: RoomShellProps) {
                 caps={caps}
                 onToggle={(n) => setCaps((c) => ({ ...c, [n]: !c[n] }))}
                 page={pageOf('ABOUT')}
+                next={nextOf('ABOUT')}
               />
             </div>
 
             <div {...panel('d', 'PROJECTS')} className="h-full animate-pane-in">
               {device === null ? (
-                <ProjectsPane onOpen={openDevice} page={pageOf('PROJECTS')} />
+                <ProjectsPane onOpen={openDevice} page={pageOf('PROJECTS')} next={nextOf('PROJECTS')} />
               ) : (
                 <DeviceDetail product={at(PROJECT_COPY, device)} onBack={closeDevice} />
               )}
@@ -173,7 +192,9 @@ export function RoomShell({ roles }: RoomShellProps) {
                 device={device}
                 onOpenDevice={openDevice}
                 onCloseDevice={closeDevice}
-                onNext={() => goIndex(wrapIndex(index + 1, total))}
+                onRoom={goRoom}
+                next={nextOf(r.key)}
+                roles={roles}
               />
             </div>
           ))}
@@ -207,14 +228,18 @@ function MobilePane({
   device,
   onOpenDevice,
   onCloseDevice,
-  onNext,
+  onRoom,
+  next,
+  roles,
 }: {
   room: RoomKey;
   page: Room['page'];
   device: number | null;
   onOpenDevice: (i: number, el: HTMLButtonElement) => void;
   onCloseDevice: () => void;
-  onNext: () => void;
+  onRoom: (key: RoomKey) => void;
+  next?: NextStep;
+  roles: Role[];
 }) {
 
   const content: Record<RoomKey, { kicker: string; title: string; accent?: string; copy: string; stats: Stat[] }> = {
@@ -324,6 +349,27 @@ function MobilePane({
       </Heading>
       <p className="mt-[14px] text-[15.5px] leading-[1.62] text-chrome-body">{c.copy}</p>
 
+      {room === 'HOME' ? (
+        // Two doors that name the visitor's intent, job seekers first.
+        <div className="mt-[18px] flex flex-col gap-[10px]">
+          <RoomLink
+            href={HOME_DOORS.role.href}
+            onGo={() => onRoom('CAREER')}
+            target
+            className="flex min-h-[52px] items-center justify-center bg-teal-600 text-[16px] font-semibold text-white"
+          >
+            {HOME_DOORS.role.label} <span aria-hidden="true" className="ml-2">→</span>
+          </RoomLink>
+          <RoomLink
+            href={HOME_DOORS.build.href}
+            onGo={() => onRoom('PROJECTS')}
+            className="flex min-h-[52px] items-center justify-center border-[1.5px] border-[color:var(--btn2-border)] text-[16px] font-semibold text-chrome-link"
+          >
+            {HOME_DOORS.build.label}
+          </RoomLink>
+        </div>
+      ) : null}
+
       <RoomReadMore page={page} className="mt-[14px] text-[15.5px]" />
 
       {/*
@@ -389,15 +435,31 @@ function MobilePane({
         </div>
       ) : null}
 
-      <RoomLegal className="mt-[26px] border-t border-chrome-line pt-[18px]" />
+      {room === 'CAREER' ? (
+        // Every role opens its own description on the roles page.
+        <ul className="mt-[22px] flex flex-col gap-px border border-chrome-line bg-chrome-line">
+          {roles.map((role) => (
+            <li key={role.slug}>
+              <Link
+                href={`/careers/open-positions/#${role.slug}`}
+                className="flex min-h-[52px] items-center gap-[12px] bg-chrome-plate px-[14px] py-[10px]"
+              >
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[15px] leading-[1.35] text-chrome-ink">{role.title}</span>
+                  <span className="mt-[3px] block font-mono text-[10.5px] uppercase tracking-[0.12em] text-chrome-meta">
+                    {role.team}
+                  </span>
+                </span>
+                <span aria-hidden="true" className="text-chrome-link">→</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : null}
 
-      <button
-        type="button"
-        onClick={onNext}
-        className="mt-[24px] flex min-h-[54px] w-full items-center justify-center bg-teal-600 text-[16px] font-semibold text-white transition-colors duration-200 hover:bg-chrome-primary-hover"
-      >
-        Next room <span aria-hidden="true" className="ml-2">→</span>
-      </button>
+      {next ? <RoomNext {...next} className="mt-[26px] text-[18px]" /> : null}
+
+      <RoomLegal className="mt-[26px] border-t border-chrome-line pt-[12px]" />
     </div>
   );
 }

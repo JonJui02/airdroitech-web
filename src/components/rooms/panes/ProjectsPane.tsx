@@ -3,6 +3,7 @@
 import { Accent } from '@/components/ui/Accent';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import { Tilt } from '@/components/ui/Tilt';
+import { RoomNext } from '../RoomNext';
 import { RoomReadMore } from '../RoomReadMore';
 import type { Room } from '../rooms';
 import { PROJECT_COPY } from './copy';
@@ -10,6 +11,8 @@ import { PROJECT_COPY } from './copy';
 interface ProjectsPaneProps {
   onOpen: (index: number, el: HTMLButtonElement) => void;
   page: Room['page'];
+  /** The room's named next step (ROOM_NEXT in ./copy). */
+  next?: { label: string; href: string; onGo?: () => void };
 }
 
 /**
@@ -19,7 +22,7 @@ interface ProjectsPaneProps {
  * header's "all online" are removed: there is no release-status source in the
  * repo and no system reporting online, so both would be invented facts.
  */
-export function ProjectsPane({ onOpen, page }: ProjectsPaneProps) {
+export function ProjectsPane({ onOpen, page, next }: ProjectsPaneProps) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex flex-none items-end justify-between px-[40px] pb-[20px] pt-[30px]">
@@ -71,6 +74,10 @@ export function ProjectsPane({ onOpen, page }: ProjectsPaneProps) {
             </span>
           </button>
         ))}
+      </div>
+
+      <div className="flex flex-none items-center border-t border-chrome-line px-[40px] py-[12px]">
+        {next ? <RoomNext {...next} /> : null}
       </div>
     </div>
   );

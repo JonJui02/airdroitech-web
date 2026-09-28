@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { KeyboardEvent, MouseEvent, PointerEvent } from 'react';
+import { plainClick } from './RoomNext';
 import { at, readout, wrapIndex, type Room } from './rooms';
 
 interface RoomDialProps {
@@ -39,9 +40,6 @@ function pointerDeg(el: HTMLElement, x: number, y: number) {
   const r = el.getBoundingClientRect();
   return (Math.atan2(x - (r.left + r.width / 2), -(y - (r.top + r.height / 2))) * 180) / Math.PI;
 }
-
-/** A plain left click. Anything else (new tab, new window) is left to the browser. */
-const plainClick = (e: MouseEvent) => e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
 
 /**
  * The homepage's only navigation (design review, 2026-09-28): a physical

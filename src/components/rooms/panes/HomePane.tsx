@@ -1,18 +1,19 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
 import { CountUp } from '@/components/ui/CountUp';
 import { COMPANY_FACTS } from '@/lib/site';
-import { HERO_DECK, HERO_EYEBROW } from './copy';
+import { HERO_DECK, HERO_EYEBROW, HOME_DOORS } from './copy';
+import { RoomLink } from '../RoomNext';
+import type { RoomKey } from '../rooms';
 import { TypeText } from '@/components/ui/TypeText';
 import { GiftBox } from '@/components/anniversary/GiftBox';
 import { FLAGS } from '@/lib/flags';
 
 interface HomePaneProps {
-  onOpenProjects: () => void;
+  onRoom: (key: RoomKey) => void;
 }
 
-export function HomePane({ onOpenProjects }: HomePaneProps) {
+export function HomePane({ onRoom }: HomePaneProps) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex flex-1 items-center gap-[40px] px-[40px] py-[44px]">
@@ -31,18 +32,24 @@ export function HomePane({ onOpenProjects }: HomePaneProps) {
           {HERO_DECK}
         </p>
 
+        {/* Two doors that name the visitor's intent, job seekers first. */}
         <div className="mt-[28px] flex gap-3">
-          <button
-            type="button"
-            onClick={onOpenProjects}
+          <RoomLink
+            href={HOME_DOORS.role.href}
+            onGo={() => onRoom('CAREER')}
+            target
             className="inline-flex min-h-[54px] items-center bg-teal-600 px-7 text-[16px] font-semibold text-white transition-colors duration-200 hover:bg-chrome-primary-hover"
           >
-            Open projects <span aria-hidden="true" className="ml-2">→</span>
-          </button>
-          <Button href="/careers/" variant="secondary">
-            Work with us
-          </Button>
-          </div>
+            {HOME_DOORS.role.label} <span aria-hidden="true" className="ml-2">→</span>
+          </RoomLink>
+          <RoomLink
+            href={HOME_DOORS.build.href}
+            onGo={() => onRoom('PROJECTS')}
+            className="inline-flex min-h-[54px] items-center border-[1.5px] border-[color:var(--btn2-border)] px-7 text-[16px] font-semibold text-chrome-link transition-colors duration-200 hover:border-[color:var(--btn2-border-hover)]"
+          >
+            {HOME_DOORS.build.label}
+          </RoomLink>
+        </div>
         </div>
 
         {/*

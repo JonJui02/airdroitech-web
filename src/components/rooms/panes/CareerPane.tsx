@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { InkButton } from '@/components/ui/Button';
 import type { Role } from '@/lib/roles';
 import { TypeText } from '@/components/ui/TypeText';
@@ -30,24 +31,34 @@ export function CareerPane({ roles }: { roles: Role[] }) {
         <p className="mt-[18px] max-w-[56ch] text-[17px] leading-[1.62] text-onlime-body">
           {CAREER_BODY}
         </p>
-        <div className="mt-[24px]">
+        {/* The room's next step: the roles page, where each description and how
+            to apply live. data-flow-target: the Airflow background aims here. */}
+        <div className="mt-[24px] inline-flex" data-flow-target="">
           <InkButton href="/careers/open-positions/">{CAREER_ACTION}</InkButton>
         </div>
       </div>
 
       <ul className="flex flex-1 flex-col gap-px overflow-y-auto border-t border-chrome-line bg-chrome-line">
         {roles.map((role, i) => (
-          <li
-            key={role.slug}
-            className="hover-box flex min-h-[62px] flex-1 items-center gap-[18px] bg-chrome-ground px-[24px]"
-          >
-            <span className="font-mono text-[11.5px] tracking-[0.1em] text-chrome-meta">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <span className="flex-1 text-[16px] text-chrome-ink">{role.title}</span>
-            <span className="font-mono text-[11.5px] uppercase tracking-[0.12em] text-chrome-link">
-              {role.team}
-            </span>
+          // Each role opens its own description on the roles page (the anchors
+          // are the role slugs), so the list job seekers care about most is
+          // never a dead end.
+          <li key={role.slug} className="flex flex-1">
+            <Link
+              href={`/careers/open-positions/#${role.slug}`}
+              className="hover-box group flex min-h-[62px] flex-1 items-center gap-[18px] bg-chrome-ground px-[24px]"
+            >
+              <span className="font-mono text-[11.5px] tracking-[0.1em] text-chrome-meta">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span className="flex-1 text-[16px] text-chrome-ink">{role.title}</span>
+              <span className="font-mono text-[11.5px] uppercase tracking-[0.12em] text-chrome-link">
+                {role.team}
+              </span>
+              <span aria-hidden="true" className="text-chrome-link transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none">
+                →
+              </span>
+            </Link>
           </li>
         ))}
       </ul>

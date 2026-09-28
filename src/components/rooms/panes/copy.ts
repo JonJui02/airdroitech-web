@@ -21,7 +21,30 @@ export const CAREER_EYEBROW = 'Careers';
 export const CAREER_HEADING = 'Be an ‘Airdroitechie’';
 export const CAREER_BODY =
   'Are you a tech enthusiast looking for a career journey? Join the AirdroiTechies in Shah Alam.';
-export const CAREER_ACTION = 'See open positions';
+// Never says "open" (user request 2026-09-13): whether roles are still open is
+// unconfirmed (docs/OPEN-DECISIONS.md #4).
+export const CAREER_ACTION = 'See the roles and how to apply';
+
+/**
+ * Hero doors on the Home room (design review, 2026-09-28): name the visitor's
+ * intent, job seekers first. Each opens a room in place, or its page without
+ * JavaScript.
+ */
+export const HOME_DOORS = {
+  role: { label: 'Find a role', href: '/careers/' },
+  build: { label: 'See what we build', href: '/projects/' },
+} as const;
+
+/**
+ * The one named next step at the end of each room, in dial order. Home has the
+ * two doors above instead; Contact is the end of the path. `room` is the room
+ * the step opens in place; without it, the step leaves for `href`.
+ */
+export const ROOM_NEXT = {
+  ABOUT: { label: 'What we work on', room: 'PROJECTS', href: '/projects/' },
+  PROJECTS: { label: 'Life at AirdroiTech', room: 'CAREER', href: '/careers/' },
+  CAREER: { label: CAREER_ACTION, href: '/careers/open-positions/' },
+} as const;
 
 export const CONTACT_EYEBROW = 'Get in touch';
 export const CONTACT_HEADING = 'Talk to the team';

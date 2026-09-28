@@ -4,6 +4,8 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Accent } from '@/components/ui/Accent';
 import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
+import { Breadcrumbs } from '@/components/shell/Breadcrumbs';
+import { OpenRoleFromHash } from '@/components/content/OpenRoleFromHash';
 import { getRolesByTeam } from '@/lib/roles';
 import { EMAIL } from '@/lib/site';
 import { ROLES_TEASER } from '../careers-copy';
@@ -78,7 +80,16 @@ export default function Page() {
   return (
     <>
       {/* ================= hero ================= */}
+      <OpenRoleFromHash />
       <section className="gutter section-y">
+        <Breadcrumbs
+          className="-mt-3 mb-6"
+          trail={[
+            { label: 'Home', href: '/' },
+            { label: 'Career', href: '/careers/' },
+            { label: 'Open positions', href: '/careers/open-positions/' },
+          ]}
+        />
         <Eyebrow className="tracking-[0.16em] text-[color:var(--muted)]">Careers</Eyebrow>
         <h1 className="mt-4 max-w-[16ch] font-display text-[clamp(44px,7vw,96px)] font-bold leading-[0.92] tracking-[-0.04em] text-[color:var(--ink)]">
           <Accent text="Be an AirdroiTechie" accent="AirdroiTechie" />
