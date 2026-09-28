@@ -10,7 +10,7 @@ import { AIRTOUCH } from '../projects-copy';
 export const metadata: Metadata = {
   title: 'AirTouch',
   description:
-    'AirTouch — smart home climate control. Integrated AC unit and zone control, per-zone temperature monitoring and adjustment, and app control from anywhere.',
+    'AirTouch — smart home climate control. Zone-by-zone temperature, mode and fan, app control at home or away, geofencing, and Alexa and Google Home.',
   alternates: { canonical: '/projects/airtouch/' },
 };
 

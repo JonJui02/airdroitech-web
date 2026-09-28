@@ -87,7 +87,7 @@ export const AIRTOUCH: ProductPageCopy = {
       x: 25.5,
       y: 35,
       side: 'l',
-      from: '“A Polyaire product”: individual temperature monitoring and adjustment for each zone',
+      from: '“A Polyaire product”: individual temperature monitoring and adjustment for each zone; mode and fan per zone read off ATH-device.webp',
     },
     {
       title: 'One app for the home',
@@ -233,7 +233,7 @@ export const POLYPLAN: ProductPageCopy = {
       x: 17,
       y: 10,
       side: 'l',
-      from: '“Rapid calculations and designs” (official)',
+      from: '“Rapid calculations” (official): complete standard residential HVAC installations in as little as 15 minutes',
     },
     {
       title: 'Online ordering',
@@ -269,7 +269,7 @@ export const POLYPLAN: ProductPageCopy = {
     },
     {
       title: 'Auto Flex Pen',
-      detail: 'Draw a duct; size, insulation, length follow.',
+      detail: 'Draw ducts; size, insulation, length set.',
       x: 62,
       y: 49,
       side: 'r',

@@ -9,6 +9,15 @@
         "dev"
       ],
       "autoPort": true
+    },
+    {
+      "name": "airdroitech-prod",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "start"
+      ],
+      "port": 3000
     }
   ]
 }

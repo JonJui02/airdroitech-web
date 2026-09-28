@@ -101,13 +101,15 @@ export function ProductHero({ product }: { product: ProductPageCopy }) {
         const len = Math.hypot(hx - kx, hy - ly) || 1;
         const ex = hx - ((hx - kx) / len) * 13;
         const ey = hy - ((hy - ly) / len) * 13;
+        // The dash length goes on with the path, so a new line starts hidden
+        // instead of drawing solid for a frame and then retracting.
+        const dash = Math.ceil(Math.abs(kx - lx) + Math.hypot(ex - kx, ey - ly)) + 2;
         const path = document.createElementNS(ns, 'path');
         path.setAttribute('d', `M${lx.toFixed(1)} ${ly.toFixed(1)} H${kx.toFixed(1)} L${ex.toFixed(1)} ${ey.toFixed(1)}`);
-        path.setAttribute('style', `--i:${li.style.getPropertyValue('--i')}`);
+        path.setAttribute('style', `--i:${li.style.getPropertyValue('--i')};--len:${dash}`);
         return path;
       });
       svg.replaceChildren(...paths);
-      paths.forEach((p) => p.style.setProperty('--len', String(Math.ceil(p.getTotalLength()) + 2)));
     };
 
     // Where the resting product sits (just under the full-size title), and how

@@ -1482,6 +1482,13 @@ html.tt-ready .count-text[data-count='play'] .count-live {
     transform: translateY(8px);
   }
 
+  /* Tablets and small laptops: two columns of points leave room for a bigger product. */
+  @container ps (min-width: 600px) {
+    html.tt-ready .ps-stage[data-armed] .ps-img {
+      max-height: clamp(140px, 34svh, 380px);
+    }
+  }
+
   @container ps (min-width: 1100px) {
     html.tt-ready .ps-stage[data-armed] .ps-board {
       display: block;

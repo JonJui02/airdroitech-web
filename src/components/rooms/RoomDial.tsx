@@ -131,11 +131,10 @@ export function RoomDial({ rooms, index, onIndex, variant, idBase }: RoomDialPro
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
+    // A horizontal tab list: Left/Right, Home/End (WAI-ARIA tabs pattern).
     const keys: Record<string, number> = {
       ArrowRight: wrapIndex(index + 1, total),
-      ArrowDown: wrapIndex(index + 1, total),
       ArrowLeft: wrapIndex(index - 1, total),
-      ArrowUp: wrapIndex(index - 1, total),
       Home: 0,
       End: total - 1,
     };
@@ -161,7 +160,10 @@ export function RoomDial({ rooms, index, onIndex, variant, idBase }: RoomDialPro
   };
 
   const tabList = (
-    <div role="tablist" aria-label="Rooms" aria-orientation="horizontal" onKeyDown={onKeyDown}>
+    // A navigation landmark as well as a tab list: it is the homepage's only
+    // navigation, so landmark users should find it like the header nav elsewhere.
+    <nav aria-label="Main">
+      <div role="tablist" aria-label="Rooms" aria-orientation="horizontal" onKeyDown={onKeyDown}>
       {rooms.map((r, i) => {
         const active = i === index;
         const deg = detent(i);
@@ -202,7 +204,8 @@ export function RoomDial({ rooms, index, onIndex, variant, idBase }: RoomDialPro
           </a>
         );
       })}
-    </div>
+      </div>
+    </nav>
   );
 
   const ridges = (
@@ -278,7 +281,9 @@ export function RoomDial({ rooms, index, onIndex, variant, idBase }: RoomDialPro
   }
 
   return (
-    <div {...handlers} className={`relative h-[132px] w-full touch-none select-none overflow-hidden ${dragging ? 'cursor-grabbing' : 'cursor-grab'}`}>
+    // No overflow clipping here, so a focus ring on an end label is never cut;
+    // the knob's lower half runs off the screen edge and the console clips it.
+    <div {...handlers} className={`relative h-[132px] w-full touch-none select-none ${dragging ? 'cursor-grabbing' : 'cursor-grab'}`}>
       {/* Track arc. The names carry their own dots, so the arc has no detent
           dots of its own: two markers per room read as clutter at 375px. */}
       <svg

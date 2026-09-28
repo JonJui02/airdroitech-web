@@ -112,13 +112,14 @@ export function Airflow({ variant, watch }: AirflowProps) {
     const find = (sel: string) =>
       Array.from(scope.querySelectorAll(sel)).find((el) => el.getBoundingClientRect().width > 0);
 
-    const source = () => {
-      const el = find('[data-flow-source]');
-      return el ? centre(el) : null;
-    };
+    // Resolved on aim (room change, resize), never inside the frame loop: the
+    // loop reads only these cached values, so drawing touches no layout.
+    let srcPoint: { x: number; y: number } | null = null;
+    let targetEl: Element | undefined;
+
+    const source = () => srcPoint;
     const target = () => {
-      const el = find('[data-flow-target]');
-      const p = el ? centre(el) : null;
+      const p = targetEl ? centre(targetEl) : null;
       if (!p) return phone ? { x: W / 2, y: H * 0.35 } : null;
       // On phones the step may be scrolled out of view; aim at the nearest edge.
       return phone ? { x: p.x, y: Math.min(H * 0.8, Math.max(90, p.y)) } : p;
@@ -146,7 +147,7 @@ export function Airflow({ variant, watch }: AirflowProps) {
     };
 
     const ping = () => {
-      const el = find('[data-flow-target]');
+      const el = targetEl;
       if (!el) return;
       el.classList.remove('flow-ping');
       void (el as HTMLElement).offsetWidth;
@@ -186,6 +187,12 @@ export function Airflow({ variant, watch }: AirflowProps) {
 
       if (t - lastSpawn > SPAWN) {
         lastSpawn = t;
+        // Once a pulse, not once a frame: follow a phone room scrolling under the flow.
+        const T = target();
+        if (T) {
+          goal = Math.atan2(T.y - S.y, T.x - S.x);
+          sT = Math.hypot(T.x - S.x, T.y - S.y) / L;
+        }
         const pool = lines.filter((l) => Math.abs(l.u) < 0.35);
         const line = pool[Math.floor(Math.random() * pool.length)];
         if (line) pulses.push({ line, born: t, hit: false });
@@ -220,6 +227,9 @@ export function Airflow({ variant, watch }: AirflowProps) {
     };
 
     const aim = () => {
+      const srcEl = find('[data-flow-source]');
+      srcPoint = srcEl ? centre(srcEl) : null;
+      targetEl = find('[data-flow-target]');
       const S = source();
       const T = target();
       if (!S || !T) return;

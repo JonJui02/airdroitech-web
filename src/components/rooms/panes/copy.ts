@@ -32,7 +32,9 @@ export const CAREER_ACTION = 'See the roles and how to apply';
  */
 export const HOME_DOORS = {
   role: { label: 'Find a role', href: '/careers/' },
-  build: { label: 'See what we build', href: '/projects/' },
+  // Not "what we build": the site never says AirdroiTech builds the products
+  // (CEO direction, 2026-09-24).
+  build: { label: 'See the projects', href: '/projects/' },
 } as const;
 
 /**
@@ -41,7 +43,7 @@ export const HOME_DOORS = {
  * the step opens in place; without it, the step leaves for `href`.
  */
 export const ROOM_NEXT = {
-  ABOUT: { label: 'What we work on', room: 'PROJECTS', href: '/projects/' },
+  ABOUT: { label: 'ADT Projects', room: 'PROJECTS', href: '/projects/' },
   PROJECTS: { label: 'Life at AirdroiTech', room: 'CAREER', href: '/careers/' },
   CAREER: { label: CAREER_ACTION, href: '/careers/open-positions/' },
 } as const;
