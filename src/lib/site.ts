@@ -63,9 +63,6 @@ export const CAPABILITIES = [
 /**
  * The registered office. Updated to the new premises — the company moved from
  * Unit 3A-1, Level 3A, Tower 9 to Tower 2A in the same business park.
- *
- * RoomDock derives its location readout from the last two lines, so the city,
- * state and country must stay in that order.
  */
 export const ADDRESS_LINES = [
   'Unit 6-1, Level 6, Tower 2A,',

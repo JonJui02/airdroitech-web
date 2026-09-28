@@ -1,22 +1,17 @@
 'use client';
 
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Accent } from '@/components/ui/Accent';
 import { TypeText } from '@/components/ui/TypeText';
 import { Carousel3D } from '@/components/ui/Carousel3D';
 import { CountUp } from '@/components/ui/CountUp';
 import { ImageSlot } from '@/components/ui/ImageSlot';
-import { BrandLogo } from '@/components/shell/BrandLogo';
-import { ThemeToggle } from '@/components/shell/ThemeToggle';
 import type { Role } from '@/lib/roles';
 import { CAPABILITIES, EMAIL, COMPANY_FACTS } from '@/lib/site';
-import { MobileRoomDock } from './MobileRoomDock';
 import { RoomLegal } from './RoomLegal';
 import { RoomReadMore } from './RoomReadMore';
 import { RoomDial } from './RoomDial';
-import { RoomDock } from './RoomDock';
 import { RoomHeader } from './RoomHeader';
-import { RoomRail } from './RoomRail';
 import { AboutPane } from './panes/AboutPane';
 import { CareerPane } from './panes/CareerPane';
 import { ContactPane } from './panes/ContactPane';
@@ -34,7 +29,7 @@ import {
   HERO_DECK,
   PROJECT_COPY,
 } from './panes/copy';
-import { at, buildRooms, readout, wrapIndex, type Room, type RoomKey } from './rooms';
+import { at, buildRooms, wrapIndex, type Room, type RoomKey } from './rooms';
 
 export interface RoomShellProps {
   roles: Role[];
@@ -43,15 +38,20 @@ export interface RoomShellProps {
 /**
  * Single-screen room navigation for `/`.
  *
- * One index drives everything: header cells, rail list, dial angle and arc,
- * dock readout and segments, and the mobile dock. Every control calls the same
- * setter, so they cannot disagree.
+ * One navigation (design review, 2026-09-28): the dial. On desktop it has its
+ * own column beside the room; on phones it is a half-dial docked at the
+ * bottom, within thumb reach. The top bar carries only the logo and the theme
+ * switch, and the foot only the legal line. The old room tabs, rail list,
+ * Prev/Next buttons, status dock and phone tab bar are gone.
+ *
+ * One index drives everything. Each layout has its own dial (a tab list) and
+ * its own set of panels, linked by id, so both are valid tab widgets; the
+ * other layout is display:none at any width, so only one is ever exposed.
  *
  * All five rooms are mounted at all times and the inactive ones are hidden with
  * the `hidden` attribute. That keeps the whole homepage's copy in the served
- * HTML — the same content the previous scrolling page shipped — so nothing is
- * lost to crawlers, and no element depends on client state to become visible
- * (CLAUDE.md non-negotiable #3).
+ * HTML, so nothing is lost to crawlers, and no element depends on client state
+ * to become visible (CLAUDE.md non-negotiable #3).
  */
 export function RoomShell({ roles }: RoomShellProps) {
   const rooms = useMemo(
@@ -65,10 +65,11 @@ export function RoomShell({ roles }: RoomShellProps) {
     Object.fromEntries(CAPABILITIES.map((c) => [c, true])),
   );
   const [device, setDevice] = useState<number | null>(null);
-  const [dragging, setDragging] = useState(false);
 
   /** The card that opened the device detail, so focus can go back to it. */
   const opener = useRef<HTMLButtonElement | null>(null);
+  /** The phone layout scrolls as one column; a new room starts at its top. */
+  const mobileScroll = useRef<HTMLDivElement>(null);
 
   const room = at(rooms, index).key;
 
@@ -83,6 +84,10 @@ export function RoomShell({ roles }: RoomShellProps) {
     [goIndex, rooms],
   );
 
+  useEffect(() => {
+    mobileScroll.current?.scrollTo({ top: 0 });
+  }, [index]);
+
   const closeDevice = useCallback(() => {
     setDevice(null);
     opener.current?.focus();
@@ -96,9 +101,11 @@ export function RoomShell({ roles }: RoomShellProps) {
 
   const pageOf = (key: RoomKey) => rooms.find((r) => r.key === key)?.page;
 
-  const paneProps = (key: RoomKey) => ({
-    role: 'region' as const,
-    'aria-label': rooms.find((r) => r.key === key)?.label ?? key,
+  /** Panel attributes for one layout's tab list: `d` desktop, `m` phone. */
+  const panel = (base: 'd' | 'm', key: RoomKey) => ({
+    role: 'tabpanel' as const,
+    id: `${base}-panel-${key}`,
+    'aria-labelledby': `${base}-tab-${key}`,
     hidden: room !== key,
   });
 
@@ -106,30 +113,25 @@ export function RoomShell({ roles }: RoomShellProps) {
     <main
       id="main"
       data-tone="home"
-      className="flex h-[100dvh] flex-col overflow-hidden border border-chrome-line bg-chrome-ground"
+      className="flex h-[100dvh] flex-col overflow-hidden bg-chrome-ground"
     >
       {/* ---------------- desktop ---------------- */}
-      <div className="hidden min-h-0 flex-1 flex-col lg:flex">
-        <RoomHeader rooms={rooms} room={room} onRoom={goRoom} />
+      <div className="relative hidden min-h-0 flex-1 flex-col lg:flex">
+        <RoomHeader />
 
-        <div className="grid min-h-0 flex-1 grid-cols-[300px_1fr] overflow-hidden">
-          <RoomRail
-            rooms={rooms}
-            index={index}
-            onIndex={goIndex}
-            onRoom={goRoom}
-            dragging={dragging}
-            onDragging={setDragging}
-          />
+        <div className="grid min-h-0 flex-1 grid-cols-[360px_1fr] overflow-hidden xl:grid-cols-[440px_1fr]">
+          <div className="relative z-[2] flex items-center justify-center">
+            <RoomDial rooms={rooms} index={index} onIndex={goIndex} variant="full" idBase="d" />
+          </div>
 
-          <div className="relative min-h-0 overflow-hidden">
-            <div {...paneProps('HOME')} className="h-full animate-pane-in overflow-y-auto">
+          <div className="relative z-[2] min-h-0 overflow-hidden">
+            <div {...panel('d', 'HOME')} className="h-full animate-pane-in overflow-y-auto">
               <HomePane
                 onOpenProjects={() => goRoom('PROJECTS')}
               />
             </div>
 
-            <div {...paneProps('ABOUT')} className="h-full animate-pane-in overflow-y-auto">
+            <div {...panel('d', 'ABOUT')} className="h-full animate-pane-in overflow-y-auto">
               <AboutPane
                 caps={caps}
                 onToggle={(n) => setCaps((c) => ({ ...c, [n]: !c[n] }))}
@@ -137,7 +139,7 @@ export function RoomShell({ roles }: RoomShellProps) {
               />
             </div>
 
-            <div {...paneProps('PROJECTS')} className="h-full animate-pane-in">
+            <div {...panel('d', 'PROJECTS')} className="h-full animate-pane-in">
               {device === null ? (
                 <ProjectsPane onOpen={openDevice} page={pageOf('PROJECTS')} />
               ) : (
@@ -145,64 +147,41 @@ export function RoomShell({ roles }: RoomShellProps) {
               )}
             </div>
 
-            <div {...paneProps('CAREER')} className="h-full animate-pane-in overflow-y-auto">
+            <div {...panel('d', 'CAREER')} className="h-full animate-pane-in overflow-y-auto">
               <CareerPane roles={roles} />
             </div>
 
-            <div {...paneProps('CONTACT')} className="h-full animate-pane-in overflow-y-auto">
+            <div {...panel('d', 'CONTACT')} className="h-full animate-pane-in overflow-y-auto">
               <ContactPane />
             </div>
           </div>
         </div>
 
-        <RoomDock rooms={rooms} index={index} />
+        <RoomLegal className="relative z-[2] flex-none justify-end px-[32px]" />
       </div>
 
       {/* ---------------- mobile ---------------- */}
-      <div className="flex min-h-0 flex-1 flex-col lg:hidden">
-        <header className="flex min-h-[62px] flex-none items-center gap-3 border-b border-chrome-line px-[20px]">
-          <BrandLogo height="24px" />
-          <span className="ml-auto font-mono text-[10.5px] uppercase tracking-[0.14em] text-chrome-link">
-            {readout(index, total)}
-          </span>
-          <ThemeToggle className="-mr-2 text-chrome-body hover:text-chrome-link" />
-        </header>
+      <div className="relative flex min-h-0 flex-1 flex-col lg:hidden">
+        <RoomHeader compact />
 
-        <div className="flex flex-none items-center gap-[18px] border-b border-chrome-line bg-chrome-plate px-[20px] py-[18px]">
-          <RoomDial
-            rooms={rooms}
-            index={index}
-            onIndex={goIndex}
-            size="sm"
-            dragging={dragging}
-            onDragging={setDragging}
-          />
-          <div>
-            <p className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-chrome-meta">
-              Room
-            </p>
-            <p className="mt-[6px] font-display text-[32px] font-bold leading-none text-chrome-ink">
-              {at(rooms, index).label}
-            </p>
-            <p className="mt-2 font-mono text-[10.5px] uppercase tracking-[0.14em] text-chrome-link">
-              Turn the ring to move
-            </p>
-          </div>
+        <div ref={mobileScroll} className="relative z-[2] min-h-0 flex-1 overflow-y-auto overscroll-contain">
+          {rooms.map((r) => (
+            <div key={r.key} {...panel('m', r.key)}>
+              <MobilePane
+                room={r.key}
+                page={r.page}
+                device={device}
+                onOpenDevice={openDevice}
+                onCloseDevice={closeDevice}
+                onNext={() => goIndex(wrapIndex(index + 1, total))}
+              />
+            </div>
+          ))}
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto">
-          <MobilePane
-            room={room}
-            page={at(rooms, index).page}
-
-            device={device}
-            onOpenDevice={openDevice}
-            onCloseDevice={closeDevice}
-            onNext={() => goIndex(wrapIndex(index + 1, total))}
-          />
+        <div className="relative z-[3] flex-none border-t border-chrome-line bg-chrome-ground pb-[env(safe-area-inset-bottom,0px)]">
+          <RoomDial rooms={rooms} index={index} onIndex={goIndex} variant="arc" idBase="m" />
         </div>
-
-        <MobileRoomDock rooms={rooms} index={index} onRoom={goRoom} />
       </div>
     </main>
   );
@@ -328,17 +307,21 @@ function MobilePane({
     );
   }
 
+  // The phone layout's Home title is the page's h1 at phone widths; the desktop
+  // h1 (HomePane) is display:none there, so only one is ever exposed.
+  const Heading = room === 'HOME' ? 'h1' : 'h2';
+
   return (
     <div className="animate-pane-in-sm px-[20px] py-[22px]">
       <p className={`font-mono text-[11px] uppercase tracking-[0.16em] ${room === 'HOME' ? 'text-chrome-link' : 'text-chrome-meta'}`}>{c.kicker}</p>
-      <h2 className="mt-[12px] font-display text-[36px] font-bold leading-[0.96] tracking-[-0.03em] text-chrome-ink">
+      <Heading className="mt-[12px] font-display text-[36px] font-bold leading-[0.96] tracking-[-0.03em] text-chrome-ink">
         {room === 'PROJECTS' ? (
             <Accent text={c.title} accent={c.accent} tone="chrome" />
           ) : (
-            // key={room} remounts per room, so each room title types in again.
-            <TypeText key={room} text={c.title} accent={c.accent} tone="chrome" sweep={room === 'HOME'} replay />
+            // Replays each time the room opens again.
+            <TypeText text={c.title} accent={c.accent} tone="chrome" sweep={room === 'HOME'} replay />
           )}
-      </h2>
+      </Heading>
       <p className="mt-[14px] text-[15.5px] leading-[1.62] text-chrome-body">{c.copy}</p>
 
       <RoomReadMore page={page} className="mt-[14px] text-[15.5px]" />

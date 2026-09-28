@@ -118,7 +118,9 @@ export const PROJECT_COPY: ProjectCopy[] = [
   {
     kicker: 'Air conditioning CAD software',
     name: 'PolyPlan',
-    copy: 'CAD for HVAC professionals — faster designs, automatic zoning and smarter quotes, maintained by our web team.',
+    // No "our team" framing: the site never says AirdroiTech builds or
+    // maintains the products (CEO direction, 2026-09-24).
+    copy: 'CAD for HVAC professionals — faster designs, automatic zoning and smarter quotes.',
     href: PRODUCTS[2].href,
     asset: PRODUCTS[2].asset,
     tag: PRODUCTS[2].tag,

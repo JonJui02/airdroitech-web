@@ -1,60 +1,76 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import type { KeyboardEvent, PointerEvent } from 'react';
+import type { KeyboardEvent, MouseEvent, PointerEvent } from 'react';
 import { at, readout, wrapIndex, type Room } from './rooms';
 
 interface RoomDialProps {
   rooms: Room[];
   index: number;
   onIndex: (i: number) => void;
-  /** Desktop dial is 204px; the mobile dial is 104px. */
-  size: 'lg' | 'sm';
-  dragging: boolean;
-  onDragging: (d: boolean) => void;
+  /**
+   * `full` — the desktop knob, room names printed around its rim.
+   * `arc` — the phone's half-dial, docked at the bottom of the screen within
+   * thumb reach, names spread across its arc.
+   */
+  variant: 'full' | 'arc';
+  /** Prefix for tab and panel ids, so each dial controls its own panels. */
+  idBase: string;
 }
 
-/** Progress arc radius, in the 204-unit viewBox: the middle of the groove. */
-const R_ARC = 80;
-const C = 2 * Math.PI * R_ARC;
-/** Grip ridges around the knob rim. */
-const RIDGES = 40;
 /** Springy settle: a slight overshoot, like a knob dropping into a detent. */
 const SETTLE = 'transform 460ms cubic-bezier(0.34, 1.56, 0.64, 1)';
+/** Grip ridges around the knob rim. */
+const RIDGES = 40;
+/** The arc variant spreads the rooms across ±72°, so every name is on screen. */
+const ARC_SPAN = 144;
+/** How far past the end detents the arc knob may be dragged before it stops. */
+const ARC_LIMIT = 86;
 
-/** Pointer angle in degrees: 0 at twelve o'clock, increasing clockwise. */
+/** Full dial geometry, in a 380-unit box; everything renders as percentages. */
+const F = { box: 380, body: 70, groove: 82, knob: 106, marks: 131, labels: 166 };
+/** Arc geometry, in px: knob centre sits just below the dock's bottom edge. */
+const A = { h: 132, cy: 140, knob: 62, marks: 84, labels: 104 };
+
+const rad = (deg: number) => (deg * Math.PI) / 180;
+
+/** Pointer angle in degrees: 0 at twelve o'clock, positive clockwise, -180..180. */
 function pointerDeg(el: HTMLElement, x: number, y: number) {
   const r = el.getBoundingClientRect();
-  const deg = (Math.atan2(x - (r.left + r.width / 2), -(y - (r.top + r.height / 2))) * 180) / Math.PI;
-  return deg < 0 ? deg + 360 : deg;
+  return (Math.atan2(x - (r.left + r.width / 2), -(y - (r.top + r.height / 2))) * 180) / Math.PI;
 }
 
-/**
- * The rotary room selector, drawn as a physical neumorphic knob (user request
- * 2026-09-13): a raised body, an inset groove carrying the progress arc, detent
- * dots, and a raised knob with grip ridges and an indicator.
- *
- * Feel: dragging turns the knob continuously with the pointer (relative, so the
- * knob never jumps under your finger) and changes room as it passes each
- * detent; releasing springs it onto the nearest detent with a small overshoot.
- * A tap without dragging still jumps straight to the room under the pointer.
- * On phones that support it, each detent gives a tiny vibration.
- *
- * The shadows are a scoped exception to "hairline borders, not shadows" — see
- * docs/BRAND.md. Shadow colours are tokens (--neu-*) in globals.css.
- *
- * It is a slider, not a set of buttons: one value out of five. So it carries
- * role="slider" and the arrow/Home/End keys, and the rail and header still give
- * discrete buttons for the same state — no one has to operate the dial.
- */
-export function RoomDial({ rooms, index, onIndex, size, dragging, onDragging }: RoomDialProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const total = rooms.length;
-  const step = 360 / total;
-  const lg = size === 'lg';
+/** A plain left click. Anything else (new tab, new window) is left to the browser. */
+const plainClick = (e: MouseEvent) => e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
 
-  // Unwrapped knob rotation in degrees. Kept in a ref too, for pointer maths.
-  const [angle, setAngle] = useState(index * step);
+/**
+ * The homepage's only navigation (design review, 2026-09-28): a physical
+ * selector knob whose room names sit around its rim, the way the settings sit
+ * around a real rotary switch. The indicator points at the current room.
+ *
+ * Three ways to use it, all equivalent: click or tap a name, drag the knob
+ * (it follows the pointer and drops into the nearest detent with a small
+ * overshoot), or focus a name and use the arrow keys.
+ *
+ * Accessibility: the names are a real tab list (role="tablist", one
+ * role="tab" per room, arrow keys move, Home and End jump), so nobody has to
+ * operate the knob; the knob itself is hidden from screen readers. Each name
+ * is also a real link to the room's own page, so without JavaScript the dial
+ * still navigates the site — JavaScript turns a plain click into a room change.
+ *
+ * The neumorphic shading is the scoped shadow exception in docs/BRAND.md
+ * ("Dial shading"); every colour is a --neu-* or chrome token.
+ */
+export function RoomDial({ rooms, index, onIndex, variant, idBase }: RoomDialProps) {
+  const total = rooms.length;
+  const full = variant === 'full';
+  const step = full ? 360 / total : ARC_SPAN / (total - 1);
+  const detent = (i: number) => (full ? i * step : -ARC_SPAN / 2 + i * step);
+
+  const knobRef = useRef<HTMLDivElement>(null);
+  const tabs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const [angle, setAngle] = useState(() => detent(index));
+  const [dragging, setDragging] = useState(false);
   const angleRef = useRef(angle);
   const drag = useRef<{ last: number; moved: number; x: number; y: number } | null>(null);
 
@@ -63,33 +79,41 @@ export function RoomDial({ rooms, index, onIndex, size, dragging, onDragging }: 
     setAngle(a);
   };
 
-  // Settle on the current room: after a drag, or when the room changes from the
-  // rail, header or keys. Turns the short way round to the nearest detent.
+  // Settle on the current room after a drag, or when the room changes by name
+  // or key. The full dial turns the short way round.
   useEffect(() => {
     if (dragging) return;
-    const target = index * step;
-    turnTo(target + 360 * Math.round((angleRef.current - target) / 360));
-  }, [index, dragging, step]);
+    const target = full ? index * step : -ARC_SPAN / 2 + index * step;
+    turnTo(full ? target + 360 * Math.round((angleRef.current - target) / 360) : target);
+  }, [index, dragging, full, step]);
+
+  const nearest = (a: number) =>
+    full
+      ? wrapIndex(Math.round(a / step), total)
+      : Math.min(total - 1, Math.max(0, Math.round((a + ARC_SPAN / 2) / step)));
 
   function onPointerDown(e: PointerEvent<HTMLDivElement>) {
-    const el = ref.current;
+    if ((e.target as HTMLElement).closest('a')) return;
+    const el = knobRef.current;
     if (!el) return;
     e.currentTarget.setPointerCapture(e.pointerId);
     drag.current = { last: pointerDeg(el, e.clientX, e.clientY), moved: 0, x: e.clientX, y: e.clientY };
-    onDragging(true);
+    setDragging(true);
   }
 
   function onPointerMove(e: PointerEvent<HTMLDivElement>) {
     const d = drag.current;
-    const el = ref.current;
+    const el = knobRef.current;
     if (!d || !el) return;
     const p = pointerDeg(el, e.clientX, e.clientY);
     const delta = ((p - d.last + 540) % 360) - 180;
     d.last = p;
     d.moved = Math.max(d.moved, Math.hypot(e.clientX - d.x, e.clientY - d.y));
-    const a = angleRef.current + delta;
+    if (d.moved < 4) return;
+    const raw = angleRef.current + delta;
+    const a = full ? raw : Math.min(ARC_LIMIT, Math.max(-ARC_LIMIT, raw));
     turnTo(a);
-    const next = wrapIndex(Math.round(a / step), total);
+    const next = nearest(a);
     if (next !== index) {
       onIndex(next);
       if (typeof navigator !== 'undefined' && 'vibrate' in navigator) navigator.vibrate(6);
@@ -98,150 +122,199 @@ export function RoomDial({ rooms, index, onIndex, size, dragging, onDragging }: 
 
   function endDrag(e: PointerEvent<HTMLDivElement>) {
     const d = drag.current;
-    const el = ref.current;
+    const el = knobRef.current;
     drag.current = null;
     if (d && el && d.moved < 4) {
-      // A tap: jump to the room under the pointer.
+      // A tap on the knob: jump to the room it points toward.
       const p = pointerDeg(el, e.clientX, e.clientY);
-      onIndex(Math.round((p / 360) * total) % total);
+      onIndex(nearest(full ? (p + 360) % 360 : p));
     }
-    onDragging(false);
+    setDragging(false);
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLDivElement>) {
     const keys: Record<string, number> = {
-      ArrowLeft: wrapIndex(index - 1, total),
-      ArrowDown: wrapIndex(index - 1, total),
       ArrowRight: wrapIndex(index + 1, total),
-      ArrowUp: wrapIndex(index + 1, total),
+      ArrowDown: wrapIndex(index + 1, total),
+      ArrowLeft: wrapIndex(index - 1, total),
+      ArrowUp: wrapIndex(index - 1, total),
       Home: 0,
       End: total - 1,
     };
-    const next = keys[e.key];
+    const next = e.key === ' ' ? index : keys[e.key];
     if (next === undefined) return;
     e.preventDefault();
     onIndex(next);
+    tabs.current[next]?.focus();
   }
 
-  // The dial sits on the rail (desktop) or the header plate (mobile); its body
-  // must be the same colour as that surface for the neumorphic effect.
-  const surface = lg ? 'bg-chrome-ground' : 'bg-chrome-plate';
-  const grooveInset = lg ? 10 : 5;
-  const knobInset = lg ? 34 : 17;
+  function onTabClick(e: MouseEvent<HTMLAnchorElement>, i: number) {
+    if (!plainClick(e)) return;
+    e.preventDefault();
+    onIndex(i);
+  }
 
-  return (
-    <div
-      ref={ref}
-      role="slider"
-      tabIndex={0}
-      aria-valuemin={1}
-      aria-valuemax={total}
-      aria-valuenow={index + 1}
-      aria-valuetext={at(rooms, index).label}
-      aria-label="Room selector"
-      onKeyDown={onKeyDown}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={endDrag}
-      onPointerCancel={endDrag}
-      className={`relative flex-none touch-none select-none rounded-full ${
-        dragging ? 'cursor-grabbing' : 'cursor-grab'
-      } ${lg ? 'h-[204px] w-[204px]' : 'h-[104px] w-[104px]'}`}
-    >
-      {/* Raised body */}
-      <div
-        aria-hidden="true"
-        className={`absolute inset-0 rounded-full ${surface}`}
-        style={{ boxShadow: lg ? 'var(--neu-raised-lg)' : 'var(--neu-raised-sm)' }}
-      />
+  const knobStyle = { transform: `rotate(${angle}deg)`, transition: dragging ? 'none' : SETTLE };
+  const handlers = {
+    onPointerDown,
+    onPointerMove,
+    onPointerUp: endDrag,
+    onPointerCancel: endDrag,
+  };
 
-      {/* Inset groove */}
-      <div
-        aria-hidden="true"
-        className={`absolute rounded-full ${surface}`}
-        style={{ inset: grooveInset, boxShadow: 'var(--neu-inset)' }}
-      />
+  const tabList = (
+    <div role="tablist" aria-label="Rooms" aria-orientation="horizontal" onKeyDown={onKeyDown}>
+      {rooms.map((r, i) => {
+        const active = i === index;
+        const deg = detent(i);
+        const pos = full
+          ? {
+              left: `${50 + ((F.labels / F.box) * 100) * Math.sin(rad(deg))}%`,
+              top: `${50 - ((F.labels / F.box) * 100) * Math.cos(rad(deg))}%`,
+            }
+          : {
+              left: `calc(50% + ${(A.labels * Math.sin(rad(deg))).toFixed(1)}px)`,
+              top: `${(A.cy - A.labels * Math.cos(rad(deg))).toFixed(1)}px`,
+            };
+        return (
+          <a
+            key={r.key}
+            ref={(el) => {
+              tabs.current[i] = el;
+            }}
+            href={r.page?.href ?? '/'}
+            role="tab"
+            id={`${idBase}-tab-${r.key}`}
+            aria-selected={active}
+            aria-controls={`${idBase}-panel-${r.key}`}
+            tabIndex={active ? 0 : -1}
+            onClick={(e) => onTabClick(e, i)}
+            style={pos}
+            className={`absolute z-[2] flex min-h-tap min-w-tap -translate-x-1/2 -translate-y-1/2 items-center justify-center whitespace-nowrap font-mono uppercase transition-colors duration-200 ${
+              full
+                ? 'gap-[7px] px-2 text-[12px] tracking-[0.14em]'
+                : 'flex-col gap-[5px] px-1 text-[10.5px] tracking-[0.1em]'
+            } ${active ? 'font-semibold text-chrome-ink' : 'text-chrome-meta hover:text-chrome-ink'}`}
+          >
+            <span
+              aria-hidden="true"
+              className={`block h-[6px] w-[6px] flex-none transition-colors duration-200 ${active ? 'bg-chrome-state' : 'bg-chrome-border'}`}
+            />
+            {r.label}
+          </a>
+        );
+      })}
+    </div>
+  );
 
-      {/* Progress arc in the groove, and a detent dot for each room */}
-      <svg viewBox="0 0 204 204" className="absolute inset-0 h-full w-full" aria-hidden="true" focusable="false">
-        {rooms.map((r, i) => {
-          const rad = ((i * step - 90) * Math.PI) / 180;
-          return (
+  const ridges = (
+    <svg viewBox="0 0 100 100" className="h-full w-full" focusable="false" style={knobStyle}>
+      {Array.from({ length: RIDGES }, (_, i) => (
+        <line
+          key={i}
+          x1="50"
+          y1="3"
+          x2="50"
+          y2="9"
+          transform={`rotate(${(i * 360) / RIDGES} 50 50)`}
+          stroke="var(--neu-ridge)"
+          strokeWidth={full ? 1.2 : 1.6}
+          strokeLinecap="round"
+        />
+      ))}
+      {full ? null : (
+        <line x1="50" y1="50" x2="50" y2="18" className="stroke-chrome-state" strokeWidth={3} strokeLinecap="round" />
+      )}
+      <circle cx="50" cy={full ? 17 : 12} r={full ? 4.5 : 5} className="fill-chrome-state" />
+    </svg>
+  );
+
+  if (full) {
+    const pct = (n: number) => `${((n / F.box) * 100).toFixed(2)}%`;
+    return (
+      <div className="relative aspect-square w-[320px] flex-none select-none xl:w-[380px]">
+        {/* Raised body: the drag surface. */}
+        <div
+          aria-hidden="true"
+          data-flow-source=""
+          {...handlers}
+          className={`absolute touch-none rounded-full bg-chrome-ground ${dragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+          style={{ inset: pct(F.body), boxShadow: 'var(--neu-raised-lg)' }}
+        />
+        {/* Inset groove */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute rounded-full bg-chrome-ground"
+          style={{ inset: pct(F.groove), boxShadow: 'var(--neu-inset)' }}
+        />
+        {/* Detent dots just outside the body, one per room */}
+        <svg viewBox={`0 0 ${F.box} ${F.box}`} className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true" focusable="false">
+          {rooms.map((r, i) => (
             <circle
               key={r.key}
-              cx={102 + 97 * Math.cos(rad)}
-              cy={102 + 97 * Math.sin(rad)}
-              r={lg ? 2 : 3.2}
+              cx={F.box / 2 + F.marks * Math.sin(rad(detent(i)))}
+              cy={F.box / 2 - F.marks * Math.cos(rad(detent(i)))}
+              r={3}
               className={i === index ? 'fill-chrome-state' : 'fill-chrome-meta'}
             />
-          );
-        })}
-        {/* Full track under the arc: chrome-line in light, chrome-grid in dark (--neu-track). */}
-        <circle
-          cx="102"
-          cy="102"
-          r={R_ARC}
-          fill="none"
-          stroke="var(--neu-track)"
-          strokeWidth={lg ? 9 : 12}
-        />
-        <circle
-          cx="102"
-          cy="102"
-          r={R_ARC}
-          fill="none"
-          className="stroke-chrome-state"
-          strokeWidth={lg ? 9 : 12}
-          strokeLinecap="round"
-          strokeDasharray={`${(C * (index + 1)) / total} ${C}`}
-          transform="rotate(-90 102 102)"
-          style={{ transition: 'stroke-dasharray 260ms ease' }}
-        />
-      </svg>
-
-      {/* Raised knob: fixed light and shadow, rotating ridges and indicator */}
-      <div
-        aria-hidden="true"
-        className={`absolute overflow-hidden rounded-full ${surface}`}
-        style={{
-          inset: knobInset,
-          boxShadow: lg ? 'var(--neu-knob-lg)' : 'var(--neu-knob-sm)',
-          backgroundImage: 'var(--neu-knob-face)',
-        }}
-      >
-        <svg
-          viewBox="0 0 100 100"
-          className="h-full w-full"
-          focusable="false"
-          style={{ transform: `rotate(${angle}deg)`, transition: dragging ? 'none' : SETTLE }}
-        >
-          {Array.from({ length: RIDGES }, (_, i) => (
-            <line
-              key={i}
-              x1="50"
-              y1="3"
-              x2="50"
-              y2="9"
-              transform={`rotate(${(i * 360) / RIDGES} 50 50)`}
-              stroke="var(--neu-ridge)"
-              strokeWidth={lg ? 1.2 : 1.8}
-              strokeLinecap="round"
-            />
           ))}
-          <circle cx="50" cy="19" r={lg ? 4.5 : 7} className="fill-chrome-state" />
         </svg>
-      </div>
-
-      {lg ? (
-        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-chrome-meta">
-            {readout(index, total)}
-          </p>
-          <p className="mt-[6px] font-display text-[25px] font-bold leading-none tracking-[-0.02em] text-chrome-ink">
+        {/* Raised knob: fixed light, rotating ridges and indicator */}
+        <div
+          ref={knobRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute overflow-hidden rounded-full bg-chrome-ground"
+          style={{ inset: pct(F.knob), boxShadow: 'var(--neu-knob-lg)', backgroundImage: 'var(--neu-knob-face)' }}
+        >
+          {ridges}
+        </div>
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+          <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-chrome-meta">{readout(index, total)}</p>
+          <p className="mt-[6px] font-display text-[24px] font-bold leading-none tracking-[-0.02em] text-chrome-ink">
             {at(rooms, index).label}
           </p>
         </div>
-      ) : null}
+        {tabList}
+      </div>
+    );
+  }
+
+  return (
+    <div {...handlers} className={`relative h-[132px] w-full touch-none select-none overflow-hidden ${dragging ? 'cursor-grabbing' : 'cursor-grab'}`}>
+      {/* Track arc. The names carry their own dots, so the arc has no detent
+          dots of its own: two markers per room read as clutter at 375px. */}
+      <svg
+        viewBox={`0 0 375 ${A.h}`}
+        className="pointer-events-none absolute top-0 h-[132px] w-[375px]"
+        style={{ left: 'calc(50% - 187.5px)' }}
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d={`M${187.5 - A.marks * Math.sin(rad(80))} ${A.cy - A.marks * Math.cos(rad(80))} A${A.marks} ${A.marks} 0 0 1 ${187.5 + A.marks * Math.sin(rad(80))} ${A.cy - A.marks * Math.cos(rad(80))}`}
+          fill="none"
+          stroke="var(--neu-track)"
+          strokeWidth={2}
+        />
+      </svg>
+      {/* Half-visible knob: its centre sits just below the dock's bottom edge */}
+      <div
+        ref={knobRef}
+        aria-hidden="true"
+        data-flow-source=""
+        className="pointer-events-none absolute overflow-hidden rounded-full bg-chrome-ground"
+        style={{
+          width: A.knob * 2,
+          height: A.knob * 2,
+          left: `calc(50% - ${A.knob}px)`,
+          top: A.cy - A.knob,
+          boxShadow: 'var(--neu-knob-sm)',
+          backgroundImage: 'var(--neu-knob-face)',
+        }}
+      >
+        {ridges}
+      </div>
+      {tabList}
     </div>
   );
 }
