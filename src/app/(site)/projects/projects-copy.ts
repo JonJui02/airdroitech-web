@@ -19,6 +19,12 @@ import { OFFICIAL, type OfficialLink } from '@/lib/official';
  * neutral line, "[Product] is a Polyaire Group product.", and sends visitors to
  * the official site.
  *
+ * Product pages in points (design review, 2026-09-28): the long sections that
+ * ran edge to edge are gone. Each page is one hero scene — the product with six
+ * numbered points around it — and a link to the official site, where purchase,
+ * support and full detail live. Every point is cut from copy the page already
+ * carried (the retired sections, quoted in each `from`); none is new.
+ *
  * Brand phrases stay exactly as they are: "Bringing Your Ideas to Life",
  * "Your AC's Smart Companion", "Be an 'Airdroitechie'".
  */
@@ -28,6 +34,19 @@ export const INDEX = {
   title: 'ADT Projects',
 };
 
+export interface ProductPoint {
+  title: string;
+  /** One line at 375px: keep it to about 44 characters. */
+  detail: string;
+  /** The hotspot on the hero image, as a percentage of its width and height. */
+  x: number;
+  y: number;
+  /** Which column the point sits in beside the image on wide screens. */
+  side: 'l' | 'r';
+  /** Where the words come from — the retired section or official page. */
+  from: string;
+}
+
 export interface ProductPageCopy {
   /** Matches the slug under /projects/. */
   slug: string;
@@ -36,20 +55,17 @@ export interface ProductPageCopy {
   lede: string;
   /** Shown on the index card. */
   summary: string;
-  hero: { src: string; alt: string };
-  sections: {
-    heading: string;
-    /** One word/phrase in `heading` to colour. One or two per page — see docs/BRAND.md. */
-    accent?: string;
-    body?: string;
-    items?: { title: string; body: string }[];
-    /** ratio (CSS aspect-ratio) and maxWidth (px) keep small or odd-shaped images crisp. */
-    figure?: { src: string; alt: string; ratio?: string; maxWidth?: number };
-    /** Small print under the section — used for the official Secure disclaimer. */
-    note?: string;
-  }[];
+  /** Intrinsic size, so the hotspots sit on the image at any size. */
+  hero: { src: string; alt: string; width: number; height: number };
+  /** Six, three per side: left column top to bottom, then right. */
+  points: ProductPoint[];
   /** Where purchase, access and support actually live. Opened in a new tab. */
-  official: { note: string; links: OfficialLink[] };
+  official: {
+    note: string;
+    /** The one button in the hero scene. */
+    main: OfficialLink;
+    links: OfficialLink[];
+  };
 }
 
 export const AIRTOUCH: ProductPageCopy = {
@@ -61,60 +77,62 @@ export const AIRTOUCH: ProductPageCopy = {
   hero: {
     src: '/projects/ATH-device.webp',
     alt: 'The AirTouch Home wall console showing climate zones, lighting with a dimmer, garage door and motion status, a music player and a driveway camera',
+    width: 1061,
+    height: 747,
   },
-  sections: [
+  points: [
     {
-      heading: 'A Polyaire product',
-      accent: 'Polyaire',
-      // Attribution line per the CEO direction above. The feature sentence is
-      // the legacy page's, with the "our team contributed" framing removed.
-      body: 'AirTouch is a Polyaire Group product. It offers integrated AC unit and zone control, individual temperature monitoring and adjustment for each zone in your home, and smartphone app control of your air conditioner.',
+      title: 'Zone by zone',
+      detail: 'Temperature, mode and fan per zone.',
+      x: 25.5,
+      y: 35,
+      side: 'l',
+      from: '“A Polyaire product”: individual temperature monitoring and adjustment for each zone',
     },
     {
-      heading: 'AirTouch Home — the new look',
-      // Official: airtouchhome.com.au/pages/airtouch-home and the home page's
-      // "Keep AirTouch 5 ... or install the free upgrade to the new AirTouch
-      // Home app ... easily toggle between modes" and "Add cameras, sensors,
-      // doorbells, garage control and lighting ... all from one app".
-      body: 'AirTouch Home brings air conditioning control and smart home management together in one app on AirTouch 5 — no more juggling remotes or switching between apps. It is a free upgrade: keep AirTouch 5 for air conditioning alone, or install AirTouch Home to add cameras, sensors, doorbells, garage control and lighting, and toggle between the two modes at any time.',
-      // Shown at no more than its real width (451px) so it stays sharp.
-      figure: {
-        src: '/projects/airtouch-home-closeup.webp',
-        alt: 'Close-up of the AirTouch Home screen: climate zones, a downlight dimmer, a front porch camera, local weather and air quality, and garage, front door and motion status',
-        ratio: '451/296',
-        maxWidth: 460,
-      },
+      title: 'One app for the home',
+      detail: 'Cameras, doorbells, garage and lights too.',
+      x: 31,
+      y: 57,
+      side: 'l',
+      from: '“AirTouch Home — the new look”',
     },
     {
-      heading: 'AirTouch Secure',
-      // Official: airtouchhome.com.au/pages/airtouch-secure-home. Component list
-      // is the site's own "Security for AirTouch Home" navigation.
-      body: 'AirTouch Secure is a range of smart monitoring devices that add to an AirTouch 5 system and are controlled through the AirTouch Home app. Alerts and full system control from anywhere; sensors, cameras and alarms; and do-it-yourself installation with no professional setup. The range includes an 8-piece indoor wireless Secure Kit, door and window sensors, motion sensors, a key fob, a doorbell, indoor and outdoor cameras, and a solar panel charger.',
-      figure: {
-        src: '/projects/AT_Secure_Kit.webp',
-        alt: 'The AirTouch Secure Kit: a hub, a speaker unit, two door and window sensors, two key fobs and two motion sensors',
-        ratio: '1016/470',
-        maxWidth: 640,
-      },
-      // Verbatim from the official page. Kept because it is a safety statement,
-      // not marketing, and omitting it would overstate the product.
-      note: 'AirTouch Secure helps you monitor your home and receive alerts. Performance depends on connectivity, environment and setup. AirTouch Secure is not a substitute for professional security monitoring. Requires AirTouch 5 or above with AirTouch Home installed and an active WiFi connection.',
+      title: 'Voice assistants',
+      detail: 'Works with Amazon Alexa and Google Home.',
+      x: 22,
+      y: 80,
+      side: 'l',
+      from: '“Integrates how you want”',
     },
     {
-      heading: 'You’re in Control',
-      body: 'Air conditioning app for iOS and Android. Make home comfortable from anywhere with the AirTouch App. Control temperature, zoning and airflow via Wi-Fi when you are at home, or over the internet when you are away.',
+      title: 'Geofencing',
+      detail: 'Off as you leave, on as you return.',
+      x: 68.6,
+      y: 19.3,
+      side: 'r',
+      from: '“Geofencing”',
     },
     {
-      heading: 'Geofencing',
-      body: 'Give your home’s air conditioner geofencing control with AirTouch 5. There is no need to worry about forgetting to turn off the air conditioning and wasting energy when you leave the house, and you have the added luxury of it turning back on again for you automatically as you return.',
+      title: 'From anywhere',
+      detail: 'iOS and Android app, at home or away.',
+      x: 87.8,
+      y: 19.5,
+      side: 'r',
+      from: '“You’re in Control”',
     },
     {
-      heading: 'Integrates how you want',
-      body: 'Unlock more potential for your home air conditioning with AirTouch and popular, open smart assistants like Amazon Alexa or Google Home. With whoever you choose to control your air conditioning, AirTouch will respond.',
+      title: 'AirTouch Secure',
+      detail: 'Sensors, cameras and alarms, self-installed.',
+      x: 78,
+      y: 75,
+      side: 'r',
+      from: '“AirTouch Secure”, airtouchhome.com.au/pages/airtouch-secure-home',
     },
   ],
   official: {
     note: 'Buy AirTouch and find support on the official AirTouch Home site.',
+    main: OFFICIAL.airtouch5,
     links: [OFFICIAL.airtouch5, OFFICIAL.airtouchHome, OFFICIAL.airtouchSecure],
   },
 };
@@ -126,78 +144,71 @@ export const BEAM: ProductPageCopy = {
   lede: 'Make any split-system air conditioner smart.',
   summary: 'Turns any split-system air conditioner into a smart, efficient, customisable unit.',
   hero: {
-    src: '/projects/at-beam-device.webp',
-    alt: 'The AirTouch Beam unit beside its retail box, which shows the Beam app on a phone and a wall-mounted air conditioner',
+    src: '/projects/airtouch-beam.webp',
+    alt: 'The AirTouch Beam unit beside the Beam app on a phone showing per-room controls',
+    width: 1000,
+    height: 1000,
   },
-  sections: [
+  points: [
     {
-      heading: 'A Polyaire product',
-      accent: 'Polyaire',
-      // Replaces the legacy "Our Engineers have contribute greatly" section,
-      // per the CEO direction at the top of this file.
-      body: 'AirTouch Beam is a Polyaire Group product.',
-      figure: {
-        src: '/projects/at-beam-app.webp',
-        alt: 'The AirTouch Beam app on a phone: the Lounge zone set to 23°, with heat, fan speed, swing and auto controls, a timer and programs',
-      },
+      title: 'Geofencing',
+      detail: 'Comfort as you arrive, off as you leave.',
+      x: 34.8,
+      y: 21.2,
+      side: 'l',
+      from: 'Features: “Geofencing”',
     },
     {
-      heading: 'Features',
-      items: [
-        {
-          title: 'Smart Companion',
-          body: 'Turn your AC on before you’re home for instant cool, or switch it off on the go.',
-        },
-        {
-          title: 'Geofencing',
-          body: 'Automatic comfort as you come home, and it won’t forget to turn off when you leave.',
-        },
-        {
-          title: 'Program',
-          body: 'Set it and forget it. Your AC adjusts automatically to your preset program, so comfort is there when you need it.',
-        },
-        // The five below are from the official airtouchhome.com.au Beam page
-        // and its FAQ.
-        {
-          title: 'No hub required',
-          body: 'Beam connects directly to your home Wi-Fi on a 2.4 GHz network.',
-        },
-        {
-          title: 'Plug in and connect',
-          body: 'Installation takes around ten minutes — no wiring or tools.',
-        },
-        {
-          title: 'Quick on/off button',
-          body: 'The Beam unit has its own quick-action on/off button.',
-        },
-        {
-          // Official FAQ: "One Beam unit controls one air conditioner." Stated
-          // so no reader assumes one unit covers a whole home.
-          title: 'One Beam per air conditioner',
-          body: 'Each Beam controls one AC. Homes with several units use one Beam per unit.',
-        },
-        {
-          title: 'No subscription',
-          body: 'The AirTouch app and all of its features are free.',
-        },
-      ],
+      title: 'Smart Companion',
+      detail: 'Turn the AC on before you get home.',
+      x: 27,
+      y: 33,
+      side: 'l',
+      from: 'Features: “Smart Companion”',
     },
     {
-      heading: 'Matter-enabled',
+      title: 'Programs',
+      detail: 'Set it once. The AC follows your program.',
+      x: 45.5,
+      y: 68,
+      side: 'l',
+      from: 'Features: “Program”',
+    },
+    {
       /*
        * Matter: confirmed by the user on 2026-09-13. The legacy AirdroiTech page
-       * says Matter; the official site does not mention it but does say "Works
-       * with Apple Home, Hey Google and Alexa". Both are stated.
+       * says Matter; the official site says "Works with Apple Home, Hey Google
+       * and Alexa". Both are stated.
        */
-      body: 'Enjoy seamless integration into your Matter-enabled smart home ecosystem with AirTouch Beam — quick setup, flawless interoperability and consistent performance across a wide range of devices. It works with Apple Home, Google Home and Alexa for voice control.',
-      figure: {
-        src: '/projects/airtouch-beam.webp',
-        alt: 'The AirTouch Beam unit beside the AirTouch phone app showing per-room controls',
-      },
+      title: 'Matter-enabled',
+      detail: 'Apple Home, Google Home and Alexa.',
+      x: 77.5,
+      y: 60.5,
+      side: 'r',
+      from: '“Matter-enabled”',
+    },
+    {
+      title: 'Plug in and connect',
+      detail: 'About ten minutes. No wiring, no hub.',
+      x: 86,
+      y: 74,
+      side: 'r',
+      from: 'Features: “Plug in and connect”, “No hub required” (official Beam page)',
+    },
+    {
+      // Official FAQ: "One Beam unit controls one air conditioner." Stated so no
+      // reader assumes one unit covers a whole home.
+      title: 'One Beam per AC',
+      detail: 'Each Beam runs one AC. No subscription.',
+      x: 67,
+      y: 86,
+      side: 'r',
+      from: 'Features: “One Beam per air conditioner”, “No subscription” (official FAQ)',
     },
   ],
   official: {
     note: 'Buy AirTouch Beam and find support on the official AirTouch Home site.',
+    main: OFFICIAL.airtouchBeam,
     links: [OFFICIAL.airtouchBeam],
   },
 };
@@ -212,90 +223,62 @@ export const POLYPLAN: ProductPageCopy = {
   hero: {
     src: '/projects/laptop-polyplan.webp',
     alt: 'PolyPlan open on a laptop: a floor plan with ducts and outlets sized room by room, beside the component library',
+    width: 984,
+    height: 694,
   },
-  sections: [
+  points: [
     {
-      heading: 'The ultimate HVAC CAD tool for air conditioning installers',
-      // Official, verbatim.
-      body: 'PolyPlan is a cutting-edge, cloud-based CAD tool specifically crafted for HVAC professionals. This powerful software streamlines the entire design process from start to finish, enabling fast, efficient, and confident installations. Designed to intuitively guide professionals through calculating, designing, and quoting HVAC systems, PolyPlan ensures a precise and efficient workflow for residential installations.',
-      // Official: "Open a Trade account today to access PolyPlan".
-      note: 'PolyPlan is available to trade customers through a Polyaire Trade account.',
+      title: 'Rapid calculations',
+      detail: 'Standard jobs in as little as 15 minutes.',
+      x: 17,
+      y: 10,
+      side: 'l',
+      from: '“Rapid calculations and designs” (official)',
     },
     {
-      heading: 'A Polyaire product',
-      accent: 'Polyaire',
-      // Replaces the legacy "The Airdroitech Software Web team handles PolyPlan"
-      // section, per the CEO direction at the top of this file.
-      body: 'PolyPlan is a Polyaire Group product.',
+      title: 'Online ordering',
+      detail: 'Designs link to Polyaire online ordering.',
+      x: 21,
+      y: 46,
+      side: 'l',
+      from: '“Online component ordering” (official)',
     },
     {
-      heading: 'Rapid calculations and designs',
-      items: [
-        {
-          title: 'Rapid calculations',
-          // Official.
-          body: 'Complete standard residential HVAC installations in as little as 15 minutes.',
-        },
-        {
-          title: 'Capacity calculator',
-          // Legacy AirdroiTech page.
-          body: 'Upload house plans and use smart, simple tools to calculate the area and capacity needs of every room or zone.',
-        },
-        {
-          title: 'Auto Zone',
-          // Legacy AirdroiTech page.
-          body: 'Streamlines planning by automatically generating zones within your plan.',
-        },
-        {
-          title: 'Auto Outlets and Fittings',
-          // Official.
-          body: 'Automatically calculates and places the right size and quantity of outlets and fittings needed, ensuring accuracy and saving time.',
-        },
-        {
-          title: 'Auto Flex Pen',
-          // Official.
-          body: 'Just draw where you need ducts; PolyPlan automatically selects the correct size, insulation, and length.',
-        },
-      ],
-      figure: {
-        src: '/projects/polyplan-content.webp',
-        alt: 'A PolyPlan floor plan with zoned rooms beside a capacity table listing area, volume, air flow and load per zone',
-      },
+      title: 'Capacity calculator',
+      detail: 'Area and load for every room or zone.',
+      x: 37,
+      y: 57,
+      side: 'l',
+      from: '“Capacity calculator” (legacy AirdroiTech page)',
     },
     {
-      heading: 'Design from anywhere',
-      items: [
-        {
-          title: 'Cloud-based storage',
-          // Official.
-          body: 'Unlimited storage and backups ensure you always have access to your job plans along with the latest software updates and feature additions.',
-        },
-        {
-          title: 'Access anywhere',
-          // Official.
-          body: 'Design and manage your projects from any location, at any time.',
-        },
-        {
-          title: 'Online component ordering',
-          // Official.
-          body: 'Link your design directly to the Polyaire Online Ordering system for seamless transitions from design to order.',
-        },
-      ],
+      title: 'Auto Outlets and Fittings',
+      detail: 'Right size and count, placed for you.',
+      x: 64.3,
+      y: 16.6,
+      side: 'r',
+      from: '“Auto Outlets and Fittings” (official)',
     },
     {
-      heading: 'Systems it covers',
-      // Official: "Whether you are designing ducted systems, evaporative installs,
-      // or complex multi-storey setups". Gas heaters is a literal label in the
-      // supplied product graphic (assets-src/projects/polyplan-content-2.jpg).
-      body: 'Ducted reverse cycle, ducted evaporative, gas heaters and multi-storey designs.',
-      figure: {
-        src: '/projects/polyplan-content-2.webp',
-        alt: 'PolyPlan system types — ducted reverse cycle, ducted evaporative, gas heaters and multi-storey designs — above a duct layout',
-      },
+      title: 'Auto Zone',
+      detail: 'Zones generated across your plan.',
+      x: 78,
+      y: 34,
+      side: 'r',
+      from: '“Auto Zone” (legacy AirdroiTech page)',
+    },
+    {
+      title: 'Auto Flex Pen',
+      detail: 'Draw a duct; size, insulation, length follow.',
+      x: 62,
+      y: 49,
+      side: 'r',
+      from: '“Auto Flex Pen” (official)',
     },
   ],
   official: {
     note: 'PolyPlan is accessed through a Polyaire Trade account. Try the demo, or read more on Polyaire’s site.',
+    main: OFFICIAL.polyplan,
     links: [OFFICIAL.polyplanDemo, OFFICIAL.polyplan],
   },
 };

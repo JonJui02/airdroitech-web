@@ -21,12 +21,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ProductPage
-      product={BEAM}
-      siblings={[
-        { name: 'AirTouch', href: '/projects/airtouch/' },
-        { name: 'PolyPlan', href: '/projects/polyplan/' },
-      ]}
-    />
+    <ProductPage product={BEAM} />
   );
 }

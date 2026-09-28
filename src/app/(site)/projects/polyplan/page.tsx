@@ -4,7 +4,8 @@ import { POLYPLAN } from '../projects-copy';
 
 /**
  * Route: /projects/polyplan/  (URL unchanged from the legacy site)
- * Copy:  ../projects-copy.ts — ported from the legacy page.
+ * Copy:  ../projects-copy.ts — six points cut from the legacy page and the
+ *        official site; the page ends at the official-site links.
  */
 export const metadata: Metadata = {
   title: 'PolyPlan',
@@ -15,12 +16,6 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <ProductPage
-      product={POLYPLAN}
-      siblings={[
-        { name: 'AirTouch', href: '/projects/airtouch/' },
-        { name: 'AirTouch Beam', href: '/projects/airtouch-beam/' },
-      ]}
-    />
+    <ProductPage product={POLYPLAN} />
   );
 }

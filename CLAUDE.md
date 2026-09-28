@@ -81,10 +81,7 @@ failsafe shows the value after 2.5s if JavaScript never runs.
 **Approved exception (user decision, 2026-09-24):** `src/components/ui/ScrollStage.tsx`
 runs Apple-style scroll scenes built around the product imagery. On `/projects/`
 each product is pinned while its image swings up out of 3D, lands flat and its
-text steps in. On the three product pages the hero is pinned while the product
-stands up from a tilt, the title lifts away and the product zooms to fill the
-screen; section figures (not pinned) straighten out of 3D as they reach the
-middle of the screen. A brand-teal glow blooms behind each image. Scroll position
+text steps in. A brand-teal glow blooms behind each image. Scroll position
 drives it; nothing plays on a timer. Safeguards:
 the tall stage, the pin and every transform are CSS scoped to `html.tt-ready`,
 `prefers-reduced-motion: no-preference` and `min-height: 560px`, so layout is final
@@ -92,6 +89,22 @@ before first paint and reduced motion gets the plain page; the CSS default of
 `--p` is the visible state, so no JavaScript means no motion; keyboard focus inside
 a stage forces that visible state. Do not remove a safeguard, and do not pin other
 pages without asking.
+
+**Approved exception (user decision, 2026-09-28; extends the one above):**
+`src/components/content/ProductHero.tsx` is each product page's hero (design
+review 2026-09-28). The hero is pinned while the product stands up from a tilt and
+grows, and the title shrinks into the corner; once the product lands, six numbered
+points play in around it, 80 ms apart, then one button to the official site, about
+0.8 s in all and with no further scrolling; scrolling back folds them away. The
+product pages carry no long sections any more: the points are the page, and the
+official site holds the detail. Safeguards: every point, the image and the link
+are in the server HTML; the pin, the transforms and the hidden starting state are
+CSS scoped to `html.tt-ready`, `prefers-reduced-motion: no-preference`,
+`min-height: 560px` and `[data-armed]` (set only by the component's effect), so no
+JavaScript, reduced motion or a short screen gets the plain page with every point
+visible; each tween is 200 ms or less, transform and opacity only; keyboard focus
+inside the scene shows its finished state. Do not remove a safeguard, and do not
+add points or timed reveals elsewhere without asking.
 
 **Approved exception (user decision, 2026-09-28):** `src/components/ui/Airflow.tsx`
 draws the homepage background (design review 2026-09-28): thin teal and green

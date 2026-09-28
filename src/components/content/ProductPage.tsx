@@ -1,12 +1,7 @@
-import Link from 'next/link';
-import { Accent } from '@/components/ui/Accent';
-import { Button } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { ImageSlot } from '@/components/ui/ImageSlot';
-import { Tilt } from '@/components/ui/Tilt';
-import { ScrollStage } from '@/components/ui/ScrollStage';
 import { OutboundLink } from '@/components/ui/OutboundLink';
 import { Breadcrumbs } from '@/components/shell/Breadcrumbs';
+import { ProductHero } from './ProductHero';
 import type { ProductPageCopy } from '@/app/(site)/projects/projects-copy';
 
 const PRIMARY =
@@ -17,27 +12,17 @@ const SECONDARY =
 /**
  * The shared layout for the three product pages.
  *
- * One component rather than three near-identical pages: the three differ only
- * in copy and imagery, and a shared shell keeps the heading order, landmark
- * structure and CTA identical across them.
+ * Design review, 2026-09-28: the long sections that ran edge to edge are gone.
+ * A page is now the hero scene — the product with six numbered points around
+ * it and one button to the official site (ProductHero) — and a closing band
+ * with the official-site links, where purchase, support and full detail live.
+ * Those links open in a new tab with a short fade (OutboundLink), so the
+ * visitor keeps this site behind.
  *
- * Each page ends by sending the visitor to the product's official site, where
- * purchase, access and support actually live. Those links open in a new tab
- * with a short fade (OutboundLink), so the visitor keeps this site behind.
- *
- * Nothing here has a hidden resting state. The legacy product pages were part
- * of the same blank-section failure as About.
+ * The closing band carries the "[Product] is a Polyaire Group product." line:
+ * the CEO's attribution rule (2026-09-24), not page content.
  */
-export function ProductPage({
-  product,
-  action,
-  siblings,
-}: {
-  product: ProductPageCopy;
-  /** Optional page-specific internal action, rendered before the official links. */
-  action?: { label: string; href: string; note?: string };
-  siblings: { name: string; href: string }[];
-}) {
+export function ProductPage({ product }: { product: ProductPageCopy }) {
   return (
     <>
       <section className="gutter section-y">
@@ -49,128 +34,12 @@ export function ProductPage({
             { label: product.name, href: `/projects/${product.slug}/` },
           ]}
         />
-        {/* Pinned scroll scene: the product stands up and zooms to fill the screen
-            as the title lifts away. */}
-        <ScrollStage mode="exit">
-        <div className="st st-out-text">
-        <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">{product.kicker}</Eyebrow>
-        <h1 className="mt-4 font-display text-[clamp(44px,7vw,96px)] font-bold leading-[0.92] tracking-[-0.04em] text-[color:var(--ink)]">
-          <span className="hover-sweep">{product.name}</span>
-        </h1>
-        <p className="mt-6 max-w-[40ch] font-display text-[clamp(20px,2.4vw,32px)] font-bold leading-[1.24] tracking-[-0.02em] text-[color:var(--ink)]">
-          {product.lede}
-        </p>
-        </div>
-
-        {/* Hero image: full width on phones and tablets, capped at a medium 760px and
-            centred on desktop (user request 2026-09-13). */}
-        <div className="st st-out-img mt-[clamp(28px,3.4vw,56px)] w-full lg:mx-auto lg:max-w-[760px]">
-          <Tilt>
-            <ImageSlot
-              src={product.hero.src}
-              ratio="16/9"
-              alt={product.hero.alt}
-              label={product.hero.src}
-              sizes="(min-width: 1024px) 760px, 100vw"
-              fit="contain"
-              priority
-            />
-          </Tilt>
-        </div>
-        </ScrollStage>
+        <ProductHero product={product} />
       </section>
 
-      {product.sections.map((section) => (
-        <section
-          key={section.heading}
-          className="gutter band-y border-t border-[color:var(--line)]"
-        >
-          <div className="grid gap-[clamp(20px,3vw,64px)] lg:grid-cols-[240px_1fr]">
-            <h2 className="font-display text-[clamp(20px,2vw,26px)] font-bold leading-[1.2] tracking-[-0.02em] text-[color:var(--ink)]">
-              <Accent text={section.heading} accent={section.accent} />
-            </h2>
-
-            <div>
-              {section.body ? (
-                <p className="prose-measure text-[clamp(17px,1.3vw,20px)] leading-[1.6] text-[color:var(--body)]">
-                  {section.body}
-                </p>
-              ) : null}
-
-              {section.items ? (
-                <ul
-                  className={`grid gap-px border border-[color:var(--line)] bg-[color:var(--line)] sm:grid-cols-2 ${
-                    section.body ? 'mt-8' : ''
-                  }`}
-                >
-                  {section.items.map((item, i, all) => (
-                    <li
-                      key={item.title}
-                      className={`hover-box bg-[color:var(--ground)] px-6 py-6 ${
-                        // An odd count in a two-column grid leaves the last row
-                        // half empty, and the 1px grid gap shows through as a
-                        // solid grey block. The last item spans both columns.
-                        all.length % 2 === 1 && i === all.length - 1 ? 'sm:col-span-2' : ''
-                      }`}
-                    >
-                      <p className="font-display text-[19px] font-bold tracking-[-0.01em] text-[color:var(--ink)]">
-                        {item.title}
-                      </p>
-                      <p className="mt-2 text-[15.5px] leading-[1.6] text-[color:var(--body)]">
-                        {item.body}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-
-              {section.note ? (
-                <p className="prose-measure mt-5 border-l-2 border-[color:var(--line-strong)] pl-4 text-[14px] leading-[1.6] text-[color:var(--muted)]">
-                  {section.note}
-                </p>
-              ) : null}
-
-              {section.figure ? (
-                <ScrollStage mode="view" className="mt-8">
-                <div
-                  className="st st-view"
-                  // An optional cap keeps small or square images at a sensible, sharp size.
-                  style={section.figure.maxWidth ? { maxWidth: section.figure.maxWidth } : undefined}
-                >
-                  <ImageSlot
-                    src={section.figure.src}
-                    ratio={section.figure.ratio ?? '16/9'}
-                    alt={section.figure.alt}
-                    label={section.figure.src}
-                    sizes={
-                      section.figure.maxWidth
-                        ? `(min-width: 640px) ${section.figure.maxWidth}px, 100vw`
-                        : '(min-width: 1024px) 66vw, 100vw'
-                    }
-                    fit="contain"
-                  />
-                </div>
-                </ScrollStage>
-              ) : null}
-            </div>
-          </div>
-        </section>
-      ))}
-
       <section className="gutter band-y border-t border-[color:var(--line)] bg-[color:var(--tint)]">
-        {action ? (
-          <div className="mb-8">
-            <Button href={action.href}>{action.label}</Button>
-            {action.note ? (
-              <p className="mt-4 max-w-[52ch] text-[15px] leading-[1.6] text-[color:var(--body)]">
-                {action.note}
-              </p>
-            ) : null}
-          </div>
-        ) : null}
-
         <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">On the official site</Eyebrow>
-        <p className="mt-3 max-w-[52ch] text-[17px] leading-[1.6] text-[color:var(--body)]">
+        <p className="mt-3 max-w-[52ch] font-display text-[clamp(20px,2vw,26px)] font-bold leading-[1.3] tracking-[-0.015em] text-[color:var(--ink)]">
           {product.official.note}
         </p>
         <ul className="mt-6 flex flex-wrap gap-3">
@@ -182,22 +51,9 @@ export function ProductPage({
             </li>
           ))}
         </ul>
-      </section>
-
-      <section className="gutter band-y border-t border-[color:var(--line)]">
-        <Eyebrow className="tracking-[0.16em] text-[color:var(--eyebrow)]">Other projects</Eyebrow>
-        <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
-          {siblings.map((s) => (
-            <li key={s.href}>
-              <Link
-                href={s.href}
-                className="inline-flex min-h-tap items-center font-display text-[clamp(22px,2.4vw,32px)] font-bold tracking-[-0.02em] text-[color:var(--link)] underline [text-underline-offset:6px] hover:no-underline"
-              >
-                {s.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <p className="mt-8 font-mono text-[12px] uppercase tracking-[0.14em] text-[color:var(--muted)]">
+          {product.name} is a Polyaire Group product.
+        </p>
       </section>
     </>
   );
