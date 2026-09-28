@@ -293,7 +293,7 @@ never lime. Route map: `src/lib/tones.ts`.
 
 | Route | Hue | `--page` | `--ground` | `--tint` | Glow |
 |---|---|---|---|---|---|
-| / (console) | grey 9% | `#f5f5f5` | chrome plate `#f1f2f2`, rail `#eeeeef`, hover `#ebebec` | `#ebebec` | none |
+| / (console) | grey 9% | `#f5f5f5` | chrome plate `#f1f2f2`, rail `#eeeeef`, hover `#ebebec` | `#ebebec` | Airflow glow: teal 12% + green 8% (dark 22% + 12%) |
 | /what-we-do/ | lime 9% | `#f6fbed` | `#fcfef9` | `#eef7da` | teal 9% + green 7% |
 | /projects/ | grey 6% | `#f8f8f9` | `#fdfdfd` | `#eeeeef` | teal 9% + grey 7% |
 | /projects/airtouch/ | lime 11% | `#f5fae9` | `#fafdf5` | `#ecf6d6` | teal 9% + green 7% |
@@ -369,3 +369,24 @@ the highlight is the dial's own surface lightened, never a flat white glow.
 The old light track (`--chrome-grid` under `chrome-state`) measured 1.16:1 and
 was replaced as part of this ruling. Grip ridges use a tint of `--chrome-body`
 only. The settle animation is a CSS transition, so reduced motion collapses it.
+
+### Airflow (homepage background)
+
+Design review 2026-09-28; motion exception recorded in CLAUDE.md rule 3.
+`src/components/ui/Airflow.tsx`, tokens in `globals.css`:
+
+| Token | Light | Dark | Source |
+|---|---|---|---|
+| `--flow-rgb` (streamlines) | `47, 127, 89` | `79, 153, 52` | teal-600 / green-600 |
+| `--flow-a` (streamline alpha) | 0.16 | 0.26 | — |
+| `--pulse-rgb` (travelling light) | `47, 127, 89` | `72, 168, 122` | teal-600 / teal-400 |
+| `--flow-glow-a` / `-b` | 12% / 8% | 22% / 12% | `color-mix` of `--primary` and `--green` |
+
+Rules:
+
+- Triplets are brand hexes written as RGB so the canvas can set alpha. No new hue.
+- Never lime in the flow, the pulses or the glow (same rule as page-tone glows).
+- Streamlines sit under text at 16% alpha or less (26% on dark); the pulse is a
+  moving mark, not text. Text contrast is measured against the glow peak.
+- `FlowLine` on long pages uses `chrome-hover` for the track and `chrome-state`
+  for the fill and lit nodes, like the 2px progress bar it replaces at 1024px+.

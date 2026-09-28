@@ -5,6 +5,7 @@ import { Accent } from '@/components/ui/Accent';
 import { TypeText } from '@/components/ui/TypeText';
 import { Carousel3D } from '@/components/ui/Carousel3D';
 import { CountUp } from '@/components/ui/CountUp';
+import { Airflow } from '@/components/ui/Airflow';
 import { ImageSlot } from '@/components/ui/ImageSlot';
 import type { Role } from '@/lib/roles';
 import { CAPABILITIES, EMAIL, COMPANY_FACTS } from '@/lib/site';
@@ -137,6 +138,7 @@ export function RoomShell({ roles }: RoomShellProps) {
     >
       {/* ---------------- desktop ---------------- */}
       <div className="relative hidden min-h-0 flex-1 flex-col lg:flex">
+        <Airflow variant="desk" watch={index} />
         <RoomHeader />
 
         <div className="grid min-h-0 flex-1 grid-cols-[360px_1fr] overflow-hidden xl:grid-cols-[440px_1fr]">
@@ -181,6 +183,7 @@ export function RoomShell({ roles }: RoomShellProps) {
 
       {/* ---------------- mobile ---------------- */}
       <div className="relative flex min-h-0 flex-1 flex-col lg:hidden">
+        <Airflow variant="phone" watch={index} />
         <RoomHeader compact />
 
         <div ref={mobileScroll} className="relative z-[2] min-h-0 flex-1 overflow-y-auto overscroll-contain">

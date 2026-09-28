@@ -1,5 +1,6 @@
 import { SiteHeader } from '@/components/shell/SiteHeader';
 import { Footer } from '@/components/shell/Footer';
+import { FlowLine } from '@/components/shell/FlowLine';
 import { ToneFrame } from '@/components/shell/ToneFrame';
 
 /**
@@ -20,6 +21,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <ToneFrame>
       <SiteHeader />
+      <FlowLine />
       <main id="main">{children}</main>
       <Footer />
     </ToneFrame>

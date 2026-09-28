@@ -93,6 +93,16 @@
      hover deepens to the primary hover instead — flagged for confirmation. */
   --btn2-border: #2f7f59;
   --btn2-border-hover: #235e42;
+
+  /* Airflow background (src/components/ui/Airflow.tsx). RGB triplets of brand
+     tokens so the canvas can set its own alpha: teal-600 lines and pulses in
+     light, green-600 lines and teal-400 pulses in dark. Never lime. Glow mixes
+     are percentages of --primary (teal) and --green. */
+  --flow-rgb: 47, 127, 89;
+  --flow-a: 0.16;
+  --pulse-rgb: 47, 127, 89;
+  --flow-glow-a: 12%;
+  --flow-glow-b: 8%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -147,6 +157,11 @@
     --plate: #161e1a;
     --btn2-border: #45564c;
     --btn2-border-hover: #a0d233;
+    --flow-rgb: 79, 153, 52;
+    --flow-a: 0.26;
+    --pulse-rgb: 72, 168, 122;
+    --flow-glow-a: 22%;
+    --flow-glow-b: 12%;
   }
 }
 
@@ -201,6 +216,11 @@
   --plate: #161e1a;
   --btn2-border: #45564c;
   --btn2-border-hover: #a0d233;
+  --flow-rgb: 79, 153, 52;
+  --flow-a: 0.26;
+  --pulse-rgb: 72, 168, 122;
+  --flow-glow-a: 22%;
+  --flow-glow-b: 12%;
 }
 
 @layer base {
@@ -1193,5 +1213,51 @@ html.tt-ready .count-text[data-count='play'] .count-live {
 @media (prefers-reduced-motion: no-preference) and (min-height: 560px) and (min-width: 1024px) {
   html.tt-ready .stage {
     --stage-top: calc(34px + clamp(62px, 5.2vw, 78px));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Airflow — the homepage background (src/components/ui/Airflow.tsx).
+   Approved exception to CLAUDE.md rule 3 (user decision 2026-09-28): see the
+   component for the safeguards. The glow is two soft teal and green fields;
+   it drifts only under html.tt-ready (never under reduced motion). The ring on
+   the next step when a pulse arrives is motion-only too.
+   --------------------------------------------------------------------------- */
+.flow-glow {
+  background:
+    radial-gradient(34% 42% at 46% 56%, color-mix(in srgb, var(--primary) var(--flow-glow-a), transparent), transparent 72%),
+    radial-gradient(40% 46% at 80% 30%, color-mix(in srgb, var(--green) var(--flow-glow-b), transparent), transparent 72%);
+}
+
+.flow-glow[data-variant='phone'] {
+  background:
+    radial-gradient(70% 28% at 50% 98%, color-mix(in srgb, var(--primary) var(--flow-glow-a), transparent), transparent 72%),
+    radial-gradient(70% 40% at 50% 34%, color-mix(in srgb, var(--green) var(--flow-glow-b), transparent), transparent 72%);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.tt-ready .flow-glow {
+    animation: flow-drift 26s ease-in-out infinite alternate;
+  }
+
+  html.tt-ready .flow-ping {
+    animation: flow-ping 800ms ease-out;
+  }
+}
+
+@keyframes flow-drift {
+  to {
+    transform: translate3d(3%, -2.5%, 0) scale(1.06);
+  }
+}
+
+@keyframes flow-ping {
+  from {
+    outline: 2px solid rgba(var(--pulse-rgb), 0.55);
+    outline-offset: 0;
+  }
+  to {
+    outline: 2px solid rgba(var(--pulse-rgb), 0);
+    outline-offset: 12px;
   }
 }

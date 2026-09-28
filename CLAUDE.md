@@ -93,6 +93,19 @@ before first paint and reduced motion gets the plain page; the CSS default of
 a stage forces that visible state. Do not remove a safeguard, and do not pin other
 pages without asking.
 
+**Approved exception (user decision, 2026-09-28):** `src/components/ui/Airflow.tsx`
+draws the homepage background (design review 2026-09-28): thin teal and green
+streamlines leave the dial like air from a vent, and a pulse of light runs along
+them to the current room's next step (`[data-flow-target]`), re-aiming when the
+dial turns. Safeguards: decorative and aria-hidden, nothing depends on it; without
+JavaScript a static SVG of the streamlines is in the server HTML; under reduced
+motion the canvas draws one still frame and the glow does not drift; capped at
+30 fps and 2x pixel density, paused when the tab is hidden or the canvas is off
+screen, and it drops to a still frame on a device that cannot keep up; teal and
+green only, never lime. Do not remove a safeguard, and do not put it on other
+pages without asking. Long pages get only `FlowLine.tsx`, a scroll-driven progress
+line in the left gutter at 1024px and up, which has no timed motion.
+
 ### 4. Every URL stays byte-identical
 
 Ten legacy URLs, all with a trailing slash, all preserved — including the
